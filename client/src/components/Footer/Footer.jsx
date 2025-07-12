@@ -47,16 +47,16 @@ const Footer = () => {
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum magni excepturi similique unde, praesentium incidunt impedit placeat perferendis itaque vero cum commodi ad saepe, nemo blanditiis quas non aliquam quis!</p>
                             <div className='social__links d-flex align-items-center gap-4'>
                                 <span>
-                                    <Link to='#'><i class='ri-youtube-line'></i></Link>
+                                    <Link to='#'><i className='ri-youtube-line'></i></Link>
                                 </span>
                                 <span>
-                                    <Link to='#'><i class='ri-github-fill'></i></Link>
+                                    <Link to='#'><i className='ri-github-fill'></i></Link>
                                 </span>
                                 <span>
-                                    <Link to='#'><i class='ri-facebook-circle-line'></i></Link>
+                                    <Link to='#'><i className='ri-facebook-circle-line'></i></Link>
                                 </span>
                                 <span>
-                                    <Link to='#'><i class='ri-instagram-line'></i></Link>
+                                    <Link to='#'><i className='ri-instagram-line'></i></Link>
                                 </span>
                             </div>
                         </div>

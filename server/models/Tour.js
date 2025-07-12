@@ -10,7 +10,7 @@ const tourSchema = new mongoose.Schema(
         city: {
             type: String,
             required: true,
-        }, 
+        },
         address: {
             type: String,
             required: true,
