@@ -1,0 +1,36 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+# optional: logs and temporary files
+logs/
+*.log
+.DS_Store
+Thumbs.db
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+.env.*
+!**/.env.example # Keep example .env file for reference
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# IDE specific files (optional, depending on your IDE)
+.idea/
+.vscode/
+*.swp
+*.bak
+*.swo
+
+# Database specific files (optional, if you have local DB files)
+data/db/
+*.sqlite3
+*.db

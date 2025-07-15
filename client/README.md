@@ -1,3 +1,10 @@
+PORT = 4000
+MONGO_URI=mongodb+srv://sumandhanagar135497:Suman2003$@cluster0.pvlbd0e.mongodb.net/travel-booking?retryWrites=true&w=majority
+
+
+# MongoDB altus
+# username = sumandhanagar135497
+# password = Suman2003$
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

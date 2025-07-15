@@ -2,7 +2,7 @@
   {
     "id": "01",
     "title": "Westminister Bridge",
-    "city": "London",
+    "city": "Austin",
     "address": "Somewhere in London",
     "distance": 300,
     "price": 99,
@@ -30,7 +30,7 @@
   {
     "id": "03",
     "title": "Snowy Mountains, Thailand",
-    "city": "Bangkok",
+    "city": "Seattle",
     "address": "Somewhere in Thailand",
     "distance": 500,
     "price": 99,
@@ -56,10 +56,11 @@
     "featured": true
   },
   {
+    "id": "05",
     "title": "Nusa Pendia Bali, Indonesia",
     "city": "Bali",
     "address": "Somewhere in Indonesia",
-    "distance": 500,
+    "distance": 400,
     "price": 99,
     "maxGroupSize": 8,
     "desc": "this is the description",
@@ -69,6 +70,7 @@
     "featured": true
   },
   {
+    "id": "06",
     "title": "Cherry Blossoms Spring",
     "city": "Tokyo",
     "address": "Somewhere in Japan",
@@ -82,6 +84,7 @@
     "featured": true
   },
   {
+    "id": "07",
     "title": "Holmen Lofoten, France",
     "city": "Paris",
     "address": "Somewhere in France",
@@ -95,7 +98,8 @@
     "featured": true
   },
   {
-    "title": "Snowy Mountains, Thailand",
+    "id": "08",
+    "title": "Beautiful Snowy Mountains",
     "city": "Bangkok",
     "address": "Somewhere in Thailand",
     "distance": 500,
@@ -108,6 +112,7 @@
     "featured": true
   },
   {
+    "id": "09",
     "title": "Jaflong, Sylhet",
     "city": "Sylhet",
     "address": "Somewhere in Sylhet",
@@ -121,6 +126,7 @@
     "featured": false
   },
   {
+    "id": "10",
     "title": "Cox's Bazar Sea Beach",
     "city": "Chittagong",
     "address": "Somewhere in Chittagong",
