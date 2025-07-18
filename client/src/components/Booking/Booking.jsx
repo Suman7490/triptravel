@@ -36,7 +36,9 @@ const Booking = ({ tour, avgRating }) => {
                     <h3>${price} <span>/per person</span></h3>
                     <span className='tour__rating d-flex align-items-center gap-1'>
                         <i className="ri-star-fill" style={{ 'color': "var(--secondary-color)" }}></i>
-                        {avgRating === 0 ? 'not rated' : `${avgRating} (${reviews.length})`}
+                        {/* {avgRating === 0 ? 'not rated' : `${avgRating} (${reviews.length})`} */}
+                        {avgRating === 0 || !reviews ? 'not rated' : `${avgRating} (${reviews.length})`}
+
                     </span>
                 </div>
                 <div className='booking__form'>
