@@ -7,15 +7,23 @@ import calculateAvgRating from './../utils/avgRating'
 import avatar from '../assets/images/avatar.jpg'
 import Booking from '../components/Booking/Booking'
 import Newsletter from '../shared/Newsletter'
+import useFetch from './../hooks/useFetch'
+import { BASE_URL } from './../utils/config'
 
 const TourDetails = () => {
     const { id } = useParams();
     const reviewMsgRef = useRef('');
     const [tourRating, setTourRating] = useState(null)
-    const tour = tourData.find(tour => tour.id === parseInt(id));
-    if (!tour) return <h2 className="text-center mt-5"> Tour not found</h2>;
 
-    const { photo, title, desc, price, reviews, city, address, distance, maxGroupSize } = tour;
+    // Fetch data from database
+    const { data: tour } = useFetch(`${BASE_URL}/tours/${id}`)
+
+    if (!tour) {
+        return <h4>Loading...</h4>;
+    }
+
+    const { photo, title, desc, price, address, reviews, city, distance, maxGroupSize } = tour;
+
     const { totalRating, avgRating } = calculateAvgRating(reviews);
     const options = { day: "numeric", month: "long", year: "numeric" }
 
@@ -37,7 +45,12 @@ const TourDetails = () => {
                                     <div className='d-flex align-items-center gap-5'>
                                         <span className='tour__rating d-flex align-items-center gap-1'>
                                             <i className="ri-star-fill" style={{ 'color': "var(--secondary-color)" }}></i>
-                                            {avgRating === 0 ? 'not rated' : `${avgRating} (${reviews.length})`}
+                                            {avgRating === 0 ? null : avgRating}
+                                            {totalRating === 0 ? (
+                                                "not rated"
+                                            ) : (
+                                                <span>({reviews?.length})</span>
+                                            )}
                                         </span>
                                         <span>
                                             <i className='ri-map-pin-fill'></i>{address}
@@ -82,7 +95,7 @@ const TourDetails = () => {
 
                                     <ListGroup className='user__reviews'>
                                         {
-                                            reviews?.map(reviews => (
+                                            reviews?.map(review => (
                                                 <div className='review__item'>
                                                     <img src={avatar} alt='' />
 
