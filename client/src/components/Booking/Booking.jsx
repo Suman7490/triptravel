@@ -1,15 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import './booking.css'
 import { Form, FormGroup, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/authContext';
+import { BASE_URL } from '../../utils/config';
 
 const Booking = ({ tour, avgRating }) => {
-    const { price, reviews } = tour;
+    const { price, reviews, title } = tour;
     const navigate = useNavigate();
 
-    const [credentials, setCredentials] = useState({
-        userId: '01',
-        userEmail: 'example@gmail.com',
+    const { user } = useContext(AuthContext)
+
+    const [booking, setBooking] = useState({
+        userId: user && user._id,
+        userEmail: user && user.email,
+        tourName: title,
         fullName: '',
         phone: '',
         guestSize: 1,
@@ -17,15 +22,40 @@ const Booking = ({ tour, avgRating }) => {
     });
 
     const handleChange = e => {
-        setCredentials(prev => ({ ...prev, [e.target.id]: e.target.value }));
+        setBooking(prev => ({ ...prev, [e.target.id]: e.target.value }));
     };
 
     const serviceFee = 10;
-    const totalAmount = Number(price) * Number(credentials.guestSize) + Number(serviceFee);
+    const totalAmount = Number(price) * Number(booking.guestSize) + Number(serviceFee);
 
-    const handleClick = e => {
+    const handleClick = async e => {
         e.preventDefault();
-        navigate('/thank-you')
+        console.log(booking)
+
+        try {
+            if (!user || user === undefined || user === null) {
+                return alert('Please sign in')
+            }
+            const res = await fetch(`${BASE_URL}/booking`, {
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify(booking)
+            })
+
+            const result = await res.json()
+
+            if (!res.ok) {
+                return alert(result.message)
+            }
+            navigate('/thank-you')
+        } catch (error) {
+            alert(error.message)
+        }
+
+
     }
 
 
@@ -45,7 +75,7 @@ const Booking = ({ tour, avgRating }) => {
                     <h5>Information</h5>
                     <Form onSubmit={handleClick} className="booking__info-form">
                         <FormGroup>
-                            <input type='text' placeholder='Full name' id='fullname' required onChange={handleChange} />
+                            <input type='text' placeholder='Full name' id='fullName' required onChange={handleChange} />
                         </FormGroup>
                         <FormGroup>
                             <input type='number' placeholder='Phone' id='phone' required onChange={handleChange} />

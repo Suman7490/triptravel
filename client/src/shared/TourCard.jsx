@@ -6,7 +6,7 @@ import "./tour-card.css"
 
 const TourCard = ({ tour }) => {
     const { _id, title, city, photo, price, featured, reviews } = tour;
-    console.log("TourCard data:", tour);
+    // console.log("TourCard data:", tour);
 
     const { totalRating, avgRating } = calculateAvgRating(reviews)
 
