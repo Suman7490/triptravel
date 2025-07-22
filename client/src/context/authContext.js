@@ -1,7 +1,9 @@
-import { Children, createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
+// Get 'user' from localStorage, handle if it's 'undefined' or null
+const storedUser = localStorage.getItem('user');
 const initial_state = {
-    user: localStorage.getItem('user') !== undefined ? JSON.parse(localStorage.getItem('user')) : null,
+    user: storedUser && storedUser !== "undefined" ? JSON.parse(storedUser) : null,
     loading: false,
     error: null,
 }
@@ -13,7 +15,7 @@ const AuthReducer = (state, action) => {
         case "LOGIN_START":
             return {
                 user: null,
-                loading: false,
+                loading: true,
                 error: null,
             };
         case "LOGIN_SUCCESS":
@@ -39,25 +41,31 @@ const AuthReducer = (state, action) => {
                 user: null,
                 loading: false,
                 error: null
-            }
+            };
         default:
-            return state
+            return state;
     }
 }
 
 export const AuthContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(AuthReducer, initial_state)
+    const [state, dispatch] = useReducer(AuthReducer, initial_state);
 
     useEffect(() => {
-        localStorage.setItem('user', JSON.stringify(state.user))
-    }, [state.user])
+        if (state.user) {
+            localStorage.setItem('user', JSON.stringify(state.user)); // Save the user to localStorage
+        } else {
+            localStorage.removeItem('user'); // Remove the user from localStorage if user is null
+        }
+    }, [state.user]);
 
-    return <AuthContext.Provider value={{
-        user: state.user,
-        loading: state.loading,
-        error: state.error,
-        dispatch,
-    }}>
-        {children}
-    </AuthContext.Provider>
+    return (
+        <AuthContext.Provider value={{
+            user: state.user,
+            loading: state.loading,
+            error: state.error,
+            dispatch,
+        }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
