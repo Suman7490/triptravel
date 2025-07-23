@@ -9,6 +9,7 @@ import TourDetails from './../pages/TourDetails'
 import ThankYou from '../pages/ThankYou'
 import AllBookings from '../pages/AllBookings'
 import About from '../pages/About'
+import CreateTour from '../pages/CreateTour'
 
 const Routers = () => {
 
@@ -18,6 +19,7 @@ const Routers = () => {
       <Route path='/home' element={<Home />} />
       <Route path='/about' element={<About />} />
       <Route path='/tours' element={<Tours />} />
+      <Route path='/createTour' element={<CreateTour />} />
       <Route path='/bookings' element={<AllBookings />} />
       <Route path='/tour/:id' element={<TourDetails />} />
       <Route path='/login' element={<Login />} />

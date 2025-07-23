@@ -4,20 +4,12 @@ import { verifyAdmin } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
-// create new tour
-router.post("/", verifyAdmin, createTour);
 
-// Update tour
-router.put("/:id", verifyAdmin, updateTour);
-
-// Delete tour
-router.delete("/:id", verifyAdmin, deleteTour);
-
-// Get Single tour
-router.get("/:id", getSingleTour);
-
-// Get All tour
-router.get("/", getAllTour);
+router.post("/", verifyAdmin, createTour);  // create new tour
+router.put("/:id", verifyAdmin, updateTour);  // Update tour
+router.delete("/:id", verifyAdmin, deleteTour);  // Delete tour
+router.get("/:id", getSingleTour);  // Get Single tour
+router.get("/", getAllTour);  // Get All tour
 
 // get tour by search
 router.get("/search/getTourBySearch", getTourBySearch);

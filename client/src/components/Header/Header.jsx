@@ -11,12 +11,12 @@ const navLinks = [
         display: 'Home'
     },
     {
-        path: '/about',
-        display: 'About'
-    },
-    {
         path: '/tours',
         display: 'Tours'
+    },
+    {
+        path: '/createTour',
+        display: 'Create Tour'
     },
     {
         path: '/bookings',
@@ -67,7 +67,7 @@ const Header = () => {
 
                         {/************************* Menu Start **********************/}
                         <div className='navigation' ref={menuRef} onClick={toggleMenu}>
-                            <ul className='menu d-flex align-items-center gap-5'>
+                            <ul className='menu d-flex align-items-center gap-3'>
                                 {navLinks.map((item, index) => (
                                     <li className='nav_item' key={index}>
                                         <NavLink to={item.path} className={navClass => navClass.isActive ? 'active_link' : ''}>{item.display}</NavLink>
