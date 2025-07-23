@@ -32,3 +32,13 @@ export const getAllBooking = async (req, res) => {
         res.status(500).json({ success: true, message: 'internal server error' })
     }
 }
+
+// get tour booking
+export const getBookingCount = async (req, res) => {
+    try {
+        const bookingCount = await Booking.estimatedDocumentCount();
+        res.status(200).json({ success: true, data: bookingCount })
+    } catch (error) {
+        res.status(500).json({ success: false, message: "failed to fetch" })
+    }
+}

@@ -30,11 +30,18 @@ export const verifyUser = (req, res, next) => {
 
 
 export const verifyAdmin = (req, res, next) => {
-    verifyToken(req, res, next, () => {
-        if (req.user.role === 'admin') {
-            next();
-        } else {
-            return res.status(401).json({ success: false, message: 'You are not authorized' })
+    const token = req.cookies.accessToken;
+    if (!token) return res.status(401).json({ success: false, message: 'Unauthorized: No token' });
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        if (decoded.role !== 'admin') {
+            return res.status(403).json({ success: false, message: 'Access denied: Admins only' });
         }
-    })
-} 
+
+        req.user = decoded; // attach user data to request
+        next();
+    } catch (err) {
+        return res.status(401).json({ success: false, message: 'Invalid token' });
+    }
+};

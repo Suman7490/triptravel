@@ -50,7 +50,7 @@ const AllBookings = () => {
                                             <td>{index + 1}</td>
                                             <td>{booking.fullName}</td>
                                             <td>{booking.userEmail}</td>
-                                            <td>{booking.tourId?.title || 'N/A'}</td>
+                                            <td>{booking.tourName}</td>
                                             <td>{booking.guestSize}</td>
                                             <td>{booking.phone}</td>
                                             <td>{new Date(booking.createdAt).toLocaleDateString()}</td>

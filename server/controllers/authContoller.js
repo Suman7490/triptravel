@@ -23,33 +23,38 @@ export const register = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    const email = req.body.email
+    const { email, password } = req.body;
+
     try {
-        const user = await User.findOne({ email })
-        // If user does not exists
-        if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found' })
-        }
-        // If user exists then check the password or compare the password
-        const checkCorrectPassword = await bcrypt.compare(req.body.password, user.password)
-        // If password is correct
-        if (!checkCorrectPassword) {
-            return res.status(401).json({ success: false, message: "Incorrect email or password" })
-        }
-        const { password, role, ...rest } = user._doc;
-        // create json token
+        const user = await User.findOne({ email });
+        if (!user)
+            return res.status(404).json({ success: false, message: 'User not found' });
+
+        const checkPassword = await bcrypt.compare(password, user.password);
+        if (!checkPassword)
+            return res.status(401).json({ success: false, message: 'Incorrect credentials' });
+
         const token = jwt.sign(
-            { id: user._id, role: user.role },
+            {
+                id: user._id,
+                role: user.role, // 👈 Store role in token
+            },
             process.env.JWT_SECRET_KEY,
-            { expiresIn: "15d" }
+            { expiresIn: '15d' }
         );
-        // set token in the browser cookies and send the response to the client
+
         res.cookie('accessToken', token, {
             httpOnly: true,
-            expires: token.expiresIn
-        }).status(200).json({ token, success: true, message: 'Successfully login', data: { ...rest }, role, })
-
-    } catch (error) {
-        res.status(500).json({ success: false, message: "Failed to login" })
+            sameSite: 'Lax',
+            secure: false, // use true only in production over HTTPS
+            expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+        }).status(200).json({
+            success: true,
+            message: 'Login successful',
+            data: { ...user._doc },
+            role: user.role,
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Failed to login' });
     }
-}
+};

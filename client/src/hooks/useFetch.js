@@ -10,7 +10,13 @@ const useFetch = (url) => {
             setLoading(true)
 
             try {
-                const res = await fetch(url)
+                const res = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
 
                 if (!res.ok) {
                     setError('Failed to fetch')
@@ -20,6 +26,7 @@ const useFetch = (url) => {
                 setLoading(false)
             } catch (err) {
                 setError(err.message)
+            } finally {
                 setLoading(false)
             }
         }
@@ -29,8 +36,8 @@ const useFetch = (url) => {
 
     return {
         data,
-        error,
-        loading
+        loading,
+        error
     }
 }
 
