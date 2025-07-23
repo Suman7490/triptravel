@@ -118,12 +118,12 @@ const TourDetails = () => {
                                     <div className='tour__reviews mt-4'>
                                         <h4>Reviews ({reviews?.length} reviews)</h4>
                                         <Form onSubmit={submitHandler}>
-                                            <div className='d-flex align-item-center gap-3 mb-4 rating__group'>
-                                                <span onClick={() => setTourRating(1)}>1 <i className='ri-star-s-fill'></i></span>
-                                                <span onClick={() => setTourRating(2)}>2 <i className='ri-star-s-fill'></i></span>
-                                                <span onClick={() => setTourRating(3)}>3 <i className='ri-star-s-fill'></i></span>
-                                                <span onClick={() => setTourRating(4)}>4 <i className='ri-star-s-fill'></i></span>
-                                                <span onClick={() => setTourRating(5)}>5 <i className='ri-star-s-fill'></i></span>
+                                            <div className='d-flex align-item-center gap-2 mb-4 rating__group'>
+                                                <span onClick={() => setTourRating(1)}><i className='ri-star-s-fill'></i></span>
+                                                <span onClick={() => setTourRating(2)}><i className='ri-star-s-fill'></i></span>
+                                                <span onClick={() => setTourRating(3)}><i className='ri-star-s-fill'></i></span>
+                                                <span onClick={() => setTourRating(4)}><i className='ri-star-s-fill'></i></span>
+                                                <span onClick={() => setTourRating(5)}><i className='ri-star-s-fill'></i></span>
                                             </div>
 
                                             <div className='review__input'>
@@ -147,7 +147,8 @@ const TourDetails = () => {
                                                                     </p>
                                                                 </div>
                                                                 <span className='d-flex align-items-center'>
-                                                                    {review.rating}<i className='ri-star-s-fill'></i>
+                                                                    {/* {review.rating} */}
+                                                                    <i className='ri-star-s-fill'></i>
                                                                 </span>
                                                             </div>
                                                             <h6>{review.reviewText}</h6>

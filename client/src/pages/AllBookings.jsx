@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "../styles/tour.css";
 import CommonSection from '../shared/CommonSection';
 import Newsletter from './../shared/Newsletter';
-import { Container } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import useFetch from '../hooks/useFetch';
 import { BASE_URL } from '../utils/config';
 
@@ -14,7 +14,7 @@ const AllBookings = () => {
     const { data: bookingsCount } = useFetch(`${BASE_URL}/booking/search/getBookingCount`);
 
     useEffect(() => {
-        const pages = Math.ceil((bookingsCount || 0) / 8);
+        const pages = Math.ceil((bookingsCount || 0) / 4);
         setPageCount(pages);
         window.scrollTo(0, 0);
     }, [page, bookingsCount, bookings]);
@@ -59,19 +59,20 @@ const AllBookings = () => {
                                 </tbody>
                             </table>
 
+
+                        </>
+                    )}
+                    <Row>
+                        <Col lg='12'>
                             <div className='pagination d-flex align-items-center justify-content-center mt-4 gap-3'>
-                                {[...Array(pageCount).keys()].map((number) => (
-                                    <span
-                                        key={number}
-                                        onClick={() => setPage(number)}
-                                        className={page === number ? "active__page" : ""}
-                                    >
+                                {[...Array(pageCount).keys()].map(number => (
+                                    <span key={number} onClick={() => setPage(number)} className={page === number ? "active__page" : ""}>
                                         {number + 1}
                                     </span>
                                 ))}
                             </div>
-                        </>
-                    )}
+                        </Col>
+                    </Row>
                 </Container>
             </section>
             <Newsletter />
