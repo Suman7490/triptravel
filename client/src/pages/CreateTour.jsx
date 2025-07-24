@@ -8,6 +8,15 @@ import { BASE_URL } from '../utils/config';
 
 const CreateTour = (req) => {
     const [photo, setPhoto] = useState(null);
+    const [previewURL, setPreviewURL] = useState(null);
+
+    const handlePhotoChange = (e) => {
+        const file = e.target.files[0];
+        setPhoto(file);
+        if (file) {
+            setPreviewURL(URL.createObjectURL(file)); // ✅ generate a real preview URL
+        }
+    };
     const [formData, setFormData] = useState({
         title: '',
         city: '',
@@ -28,38 +37,72 @@ const CreateTour = (req) => {
         }));
     };
 
+    // const handleSubmit = async e => {
+    //     e.preventDefault();
+
+    //     const data = new FormData();
+    //     Object.entries(formData).forEach(([key, value]) => {
+    //         data.append(key, value);
+    //     });
+    //     if (photo) {
+    //         data.append('photo', photo); // This must match multer field name
+    //     }
+
+    //     try {
+    //         const res = await fetch(`${BASE_URL}/tours`, {
+    //             method: 'POST',
+    //             credentials: 'include',
+    //             body: data, // DO NOT set Content-Type! Browser will set it automatically
+    //         });
+
+    //         const result = await res.json();
+    //         if (res.ok) {
+    //             alert('Tour added successfully!');
+    //             setFormData({
+    //                 title: '',
+    //                 city: '',
+    //                 address: '',
+    //                 distance: '',
+    //                 desc: '',
+    //                 price: '',
+    //                 maxGroupSize: '',
+    //                 featured: false,
+    //             });
+    //             setPhoto(null);
+    //         } else {
+    //             alert(result.message || 'Failed to add tour');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         alert('Something went wrong');
+    //     }
+    // };
+
     const handleSubmit = async e => {
         e.preventDefault();
 
-        const data = new FormData();
-        Object.entries(formData).forEach(([key, value]) => {
-            data.append(key, value);
-        });
-        if (photo) {
-            data.append('photo', photo); // This must match multer field name
-        }
+        const formDataToSend = new FormData();
+        formDataToSend.append('title', formData.title);
+        formDataToSend.append('city', formData.city);
+        formDataToSend.append('address', formData.address);
+        formDataToSend.append('distance', formData.distance);
+        formDataToSend.append('desc', formData.desc);
+        formDataToSend.append('price', formData.price);
+        formDataToSend.append('maxGroupSize', formData.maxGroupSize);
+        formDataToSend.append('featured', formData.featured);
+        formDataToSend.append('photo', photo); // ⬅️ Append the image file
 
         try {
             const res = await fetch(`${BASE_URL}/tours`, {
                 method: 'POST',
                 credentials: 'include',
-                body: data, // DO NOT set Content-Type! Browser will set it automatically
+                body: formDataToSend,
             });
 
             const result = await res.json();
             if (res.ok) {
                 alert('Tour added successfully!');
-                setFormData({
-                    title: '',
-                    city: '',
-                    address: '',
-                    distance: '',
-                    desc: '',
-                    price: '',
-                    maxGroupSize: '',
-                    featured: false,
-                });
-                setPhoto(null);
+                // reset form...
             } else {
                 alert(result.message || 'Failed to add tour');
             }
@@ -97,7 +140,15 @@ const CreateTour = (req) => {
 
                     <FormGroup>
                         <Label>Photo</Label>
-                        <Input type='file' name="photo" accept="image/*" onChange={(e) => setPhoto(e.target.files[0])} required />
+                        {/* <Input type='file' name="photo" accept="image/*" onChange={(e) => setPhoto(e.target.files[0])} required /> */}
+                        <Input type="file" name="photo" accept="image/*" onChange={handlePhotoChange} required />
+                        {previewURL && (
+                            <img
+                                src={previewURL}
+                                alt="Preview"
+                                style={{ maxWidth: '200px', marginTop: '10px' }}
+                            />
+                        )}
                     </FormGroup>
 
                     <FormGroup>
