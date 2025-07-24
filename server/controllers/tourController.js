@@ -2,14 +2,28 @@ import Tour from '../models/Tour.js'
 
 
 // Create new tour
-export const createTour = async (req, res) => {
-    const newTour = new Tour(req.body)
+// export const createTour = async (req, res) => {
+//     const newTour = new Tour(req.body)
 
+//     try {
+//         const savedTour = await newTour.save()
+//         res.status(200).json({ success: true, message: 'Successfully created', data: savedTour })
+//     } catch (err) {
+//         res.status(500).json({ success: false, message: 'Failed to create. Try again' })
+//     }
+// }
+
+export const createTour = async (req, res) => {
     try {
-        const savedTour = await newTour.save()
-        res.status(200).json({ success: true, message: 'Successfully created', data: savedTour })
-    } catch (err) {
-        res.status(500).json({ success: false, message: 'Failed to create. Try again' })
+        const photoPath = req.file
+            ? `/uploads/${req.file.filename}`
+            : req.body.photo; // fallback
+        const newTour = new Tour({ ...req.body, photo: photoPath });
+        const saved = await newTour.save();
+        res.status(201).json({ success: true, data: saved });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ success: false, message: 'Something wrong', error: e.message });
     }
 }
 
