@@ -7,7 +7,6 @@ import upload from "../middleware/upload.js";
 
 const router = express.Router();
 router.post('/', verifyToken, verifyAdmin, upload.single('photo'), createTour);
-// router.post("/", verifyAdmin, createTour);  // create new tour
 router.put("/:id", verifyAdmin, updateTour);  // Update tour
 router.delete("/:id", verifyAdmin, deleteTour);  // Delete tour
 router.get("/:id", getSingleTour);  // Get Single tour
