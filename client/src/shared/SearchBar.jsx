@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './search-bar.css'
-import { Col, Form, FormGroup } from 'reactstrap'
+import { Container, Row, Col, Form, FormGroup } from 'reactstrap'
 import { BASE_URL } from './../utils/config'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,12 +9,27 @@ const SearchBar = () => {
     const [allCities, setAllCities] = useState([]);
     const [locationInput, setLocationInput] = useState('');
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const [showDurationDropdown, setShowDurationDropdown] = useState(false);
+    const [selectedDurations, setSelectedDurations] = useState([]);
+
+    const toggleDropdown = () => {
+        setShowDurationDropdown(!showDurationDropdown);
+    };
+
+    const handleDurationChange = (e) => {
+        const value = e.target.value;
+        setSelectedDurations(prev =>
+            prev.includes(value)
+                ? prev.filter(item => item !== value)
+                : [...prev, value]
+        );
+    };
 
     const distanceRef = useRef(0)
     const maxGroupSizeRef = useRef(0)
     const navigate = useNavigate();
 
-    // Fetch all cities on mount
+
     useEffect(() => {
         const fetchCities = async () => {
             try {
@@ -22,7 +37,6 @@ const SearchBar = () => {
                 const result = await res.json();
 
                 if (result.success) {
-                    // extract unique city names
                     const uniqueCities = [...new Set(result.data.map(tour => tour.city.trim()))];
                     setAllCities(uniqueCities);
                 }
@@ -80,8 +94,8 @@ const SearchBar = () => {
     return (
         <Col lg='12'>
             <div className='search__bar'>
-                <Form className='d-flex align-itmes-center gap-4'>
-                    <FormGroup className='d-flex gap-3 form__group form__group-fast' style={{ position: 'relative' }}>
+                <Form className='d-flex flex-wrap align-items-center gap-4'>
+                    <FormGroup className='d-flex gap-3 form__group form__group-fast flex-grow-1' style={{ position: 'relative' }}>
                         <span><i className='ri-map-pin-line'></i></span>
                         <div>
                             <h6>Location</h6>
@@ -98,24 +112,51 @@ const SearchBar = () => {
                             )}
                         </div>
                     </FormGroup>
-                    <FormGroup className='d-flex gap-3 form__group form__group-fast'>
+                    <FormGroup className='d-flex gap-3 form__group form__group-fast flex-grow-1' style={{ position: 'relative' }}>
                         <span><i className='ri-map-pin-time-line'></i></span>
                         <div>
                             <h6>Duration</h6>
-                            {/* <DurationSelectBox
-                                selectedDurations={selectedDurations}
-                                setSelectedDurations={setSelectedDurations}
-                            /> */}
-                            <select style={{ border: 'none', cursor: 'pointer' }}>
-                                <option style={{ cursor: 'pointer' }}>Select Days</option>
-                                <option>1-3 Days</option>
-                                <option>4-6 Days</option>
-                                <option>7-9 Days</option>
-                                <option>10-12 Days or More</option>
-                            </select>
+                            <div onClick={toggleDropdown} className="custom-dropdown-toggle" style={{
+                                border: 'none',
+                                padding: '0',
+                                borderRadius: '6px',
+                                cursor: 'pointer',
+                                width: '150px'
+                            }}>
+                                {selectedDurations.length > 0 ? selectedDurations.join(', ') : 'Select Days'}
+                            </div>
+
+                            {showDurationDropdown && (
+                                <div className="duration-dropdown" style={{
+                                    position: 'absolute',
+                                    top: '100%',
+                                    left: '0',
+                                    zIndex: '1000',
+                                    background: '#fff',
+                                    border: '1px solid #ccc',
+                                    borderRadius: '5px',
+                                    padding: '10px',
+                                    width: '200px',
+                                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                                }}>
+                                    {['1-3 Days', '4-6 Days', '7-9 Days', '10+ Days'].map((label, idx) => (
+                                        <div key={idx} style={{ marginBottom: '5px' }}>
+                                            <input
+                                                type="checkbox"
+                                                value={label}
+                                                checked={selectedDurations.includes(label)}
+                                                onChange={handleDurationChange}
+                                                id={`duration-${idx}`}
+                                            />
+                                            <label htmlFor={`duration-${idx}`} style={{ marginLeft: '5px' }}>{label}</label>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </FormGroup>
-                    <FormGroup className='d-flex gap-3 form__group form__group-last'>
+
+                    <FormGroup className='d-flex gap-3 form__group form__group-fast flex-grow-1'>
                         <span><i className='ri-group-line'></i></span>
                         <div>
                             <h6>Max People</h6>

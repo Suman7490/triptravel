@@ -1,96 +1,69 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import CommonSection from '../shared/CommonSection';
 import Newsletter from './../shared/Newsletter';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { BASE_URL } from '../utils/config';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-
-
-const CreateTour = (req) => {
+const CreateTour = () => {
     const [photo, setPhoto] = useState(null);
     const [previewURL, setPreviewURL] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
 
-    const handlePhotoChange = (e) => {
-        const file = e.target.files[0];
-        setPhoto(file);
-        if (file) {
-            setPreviewURL(URL.createObjectURL(file)); // ✅ generate a real preview URL
-        }
-    };
     const [formData, setFormData] = useState({
         title: '',
         city: '',
         address: '',
         distance: '',
-        photo: '',
         desc: '',
         price: '',
         maxGroupSize: '',
         featured: true,
     });
 
+    // Simulated admin check from cookie/localStorage
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user')); // Example, adapt as per your auth
+        if (user?.role === 'admin') {
+            setIsAdmin(true);
+        } else {
+            toast.error("Unauthorized access – Admins only");
+        }
+    }, []);
+
     const handleChange = e => {
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox' ? checked : value,
         }));
     };
 
-    // const handleSubmit = async e => {
-    //     e.preventDefault();
-
-    //     const data = new FormData();
-    //     Object.entries(formData).forEach(([key, value]) => {
-    //         data.append(key, value);
-    //     });
-    //     if (photo) {
-    //         data.append('photo', photo); // This must match multer field name
-    //     }
-
-    //     try {
-    //         const res = await fetch(`${BASE_URL}/tours`, {
-    //             method: 'POST',
-    //             credentials: 'include',
-    //             body: data, // DO NOT set Content-Type! Browser will set it automatically
-    //         });
-
-    //         const result = await res.json();
-    //         if (res.ok) {
-    //             alert('Tour added successfully!');
-    //             setFormData({
-    //                 title: '',
-    //                 city: '',
-    //                 address: '',
-    //                 distance: '',
-    //                 desc: '',
-    //                 price: '',
-    //                 maxGroupSize: '',
-    //                 featured: false,
-    //             });
-    //             setPhoto(null);
-    //         } else {
-    //             alert(result.message || 'Failed to add tour');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //         alert('Something went wrong');
-    //     }
-    // };
+    const handlePhotoChange = e => {
+        const file = e.target.files[0];
+        if (file) {
+            setPhoto(file);
+            setPreviewURL(URL.createObjectURL(file));
+        }
+    };
 
     const handleSubmit = async e => {
         e.preventDefault();
 
+        // Basic Validation
+        for (const key in formData) {
+            if (!formData[key] && key !== 'featured') {
+                return toast.warning(`Please fill in the ${key} field.`);
+            }
+        }
+        if (!photo) return toast.warning('Please upload a photo');
+
         const formDataToSend = new FormData();
-        formDataToSend.append('title', formData.title);
-        formDataToSend.append('city', formData.city);
-        formDataToSend.append('address', formData.address);
-        formDataToSend.append('distance', formData.distance);
-        formDataToSend.append('desc', formData.desc);
-        formDataToSend.append('price', formData.price);
-        formDataToSend.append('maxGroupSize', formData.maxGroupSize);
-        formDataToSend.append('featured', formData.featured);
-        formDataToSend.append('photo', photo); // ⬅️ Append the image file
+        Object.entries(formData).forEach(([key, value]) => {
+            formDataToSend.append(key, value);
+        });
+        formDataToSend.append('photo', photo);
 
         try {
             const res = await fetch(`${BASE_URL}/tours`, {
@@ -101,23 +74,35 @@ const CreateTour = (req) => {
 
             const result = await res.json();
             if (res.ok) {
-                alert('Tour added successfully!');
-                // reset form...
+                toast.success('Tour added successfully!');
+                setFormData({
+                    title: '',
+                    city: '',
+                    address: '',
+                    distance: '',
+                    desc: '',
+                    price: '',
+                    maxGroupSize: '',
+                    featured: false,
+                });
+                setPhoto(null);
+                setPreviewURL(null);
             } else {
-                alert(result.message || 'Failed to add tour');
+                toast.error(result.message || 'Failed to add tour');
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('Something went wrong');
+            console.error(error);
+            toast.error('Something went wrong');
         }
     };
 
+    if (!isAdmin) return <p className="text-center mt-5">You are not authorized to access this page.</p>;
+
     return (
         <>
-            <CommonSection title={"Create Tour"} />
-
+            <CommonSection title="Create Tour" />
             <Container className="my-5">
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} className="shadow p-4 rounded bg-light">
                     <FormGroup>
                         <Label>Title</Label>
                         <Input name="title" value={formData.title} onChange={handleChange} required />
@@ -140,13 +125,13 @@ const CreateTour = (req) => {
 
                     <FormGroup>
                         <Label>Photo</Label>
-                        {/* <Input type='file' name="photo" accept="image/*" onChange={(e) => setPhoto(e.target.files[0])} required /> */}
-                        <Input type="file" name="photo" accept="image/*" onChange={handlePhotoChange} required />
+                        <Input type="file" name="photo" accept="image/*" onChange={handlePhotoChange} />
                         {previewURL && (
                             <img
                                 src={previewURL}
                                 alt="Preview"
-                                style={{ maxWidth: '200px', marginTop: '10px' }}
+                                className="img-thumbnail mt-2"
+                                style={{ maxWidth: '200px' }}
                             />
                         )}
                     </FormGroup>
@@ -166,20 +151,21 @@ const CreateTour = (req) => {
                         <Input type="number" name="maxGroupSize" value={formData.maxGroupSize} onChange={handleChange} required />
                     </FormGroup>
 
-                    <FormGroup check>
+                    <FormGroup check className="mb-3">
                         <Label check>
                             <Input type="checkbox" name="featured" checked={formData.featured} onChange={handleChange} />
                             Featured Tour
                         </Label>
                     </FormGroup>
 
-                    <Button color="primary" className="mt-3">Add Tour</Button>
+                    <Button color="primary" block>Add Tour</Button>
                 </Form>
             </Container>
 
             <Newsletter />
+            <ToastContainer position="top-center" />
         </>
-    )
-}
+    );
+};
 
-export default CreateTour
+export default CreateTour;

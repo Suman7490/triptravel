@@ -1,0 +1,7 @@
+/* In your CSS file */
+.testimonial {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  min-height: 300px;
+  max-width: 100%;
+}

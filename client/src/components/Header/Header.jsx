@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react'; // ✅ useRef
 import { Container, Button } from 'reactstrap';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
@@ -13,12 +13,20 @@ const navLinks = [
 ];
 
 const Header = () => {
-    const navigation = useNavigate();
+    const navigate = useNavigate();
     const { user, dispatch } = useContext(AuthContext);
+    const navbarCollapseRef = useRef(null); // ✅ Ref to the menu
 
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
-        navigation('/');
+        navigate('/');
+    };
+
+    // ✅ Close menu on link click
+    const handleNavClick = () => {
+        if (navbarCollapseRef.current?.classList.contains('show')) {
+            navbarCollapseRef.current.classList.remove('show');
+        }
     };
 
     return (
@@ -40,12 +48,13 @@ const Header = () => {
                         <span className="navbar-toggler-icon" />
                     </button>
 
-                    <div className="collapse navbar-collapse" id="navbarContent">
+                    <div className="collapse navbar-collapse" id="navbarContent" ref={navbarCollapseRef}>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             {navLinks.map((item, index) => (
                                 <li className="nav-item" key={index}>
                                     <NavLink
                                         to={item.path}
+                                        onClick={handleNavClick} // ✅ Collapse on click
                                         className={({ isActive }) =>
                                             `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
                                         }
@@ -66,10 +75,10 @@ const Header = () => {
                                 </>
                             ) : (
                                 <>
-                                    <Link to="/login" className="btn btn-outline-primary btn-sm">
+                                    <Link to="/login" className="btn btn-outline-primary btn-sm" onClick={handleNavClick}>
                                         Login
                                     </Link>
-                                    <Link to="/register" className="btn btn-primary btn-sm">
+                                    <Link to="/register" className="btn btn-primary btn-sm" onClick={handleNavClick}>
                                         Register
                                     </Link>
                                 </>
