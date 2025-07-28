@@ -68,3 +68,31 @@
   cursor: pointer;
   font-weight: bold;
 }
+.suggestion-box {
+  position: absolute;
+  top: 100%; /* puts the box right below the input field */
+  left: 0;
+  right: 0;
+
+  background-color: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 999;
+
+  max-height: 180px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-box li {
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.suggestion-box li:hover {
+  background-color: #f2f2f2;
+}

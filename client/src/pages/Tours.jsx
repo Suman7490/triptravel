@@ -13,6 +13,11 @@ const Tours = () => {
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(0);
 
+    const [filters, setFilters] = useState({
+        city: '',
+        price: '',
+    });
+
     const { data: tours, loading, error } = useFetch(`${BASE_URL}/tours?page=${page}`)
     const { data: tourCount } = useFetch(`${BASE_URL}/tours/search/getTourCount`)
 
@@ -40,6 +45,7 @@ const Tours = () => {
 
                     {
                         !loading && !error && < Row >
+
                             {tours?.map(tour => (
                                 <Col lg='3' key={tour._id}>
                                     <TourCard tour={tour} />
