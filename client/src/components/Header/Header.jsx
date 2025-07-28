@@ -1,113 +1,85 @@
-import React, { useRef, useEffect, useContext } from 'react'
-import { Container, Row, Button } from 'reactstrap'
-import { NavLink, Link, useNavigate } from 'react-router-dom'
-import logo from '../../assets/images/logo.png'
-import { AuthContext } from './../../context/authContext'
-import './header.css'
+import React, { useContext } from 'react';
+import { Container, Button } from 'reactstrap';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import logo from '../../assets/images/logo.png';
+import { AuthContext } from './../../context/authContext';
+import './header.css';
 
 const navLinks = [
-    {
-        path: '/home',
-        display: 'Home'
-    },
-    {
-        path: '/tours',
-        display: 'Tours'
-    },
-    {
-        path: '/createTour',
-        display: 'Create Tour'
-    },
-    {
-        path: '/bookings',
-        display: 'Bookings'
-    }
-]
+    { path: '/home', display: 'Home' },
+    { path: '/tours', display: 'Tours' },
+    { path: '/createTour', display: 'Create Tour' },
+    { path: '/bookings', display: 'Bookings' },
+];
 
 const Header = () => {
-
-    const headerRef = useRef(null)
-    const menuRef = useRef(null)
-    const navigation = useNavigate()
-    const { user, dispatch } = useContext(AuthContext)
+    const navigation = useNavigate();
+    const { user, dispatch } = useContext(AuthContext);
 
     const logout = () => {
-        dispatch({ type: 'LOGOUT' })
-        navigation('/')
-    }
-
-    const stickyHeaderFunc = () => {
-        window.addEventListener('scroll', () => {
-            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-                headerRef.current.classList.add('sticky_header')
-            } else {
-                headerRef.current.classList.remove('sticky_header')
-            }
-        })
-    }
-
-    useEffect(() => {
-        stickyHeaderFunc();
-        return window.removeEventListener("scroll", stickyHeaderFunc);
-    })
-
-
-    const toggleMenu = () => menuRef.current.classList.toggle('show__menu')
+        dispatch({ type: 'LOGOUT' });
+        navigation('/');
+    };
 
     return (
-        <header className="header" ref={headerRef}>
+        <header className="header sticky-top bg-white shadow-sm">
             <Container>
-                <Row>
-                    <div className="nav_wrapper d-flex justify-content-between align-items-center">
-                        {/************************* Logo Start **********************/}
-                        <div className="logo">
-                            <img src={logo} alt='Logo' />
-                        </div>
-                        {/************************* Logo End **********************/}
+                <nav className="navbar navbar-expand-lg navbar-light">
+                    <Link className="navbar-brand" to="/">
+                        <img src={logo} alt="Logo" className="img-fluid" style={{ width: '120px' }} />
+                    </Link>
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarContent"
+                        aria-controls="navbarContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
+                        <span className="navbar-toggler-icon" />
+                    </button>
 
-                        {/************************* Menu Start **********************/}
-                        <div className='navigation' ref={menuRef} onClick={toggleMenu}>
-                            <ul className='menu d-flex align-items-center gap-3'>
-                                {navLinks.map((item, index) => (
-                                    <li className='nav_item' key={index}>
-                                        <NavLink to={item.path} className={navClass => navClass.isActive ? 'active_link' : ''}>{item.display}</NavLink>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        {/************************* Menu End **********************/}
+                    <div className="collapse navbar-collapse" id="navbarContent">
+                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                            {navLinks.map((item, index) => (
+                                <li className="nav-item" key={index}>
+                                    <NavLink
+                                        to={item.path}
+                                        className={({ isActive }) =>
+                                            `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
+                                        }
+                                    >
+                                        {item.display}
+                                    </NavLink>
+                                </li>
+                            ))}
+                        </ul>
 
-                        <div className="nav_right d-flex align-items-center gap-4">
-                            <div className="nav_btns d-flex align-items-center gap-4">
-
-                                {
-                                    user ? (
-                                        <>
-                                            <h5 className='mb-0'>{user.username}</h5>
-                                            <Button className='btn btn-dark' onClick={logout}>Logout</Button>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Button className='btn secondary__btn'>
-                                                <Link to='/login'>Login</Link>
-                                            </Button>
-                                            <Button className='btn primary__btn'>
-                                                <Link to='/register'>Register</Link>
-                                            </Button>
-                                        </>
-                                    )}
-
-
-                            </div>
-                            <span className='mobile_menu' onClick={toggleMenu}>
-                                <i className='ri-menu-line'></i>
-                            </span>
+                        <div className="d-flex align-items-center gap-3 ms-lg-4 mt-3 mt-lg-0">
+                            {user ? (
+                                <>
+                                    <span className="fw-semibold">{user.username}</span>
+                                    <Button color="dark" size="sm" onClick={logout}>
+                                        Logout
+                                    </Button>
+                                </>
+                            ) : (
+                                <>
+                                    <Link to="/login" className="btn btn-outline-primary btn-sm">
+                                        Login
+                                    </Link>
+                                    <Link to="/register" className="btn btn-primary btn-sm">
+                                        Register
+                                    </Link>
+                                </>
+                            )}
                         </div>
                     </div>
-                </Row>
+                </nav>
             </Container>
-        </header >
-    )
-}
+        </header>
+    );
+};
 
-export default Header
+export default Header;
