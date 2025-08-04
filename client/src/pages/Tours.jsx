@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import "../styles/tour.css"
+import "../styles/tours.css"
 import CommonSection from '../shared/CommonSection'
 import TourCard from './../shared/TourCard'
 import SearchBar from './../shared/SearchBar'

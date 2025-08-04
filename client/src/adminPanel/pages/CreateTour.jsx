@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import CommonSection from '../shared/CommonSection';
-import Newsletter from './../shared/Newsletter';
+import CommonSection from '../../shared/CommonSection';
+import Newsletter from '../../shared/Newsletter';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import { BASE_URL } from '../utils/config';
+import { BASE_URL } from '../../utils/config';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

@@ -1,28 +1,34 @@
-import React, { useContext, useRef } from 'react'; // ✅ useRef
+import React, { useContext, useRef } from 'react'; // ✅
 import { Container, Button } from 'reactstrap';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import logo from '../../assets/images/logo.png';
-import { AuthContext } from './../../context/authContext';
-import './header.css';
-
-const navLinks = [
-    { path: '/home', display: 'Home' },
-    { path: '/tours', display: 'Tours' },
-    { path: '/createTour', display: 'Create Tour' },
-    { path: '/bookings', display: 'Bookings' },
-];
+import logo from '../assets/images/logo.png';
+import { AuthContext } from '../context/authContext';
+import './style/header.css';
 
 const Header = () => {
     const navigate = useNavigate();
-    const { user, dispatch } = useContext(AuthContext);
-    const navbarCollapseRef = useRef(null); // ✅ Ref to the menu
+    const { user, dispatch } = useContext(AuthContext); // ✅ Moved inside component
+    const isAdmin = user?.role === 'admin';
+    const navbarCollapseRef = useRef(null);
+
+    const filteredNavLinks = isAdmin
+        ? [
+            { path: '/dashboard', display: 'Dashboard' },
+            { path: '/dashboard/create-tour', display: 'Create Tour' },
+            { path: '/dashboard/tours', display: 'Tours' },
+            { path: '/dashboard/bookings', display: 'Bookings' }
+        ]
+        : [
+            { path: '/', display: 'Home' },
+            { path: '/tours', display: 'Tours' },
+            // { path: `/tours/${id}`, display: 'TourDetails' }
+        ];
 
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
         navigate('/');
     };
 
-    // ✅ Close menu on link click
     const handleNavClick = () => {
         if (navbarCollapseRef.current?.classList.contains('show')) {
             navbarCollapseRef.current.classList.remove('show');
@@ -50,11 +56,11 @@ const Header = () => {
 
                     <div className="collapse navbar-collapse" id="navbarContent" ref={navbarCollapseRef}>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                            {navLinks.map((item, index) => (
+                            {filteredNavLinks.map((item, index) => (
                                 <li className="nav-item" key={index}>
                                     <NavLink
                                         to={item.path}
-                                        onClick={handleNavClick} // ✅ Collapse on click
+                                        onClick={handleNavClick}
                                         className={({ isActive }) =>
                                             `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
                                         }

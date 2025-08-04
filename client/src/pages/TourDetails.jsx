@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, ListGroup, ListGroupItemHeading } from 'reac
 import { useParams } from 'react-router-dom'
 import calculateAvgRating from './../utils/avgRating'
 import avatar from '../assets/images/avatar.jpg'
-import Booking from '../components/Booking/Booking'
+import BookingForm from './BookingForm'
 import Newsletter from '../shared/Newsletter'
 import useFetch from './../hooks/useFetch'
 import { BASE_URL } from './../utils/config'
@@ -147,7 +147,7 @@ const TourDetails = () => {
                                                                     </p>
                                                                 </div>
                                                                 <span className='d-flex align-items-center'>
-                                                                    {/* {review.rating} */}
+                                                                    {review.rating}
                                                                     <i className='ri-star-s-fill'></i>
                                                                 </span>
                                                             </div>
@@ -161,7 +161,7 @@ const TourDetails = () => {
                                 </div>
                             </Col>
                             <Col lg='4'>
-                                <Booking tour={tour} avgRating={avgRating} />
+                                <BookingForm tour={tour} avgRating={avgRating} />
                             </Col>
                         </Row>
                     }

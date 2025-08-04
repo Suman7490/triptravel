@@ -1,8 +1,8 @@
 import React from 'react'
-import './footer.css'
+import './style/footer.css'
 import { Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap'
 import { Link } from 'react-router-dom'
-import logo from '../../assets/images/logo.png'
+import logo from '../assets/images/logo.png'
 
 const quickLinks = [
     { path: '/home', display: 'Home' },

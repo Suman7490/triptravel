@@ -1,0 +1,16 @@
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  margin-bottom: 20px;
+}

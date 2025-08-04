@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import CommonSection from '../shared/CommonSection';
-import Newsletter from './../shared/Newsletter';
+import CommonSection from '../../shared/CommonSection';
+import Newsletter from '../../shared/Newsletter';
 import { Container, Row, Col } from 'reactstrap';
-import useFetch from '../hooks/useFetch';
-import { BASE_URL } from '../utils/config';
+import useFetch from '../../hooks/useFetch';
+import { BASE_URL } from '../../utils/config';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../styles/allBookings.css';
+import '../../styles/allBookings.css';
 
 const AllBookings = () => {
     const [isAdmin, setIsAdmin] = useState(false);

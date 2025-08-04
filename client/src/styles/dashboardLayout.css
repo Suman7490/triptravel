@@ -1,0 +1,17 @@
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-body {
+  padding: 20px;
+  background-color: #f7f7f7;
+  flex: 1;
+  overflow-y: auto;
+}

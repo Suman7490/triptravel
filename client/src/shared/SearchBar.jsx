@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
-import './search-bar.css'
+import '../styles/search-bar.css'
 import { useNavigate } from 'react-router-dom'
-import { BASE_URL } from './../utils/config'
+import { BASE_URL } from '../utils/config'
 
 const SearchBar = () => {
     const [citySuggestions, setCitySuggestions] = useState([])

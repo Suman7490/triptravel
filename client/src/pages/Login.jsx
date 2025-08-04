@@ -25,30 +25,40 @@ const Login = () => {
     const handleClick = async e => {
         e.preventDefault();
 
-        dispatch({ type: 'LOGIN_START' })
+        dispatch({ type: 'LOGIN_START' });
 
         try {
             const res = await fetch(`${BASE_URL}/auth/login`, {
                 method: "post",
                 headers: {
-                    "content-type": "application/json",
+                    "Content-Type": "application/json",
                 },
                 credentials: 'include',
-                body: JSON.stringify(credentials)
-            })
+                body: JSON.stringify(credentials),
+            });
 
-            const result = await res.json()
-            if (!res.ok) alert(result.message)
+            const result = await res.json();
 
-            console.log(result.data)
+            if (!res.ok) {
+                alert(result.message); // Optionally replace with toast
+                dispatch({ type: 'LOGIN_FAILED', payload: result.message });
+                return;
+            }
 
-            dispatch({ type: 'LOGIN_SUCCESS', payload: result.data })
-            navigate('/')
+            dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
+
+            // 👇 REDIRECTION BASED ON ROLE
+            if (result.data.role === 'admin') {
+                navigate('/dashboard/bookings'); // Admin dashboard
+            } else {
+                navigate('/'); // Regular user home
+            }
 
         } catch (error) {
-            dispatch({ type: 'LOGIN_FAILURE', payload: error.message })
+            dispatch({ type: 'LOGIN_FAILED', payload: error.message });
         }
-    }
+    };
+
 
     return (
         <section>

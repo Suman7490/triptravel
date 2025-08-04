@@ -1,0 +1,26 @@
+.sidebar {
+  width: 240px;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 15px;
+  transition: width 0.3s;
+}
+.sidebar.collapsed {
+  width: 60px;
+}
+.sidebar .toggle-btn {
+  background: transparent;
+  font-weight: 800;
+  color: white;
+  border: none;
+  margin-bottom: 20px;
+}
+.sidebar nav a {
+  display: block;
+  color: white;
+  margin: 10px 0;
+  text-decoration: none;
+}
+.sidebar nav a.active {
+  font-weight: bold;
+}
