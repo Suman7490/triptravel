@@ -5,6 +5,9 @@ import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { BASE_URL } from '../../utils/config';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 const CreateTour = () => {
     const [photo, setPhoto] = useState(null);
@@ -14,8 +17,6 @@ const CreateTour = () => {
     const [formData, setFormData] = useState({
         title: '',
         city: '',
-        address: '',
-        distance: '',
         desc: '',
         price: '',
         maxGroupSize: '',
@@ -78,8 +79,6 @@ const CreateTour = () => {
                 setFormData({
                     title: '',
                     city: '',
-                    address: '',
-                    distance: '',
                     desc: '',
                     price: '',
                     maxGroupSize: '',
@@ -114,16 +113,6 @@ const CreateTour = () => {
                     </FormGroup>
 
                     <FormGroup>
-                        <Label>Address</Label>
-                        <Input name="address" value={formData.address} onChange={handleChange} required />
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label>Distance (km)</Label>
-                        <Input type="number" name="distance" value={formData.distance} onChange={handleChange} required />
-                    </FormGroup>
-
-                    <FormGroup>
                         <Label>Photo</Label>
                         <Input type="file" name="photo" accept="image/*" onChange={handlePhotoChange} />
                         {previewURL && (
@@ -136,10 +125,34 @@ const CreateTour = () => {
                         )}
                     </FormGroup>
 
-                    <FormGroup>
+                    {/* <FormGroup>
                         <Label>Description</Label>
                         <Input type="textarea" name="desc" value={formData.desc} onChange={handleChange} required />
+                    </FormGroup> */}
+                    <FormGroup>
+                        <Label>Description</Label>
+                        <ReactQuill
+                            theme="snow"
+                            value={formData.desc}
+                            onChange={(value) => setFormData(prev => ({ ...prev, desc: value }))}
+                            modules={{
+                                toolbar: [
+                                    [{ 'header': [1, 2, false] }],
+                                    ['bold', 'italic', 'underline', 'strike'],
+                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                    [{ 'align': [] }],
+                                    [{ 'color': [] }, { 'background': [] }],
+                                    ['clean'],
+                                ],
+                            }}
+                            formats={[
+                                'header', 'bold', 'italic', 'underline', 'strike',
+                                'list', 'bullet', 'align', 'color', 'background'
+                            ]}
+                            style={{ height: '200px', marginBottom: '50px' }}
+                        />
                     </FormGroup>
+
 
                     <FormGroup>
                         <Label>Price (₹)</Label>

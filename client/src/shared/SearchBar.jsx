@@ -12,7 +12,7 @@ const SearchBar = () => {
     const [selectedDurations, setSelectedDurations] = useState([])
     const [travelDate, setTravelDate] = useState('')
 
-    const distanceRef = useRef(0)
+
     const maxGroupSizeRef = useRef(0)
     const navigate = useNavigate()
 
@@ -64,22 +64,21 @@ const SearchBar = () => {
 
     const searchHandler = async () => {
         const location = locationInput.trim()
-        const distance = distanceRef.current.value
         const maxGroupSize = maxGroupSizeRef.current.value
 
-        if (!location || !distance || !maxGroupSize || !travelDate) {
+        if (!location || !maxGroupSize || !travelDate) {
             alert('Please fill in all fields')
             return
         }
 
         const res = await fetch(
-            `${BASE_URL}/tours/search/getTourBySearch?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`
+            `${BASE_URL}/tours/search/getTourBySearch?city=${location}&maxGroupSize=${maxGroupSize}`
         )
 
         if (!res.ok) return alert('Search failed')
 
         const result = await res.json()
-        navigate(`/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}&date=${travelDate}`, {
+        navigate(`/tours/search?city=${location}&maxGroupSize=${maxGroupSize}&date=${travelDate}`, {
             state: result.data
         })
     }
@@ -161,16 +160,6 @@ const SearchBar = () => {
                         ref={maxGroupSizeRef}
                         className='styled-input'
                         placeholder='Max People'
-                    />
-                </div>
-
-                <div className='input-group'>
-                    <i className='ri-road-map-line'></i>
-                    <input
-                        type='number'
-                        ref={distanceRef}
-                        className='styled-input'
-                        placeholder='Distance (km)'
                     />
                 </div>
 

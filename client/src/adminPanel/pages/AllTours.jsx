@@ -22,7 +22,7 @@ const Tours = () => {
     const { data: tourCount } = useFetch(`${BASE_URL}/tours/search/getTourCount`)
 
     useEffect(() => {
-        const pages = Math.ceil(tourCount / 10);
+        const pages = Math.ceil(tourCount / 8);
         setPageCount(pages);
         window.scrollTo(0, 0);
     }, [page, tourCount, tours]);
@@ -37,25 +37,27 @@ const Tours = () => {
                     {loading && <h4 className='text-center pt-5'>Loading...</h4>}
                     {error && <h4 className='text-center pt-5'>{error}</h4>}
 
-                    {
-                        !loading && !error && < Row >
+                    < Row >
 
 
-                            <Col lg='12'>
-                                <table className="table table-bordered table-hover text-center">
-                                    <thead className="table-dark">
-                                        <tr>
-                                            <th>Sr No.</th>
-                                            <th>Tour Name</th>
-                                            <th>Price</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
-                                            {/* <th>Tour</th>
+                        <Col lg='12'>
+                            <table className="table table-bordered table-hover text-center">
+                                <thead className="table-dark">
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Tour Name</th>
+                                        <th>Price</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                        {/* <th>Tour</th>
                                                 <th>Guest Size</th>
                                                 <th>Phone</th> */}
-                                        </tr>
-                                    </thead>
+                                    </tr>
+                                </thead>
+                                {
+                                    !loading && !error &&
                                     <tbody>
+
                                         {tours?.map((tour, index) => (
                                             <tr key={tour._id}>
                                                 <td>{index + 1}</td>
@@ -68,21 +70,23 @@ const Tours = () => {
                                                     <td>{booking.phone}</td> */}
                                             </tr>
                                         ))}
-                                    </tbody>
-                                </table>
-                            </Col>
 
-                            <Col lg='12'>
-                                <div className='pagination d-flex align-items-center justify-content-center mt-4 gap-3'>
-                                    {[...Array(pageCount).keys()].map(number => (
-                                        <span key={number} onClick={() => setPage(number)} className={page === number ? "active__page" : ""}>
-                                            {number + 1}
-                                        </span>
-                                    ))}
-                                </div>
-                            </Col>
-                        </Row>
-                    }
+                                    </tbody>
+                                }
+                            </table>
+                        </Col>
+
+                        <Col lg='12'>
+                            <div className='pagination d-flex align-items-center justify-content-center mt-4 gap-3'>
+                                {[...Array(pageCount).keys()].map(number => (
+                                    <span key={number} onClick={() => setPage(number)} className={page === number ? "active__page" : ""}>
+                                        {number + 1}
+                                    </span>
+                                ))}
+                            </div>
+                        </Col>
+                    </Row>
+
                 </Container>
             </section >
         </>

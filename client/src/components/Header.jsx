@@ -13,7 +13,7 @@ const Header = () => {
 
     const filteredNavLinks = isAdmin
         ? [
-            { path: '/dashboard', display: 'Dashboard' },
+            { path: '/', display: 'Dashboard' },
             { path: '/dashboard/create-tour', display: 'Create Tour' },
             { path: '/dashboard/tours', display: 'Tours' },
             { path: '/dashboard/bookings', display: 'Bookings' }

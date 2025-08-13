@@ -27,7 +27,7 @@ const TourDetails = () => {
         return <h4>Loading...</h4>;
     }
 
-    const { photo, title, desc, price, address, reviews, city, distance, maxGroupSize } = tour;
+    const { photo, title, desc, price, reviews, city, maxGroupSize } = tour;
 
     const { totalRating, avgRating } = calculateAvgRating(reviews);
     const options = { day: "numeric", month: "long", year: "numeric" }
@@ -91,9 +91,6 @@ const TourDetails = () => {
                                                     <span>({reviews?.length})</span>
                                                 )}
                                             </span>
-                                            <span>
-                                                <i className='ri-map-pin-fill'></i>{address}
-                                            </span>
                                         </div>
 
                                         <div className='tour__extra-details'>
@@ -101,22 +98,22 @@ const TourDetails = () => {
                                                 <i className='ri-map-pin-2-line'></i>{city}
                                             </span>
                                             <span>
-                                                <i className='ri-money-dollor-circle-line'></i>${price}/per person
-                                            </span>
-                                            <span>
-                                                <i className='ri-map-pin-line'></i>{distance}k/m
+                                                <i className='ri-money-dollor-circle-line'></i><b>₹</b>{price}/per person
                                             </span>
                                             <span>
                                                 <i className='ri-group-line'></i>{maxGroupSize} people
                                             </span>
                                         </div>
-                                        <h5>Description</h5>
-                                        <p>{desc}</p>
+                                        <h2 style={{ textDecoration: 'underline', fontSize: '25px', fontWeight: 'bolder' }}>Detailed itinerary</h2>
+                                        {/* <p>{desc}</p> */}
+                                        <div
+                                            dangerouslySetInnerHTML={{ __html: desc }}
+                                        />
                                     </div>
 
                                     {/* ******************************** */}
                                     <div className='tour__reviews mt-4'>
-                                        <h4>Reviews ({reviews?.length} reviews)</h4>
+                                        <h4>Reviews ({reviews?.length})</h4>
                                         <Form onSubmit={submitHandler}>
                                             <div className='d-flex align-item-center gap-2 mb-4 rating__group'>
                                                 <span onClick={() => setTourRating(1)}><i className='ri-star-s-fill'></i></span>

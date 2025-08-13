@@ -8,7 +8,7 @@ const Dashboard = () => {
         //     <p>This is your dashboard overview.</p>
         // </DashboardLayout>
         <>
-            <div className='text-center'>
+            <div className='text-center d-flex justify-content-center align-items-center' style={{ height: '500px', width: '100%' }}>
                 <h1>Dashboard</h1>
             </div>
         </>
