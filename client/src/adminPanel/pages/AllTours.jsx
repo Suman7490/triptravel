@@ -58,7 +58,7 @@ const Tours = () => {
 
                                         {tours?.map((tour, index) => (
                                             <tr key={tour._id}>
-                                                <td>{index + 1}</td>
+                                                <td>{page * 8 + index + 1}</td>
                                                 <td>{tour.title}</td>
                                                 <td>{tour.price}</td>
                                                 <td>Edit</td>

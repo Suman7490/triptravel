@@ -62,7 +62,7 @@ const AllBookings = () => {
                                     <tbody>
                                         {bookings?.map((booking, index) => (
                                             <tr key={booking._id}>
-                                                <td>{index + 1}</td>
+                                                <td>{page * 8 + index + 1}</td>
                                                 <td>{booking.fullName}</td>
                                                 <td>{booking.userEmail}</td>
                                                 <td>{booking.tourName}</td>
