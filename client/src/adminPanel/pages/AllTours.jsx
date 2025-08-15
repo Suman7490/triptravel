@@ -38,8 +38,6 @@ const Tours = () => {
                     {error && <h4 className='text-center pt-5'>{error}</h4>}
 
                     < Row >
-
-
                         <Col lg='12'>
                             <table className="table table-bordered table-hover text-center">
                                 <thead className="table-dark">

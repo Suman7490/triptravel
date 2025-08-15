@@ -7,6 +7,6 @@ const router = express.Router()
 router.post('/', verifyUser, createBooking)
 router.get('/:id', verifyUser, getBooking)
 router.get('/', verifyAdmin, getAllBooking)
-router.get('/', verifyAdmin, getBookingCount)
+router.get('/search/getBookingCount', verifyAdmin, getBookingCount)
 
 export default router

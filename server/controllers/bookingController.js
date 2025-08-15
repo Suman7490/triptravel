@@ -25,11 +25,23 @@ export const getBooking = async (req, res) => {
 
 // get All booking
 export const getAllBooking = async (req, res) => {
+    const page = parseInt(req.query.page);
     try {
-        const books = await Booking.find();
-        res.status(200).json({ success: true, message: 'successful', data: books, });
+        const books = await Booking.find({})
+            .skip(page * 8)
+            .limit(8);
+
+        res.status(200).json({
+            success: true,
+            count: books.length,
+            message: 'successful',
+            data: books,
+        });
     } catch (error) {
-        res.status(500).json({ success: true, message: 'internal server error' })
+        res.status(500).json({
+            success: true,
+            message: 'internal server error'
+        })
     }
 }
 

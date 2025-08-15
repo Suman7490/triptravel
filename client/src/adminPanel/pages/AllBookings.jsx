@@ -26,10 +26,10 @@ const AllBookings = () => {
     }, []);
 
     useEffect(() => {
-        const pages = Math.ceil((bookingsCount || 0) / 4);
+        const pages = Math.ceil(bookingsCount / 8);
         setPageCount(pages);
         window.scrollTo(0, 0);
-    }, [page, bookingsCount]);
+    }, [page, bookingsCount, bookings]);
 
     if (!isAdmin) {
         return <p className='text-center mt-5'>You are not authorized to access this page.</p>;
@@ -43,21 +43,22 @@ const AllBookings = () => {
                     {loading && <h4 className='text-center pt-5'>Loading...</h4>}
                     {error && <h4 className='text-center pt-5'>{error}</h4>}
 
-                    {!loading && !error && (
-                        <>
-                            <div className="table-responsive mt-4">
-                                <table className="table table-bordered table-hover text-center">
-                                    <thead className="table-dark">
-                                        <tr>
-                                            <th>Sr No.</th>
-                                            <th>User Name</th>
-                                            <th>Email</th>
-                                            <th>Tour</th>
-                                            <th>Guest Size</th>
-                                            <th>Phone</th>
-                                            <th>Booked At</th>
-                                        </tr>
-                                    </thead>
+
+                    <Row>
+                        <Col lg='12'>
+                            <table className="table table-bordered table-hover text-center">
+                                <thead className="table-dark">
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>User Name</th>
+                                        <th>Email</th>
+                                        <th>Tour</th>
+                                        <th>Guest Size</th>
+                                        <th>Phone</th>
+                                        <th>Booked At</th>
+                                    </tr>
+                                </thead>
+                                {!loading && !error &&
                                     <tbody>
                                         {bookings?.map((booking, index) => (
                                             <tr key={booking._id}>
@@ -71,12 +72,9 @@ const AllBookings = () => {
                                             </tr>
                                         ))}
                                     </tbody>
-                                </table>
-                            </div>
-                        </>
-                    )}
-
-                    <Row>
+                                }
+                            </table>
+                        </Col>
                         <Col lg='12'>
                             <div className='pagination d-flex align-items-center justify-content-center mt-4 gap-3'>
                                 {[...Array(pageCount).keys()].map(number => (
@@ -87,6 +85,7 @@ const AllBookings = () => {
                             </div>
                         </Col>
                     </Row>
+
                 </Container>
             </section>
             <Newsletter />

@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
+import Register from '../pages/Register'
 import TourDetails from '../pages/TourDetails'
 import ThankYou from '../pages/ThankYou'
 import DashboardLayout from '../adminPanel/DashboardLayout';
@@ -18,6 +19,7 @@ const Routers = () => {
       <Route path="/tours" element={<Tours />} />
       <Route path="/tour/:id" element={<TourDetails />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/thank-you" element={<ThankYou />} />
 
 
