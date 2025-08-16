@@ -98,28 +98,24 @@ export const getAllTour = async (req, res) => {
 
 // Get Tour by Search
 export const getTourBySearch = async (req, res) => {
-    const city = new RegExp(req.query.city, 'i')
-    const maxGroupSize = parseInt(req.query.maxGroupSize)
+    const city = new RegExp(req.query.city, 'i'); // case-insensitive match
 
     try {
-        // gte means greater than equal
-        const tours = await Tour.find({
-            city, maxGroupSize: { $gte: maxGroupSize }
-        }).populate("reviews");
+        const tours = await Tour.find({ city }).populate("reviews");
 
         res.status(200).json({
             success: true,
             message: "Successful",
             data: tours,
-        })
-
+        });
     } catch (error) {
         res.status(404).json({
             success: false,
-            message: "not foud",
-        })
+            message: "Not found",
+        });
     }
-}
+};
+
 
 // get featured tour
 export const getFeaturedTour = async (req, res) => {

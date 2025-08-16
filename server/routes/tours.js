@@ -6,15 +6,18 @@ import upload from "../middleware/upload.js";
 
 
 const router = express.Router();
+
+// get tour by search
+router.get("/search/getTourBySearch", getTourBySearch);
+router.get("/search/getFeaturedTour", getFeaturedTour);
+router.get("/search/getTourCount", getTourCount);
+
 router.post('/', verifyToken, verifyAdmin, upload.single('photo'), createTour);
 router.put("/:id", verifyAdmin, updateTour);  // Update tour
 router.delete("/:id", verifyAdmin, deleteTour);  // Delete tour
 router.get("/:id", getSingleTour);  // Get Single tour
 router.get("/", getAllTour);  // Get All tour
 
-// get tour by search
-router.get("/search/getTourBySearch", getTourBySearch);
-router.get("/search/getFeaturedTour", getFeaturedTour);
-router.get("/search/getTourCount", getTourCount);
+
 
 export default router;

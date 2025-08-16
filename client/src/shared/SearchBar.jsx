@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../styles/search-bar.css'
 import { useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../utils/config'
@@ -8,14 +8,10 @@ const SearchBar = () => {
     const [allCities, setAllCities] = useState([])
     const [locationInput, setLocationInput] = useState('')
     const [showSuggestions, setShowSuggestions] = useState(false)
-    const [showDurationDropdown, setShowDurationDropdown] = useState(false)
-    const [selectedDurations, setSelectedDurations] = useState([])
-    const [travelDate, setTravelDate] = useState('')
 
-
-    const maxGroupSizeRef = useRef(0)
     const navigate = useNavigate()
 
+    // Fetch all unique cities
     useEffect(() => {
         const fetchCities = async () => {
             try {
@@ -33,6 +29,7 @@ const SearchBar = () => {
         fetchCities()
     }, [])
 
+    // Handle input and suggestions
     const handleLocationChange = (e) => {
         const input = e.target.value
         setLocationInput(input)
@@ -53,39 +50,38 @@ const SearchBar = () => {
         setShowSuggestions(false)
     }
 
-    const handleDurationChange = (e) => {
-        const value = e.target.value
-        setSelectedDurations(prev =>
-            prev.includes(value)
-                ? prev.filter(item => item !== value)
-                : [...prev, value]
-        )
-    }
-
+    // Search by location only
     const searchHandler = async () => {
         const location = locationInput.trim()
-        const maxGroupSize = maxGroupSizeRef.current.value
 
-        if (!location || !maxGroupSize || !travelDate) {
-            alert('Please fill in all fields')
+        if (!location) {
+            alert('Please enter a location')
             return
         }
 
-        const res = await fetch(
-            `${BASE_URL}/tours/search/getTourBySearch?city=${location}&maxGroupSize=${maxGroupSize}`
-        )
+        try {
+            const res = await fetch(
+                `${BASE_URL}/tours/search/getTourBySearch?city=${location}`
+            )
 
-        if (!res.ok) return alert('Search failed')
+            if (!res.ok) {
+                alert('Search failed')
+                return
+            }
 
-        const result = await res.json()
-        navigate(`/tours/search?city=${location}&maxGroupSize=${maxGroupSize}&date=${travelDate}`, {
-            state: result.data
-        })
+            const result = await res.json()
+            navigate(`/tours/search?city=${location}`, {
+                state: result.data
+            })
+        } catch (err) {
+            console.error('Search error:', err)
+        }
     }
 
     return (
         <div className='search-wrapper'>
             <div className='search-card'>
+                {/* Location Input */}
                 <div className='input-group'>
                     <i className='ri-map-pin-line'></i>
                     <input
@@ -104,70 +100,12 @@ const SearchBar = () => {
                     )}
                 </div>
 
-                <div className='input-group' onClick={() => setShowDurationDropdown(prev => !prev)}>
-                    <i className='ri-time-line'></i>
-                    <div className='styled-input dropdown-toggle'>
-                        {selectedDurations.length > 0 ? selectedDurations.join(', ') : 'Select Duration'}
-                    </div>
-                    {showDurationDropdown && (
-                        // <div className='dropdown-menu'>
-                        //     {['1-3 Days', '4-6 Days', '7-9 Days', '10+ Days'].map((label, idx) => (
-                        //         <label key={idx} className='dropdown-item'>
-                        //             <input
-                        //                 type='checkbox'
-                        //                 value={label}
-                        //                 checked={selectedDurations.includes(label)}
-                        //                 onChange={handleDurationChange}
-                        //             />
-                        //             {label}
-                        //         </label>
-                        //     ))}
-                        // </div>
-
-                        <div style={{ position: 'absolute', background: 'white', border: '1px solid #ccc', width: '100%', top: '100%', padding: '5px 10px', borderTopLeftRadius: '0', borderBottomLeftRadius: '0', borderTopRightRadius: '12px', borderBottomRightRadius: '12px', zIndex: 1000 }}>
-                            {['1-3 Days', '4-6 Days', '7-9 Days', '10+ Days'].map((label, idx) => (
-                                <label key={idx} className='dropdown-item'>
-                                    <input
-                                        type='checkbox'
-                                        value={label}
-                                        checked={selectedDurations.includes(label)}
-                                        onChange={handleDurationChange}
-                                    />
-                                    {label}
-                                </label>
-                            ))}
-                        </div>
-
-
-                    )}
-                </div>
-
-                <div className='input-group'>
-                    <i className='ri-calendar-line'></i>
-                    <input
-                        type='date'
-                        className='styled-input'
-                        min={new Date().toISOString().split('T')[0]}
-                        value={travelDate}
-                        onChange={(e) => setTravelDate(e.target.value)}
-                    />
-                </div>
-
-                <div className='input-group'>
-                    <i className='ri-group-line'></i>
-                    <input
-                        type='number'
-                        ref={maxGroupSizeRef}
-                        className='styled-input'
-                        placeholder='Max People'
-                    />
-                </div>
-
+                {/* Search Button */}
                 <button className='explore-btn' onClick={searchHandler}>
                     <i className='ri-search-line'></i> Explore
                 </button>
             </div>
-        </div >
+        </div>
     )
 }
 
