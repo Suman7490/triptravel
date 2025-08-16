@@ -1,6 +1,4 @@
 import { createContext, useEffect, useReducer } from "react";
-
-// Get 'user' from localStorage, handle if it's 'undefined' or null
 const storedUser = localStorage.getItem('user');
 const initial_state = {
     user: storedUser && storedUser !== "undefined" ? JSON.parse(storedUser) : null,

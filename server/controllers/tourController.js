@@ -15,12 +15,7 @@ export const createTour = async (req, res) => {
 }
 
 
-
-
-
 // Update Tour
-
-
 export const updateTour = async (req, res) => {
     const id = req.params.id
 
@@ -102,7 +97,6 @@ export const getAllTour = async (req, res) => {
 }
 
 // Get Tour by Search
-// controllers/tourController.js
 export const getTourBySearch = async (req, res) => {
     const city = req.query.city;
 
@@ -125,7 +119,6 @@ export const getTourBySearch = async (req, res) => {
         });
     }
 };
-
 
 
 // get featured tour

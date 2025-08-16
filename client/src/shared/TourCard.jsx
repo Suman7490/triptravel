@@ -6,7 +6,6 @@ import "../styles/tour-card.css"
 
 const TourCard = ({ tour }) => {
     const { _id, title, city, photo, price, featured, reviews } = tour;
-    // console.log("TourCard data:", tour);
 
     const { totalRating, avgRating } = calculateAvgRating(reviews)
 
@@ -15,7 +14,6 @@ const TourCard = ({ tour }) => {
             <div className='tour__card'>
                 <Card className='mb-3'>
                     <div className='tour__img'>
-                        {/* <img src={photo} alt='tour-img' /> */}
                         <img src={`http://localhost:4000${photo}`} alt='tour-img' />
                         {featured && <span>Featured</span>}
                     </div>

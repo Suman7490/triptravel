@@ -7,12 +7,14 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const CreateTour = () => {
     const [photo, setPhoto] = useState(null);
     const [previewURL, setPreviewURL] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         title: '',
@@ -44,13 +46,10 @@ const CreateTour = () => {
 
     const handleCategoryChange = (e) => {
         const value = e.target.value;
-
         setFormData((prev) => {
             if (prev.category.includes(value)) {
-                // remove if already exists (uncheck)
                 return { ...prev, category: prev.category.filter((item) => item !== value) };
             } else {
-                // add if not exists (check)
                 return { ...prev, category: [...prev.category, value] };
             }
         });
@@ -66,8 +65,6 @@ const CreateTour = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-
-        // Basic Validation
         for (const key in formData) {
             if (!formData[key] && key !== 'featured') {
                 return toast.warning(`Please fill in the ${key} field.`);
@@ -77,7 +74,6 @@ const CreateTour = () => {
 
         const formDataToSend = new FormData();
         Object.entries(formData).forEach(([key, value]) => {
-            // formDataToSend.append(key, value);
             if (Array.isArray(value)) {
                 value.forEach(v => formDataToSend.append(key, v));
             } else {
@@ -96,6 +92,7 @@ const CreateTour = () => {
             const result = await res.json();
             if (res.ok) {
                 toast.success('Tour added successfully!');
+                navigate("/tours");
                 setFormData({
                     title: '',
                     city: '',

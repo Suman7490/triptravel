@@ -40,18 +40,17 @@ const Login = () => {
             const result = await res.json();
 
             if (!res.ok) {
-                alert(result.message); // Optionally replace with toast
+                alert(result.message);
                 dispatch({ type: 'LOGIN_FAILED', payload: result.message });
                 return;
             }
 
             dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
 
-            // 👇 REDIRECTION BASED ON ROLE
             if (result.data.role === 'admin') {
-                navigate('/dashboard/bookings'); // Admin dashboard
+                navigate('/dashboard/bookings');
             } else {
-                navigate('/'); // Regular user home
+                navigate('/');
             }
 
         } catch (error) {

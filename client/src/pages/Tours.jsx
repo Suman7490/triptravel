@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "../styles/tours.css"
 import CommonSection from '../shared/CommonSection'
-import TourCard from './../shared/TourCard'
 import SearchBar from './../shared/SearchBar'
 import Newsletter from './../shared/Newsletter'
 import { Link } from 'react-router-dom'
@@ -58,9 +57,6 @@ const Tours = () => {
                                         <th>City</th>
                                         <th>Price</th>
                                         <th>Action</th>
-                                        {/* <th>Tour</th>
-                                                <th>Guest Size</th>
-                                                <th>Phone</th> */}
                                     </tr>
                                 </thead>
                                 {
@@ -74,9 +70,6 @@ const Tours = () => {
                                                 <td>{tour.city}</td>
                                                 <td>{tour.price}</td>
                                                 <td><Link to={`/tour/${tour._id}`}>Get Details</Link></td>
-                                                {/* <td>{booking.tourName}</td>
-                                                    <td>{booking.guestSize}</td>
-                                                    <td>{booking.phone}</td> */}
                                             </tr>
                                         ))}
 

@@ -24,17 +24,6 @@ const Routers = () => {
       <Route path="/tours/search" element={<SearchResultList />} />
       <Route path="/thank-you" element={<ThankYou />} />
 
-
-      {/* Admin Dashboard with Layout */}
-      {/* <Route path="/dashboard/*" element={
-        <ProtectedRoute adminOnly>
-          <DashboardLayout>
-            <Routes>
-              <Route path="bookings" element={<AllBookings />} />
-              <Route path="create-tour" element={<CreateTour />} />
-            </Routes>
-          </DashboardLayout>
-        </ProtectedRoute> */}
       <Route path="/dashboard/*" element={
         <ProtectedRoute adminOnly>
           <Routes>

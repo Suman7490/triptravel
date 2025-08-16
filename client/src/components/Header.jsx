@@ -7,7 +7,7 @@ import './style/header.css';
 
 const Header = () => {
     const navigate = useNavigate();
-    const { user, dispatch } = useContext(AuthContext); // ✅ Moved inside component
+    const { user, dispatch } = useContext(AuthContext);
     const isAdmin = user?.role === 'admin';
     const navbarCollapseRef = useRef(null);
 
@@ -21,7 +21,6 @@ const Header = () => {
         : [
             { path: '/', display: 'Home' },
             { path: '/tours', display: 'Tours' },
-            // { path: `/tours/${id}`, display: 'TourDetails' }
         ];
 
     const logout = () => {

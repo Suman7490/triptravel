@@ -1,24 +1,16 @@
 import React, { useState, useEffect } from 'react'
-// import "../styles/tours.css"
 import CommonSection from '../../shared/CommonSection'
-// import TourCard from './../shared/TourCard'
-// import SearchBar from './../shared/SearchBar'
-// import Newsletter from './../shared/Newsletter'
 import { Container, Row, Col } from 'reactstrap'
-
 import useFetch from '../../hooks/useFetch'
 import { BASE_URL } from '../../utils/config'
 
 const Tours = () => {
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(0);
+    const [refresh, setRefresh] = useState(false);
 
-    const [filters, setFilters] = useState({
-        city: '',
-        price: '',
-    });
 
-    const { data: tours, loading, error } = useFetch(`${BASE_URL}/tours?page=${page}`)
+    const { data: tours, loading, error } = useFetch(`${BASE_URL}/tours?page=${page}&refresh=${refresh}`)
     const { data: tourCount } = useFetch(`${BASE_URL}/tours/search/getTourCount`)
 
     useEffect(() => {
@@ -26,6 +18,32 @@ const Tours = () => {
         setPageCount(pages);
         window.scrollTo(0, 0);
     }, [page, tourCount, tours]);
+
+    const handleDelete = async (id) => {
+        const token = localStorage.getItem("token");
+
+        try {
+            const res = await fetch(`http://localhost:4000/api/v1/tours/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const result = await res.json();
+
+            if (res.ok) {
+                alert("Tour deleted successfully");
+                setRefresh(prev => !prev);
+            } else {
+                alert(result.message || "Failed to delete tour");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error deleting tour");
+        }
+    };
+
 
     return (
         <>
@@ -45,11 +63,7 @@ const Tours = () => {
                                         <th>Sr No.</th>
                                         <th>Tour Name</th>
                                         <th>Price</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                        {/* <th>Tour</th>
-                                                <th>Guest Size</th>
-                                                <th>Phone</th> */}
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 {
@@ -61,11 +75,17 @@ const Tours = () => {
                                                 <td>{page * 8 + index + 1}</td>
                                                 <td>{tour.title}</td>
                                                 <td>{tour.price}</td>
-                                                <td>Edit</td>
-                                                <td>Delete</td>
-                                                {/* <td>{booking.tourName}</td>
-                                                    <td>{booking.guestSize}</td>
-                                                    <td>{booking.phone}</td> */}
+                                                <td>
+                                                    <div className='d-flex justify-content-around align-items-center'>
+                                                        <button className='btn btn-primary'>Edit</button>
+                                                        <button
+                                                            className='btn btn-danger'
+                                                            onClick={() => handleDelete(tour._id)}
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         ))}
 

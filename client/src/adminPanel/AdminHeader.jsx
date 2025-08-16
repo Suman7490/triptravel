@@ -6,7 +6,7 @@ const AdminHeader = () => {
     const navigate = useNavigate();
 
     const logout = () => {
-        localStorage.removeItem('user'); // or your auth method
+        localStorage.removeItem('user');
         navigate('/');
     };
 

@@ -67,7 +67,6 @@ const SearchBar = () => {
             }
 
             const result = await res.json()
-            // 🔥 update SearchResultList directly
             navigate(`/tours/search?city=${trimmed}`, {
                 state: result.data
             })
@@ -82,7 +81,6 @@ const SearchBar = () => {
     return (
         <div className='search-wrapper'>
             <div className='search-card'>
-                {/* Location Input */}
                 <div className='input-group'>
                     <i className='ri-map-pin-line'></i>
                     <input
@@ -101,7 +99,6 @@ const SearchBar = () => {
                     )}
                 </div>
 
-                {/* Search Button */}
                 <button className='explore-btn' onClick={searchHandler}>
                     <i className='ri-search-line'></i> Explore
                 </button>
