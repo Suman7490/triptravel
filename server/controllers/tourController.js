@@ -97,17 +97,22 @@ export const getAllTour = async (req, res) => {
 }
 
 // Get Tour by Search
+// controllers/tourController.js
 export const getTourBySearch = async (req, res) => {
-    const city = new RegExp(req.query.city, 'i'); // case-insensitive match
+    const city = req.query.city;
 
     try {
-        const tours = await Tour.find({ city }).populate("reviews");
+        // ^ ensures city name starts with entered letters (case-insensitive)
+        const tours = await Tour.find({
+            city: { $regex: new RegExp("^" + city, "i") },
+        }).populate("reviews");
 
         res.status(200).json({
             success: true,
             message: "Successful",
             data: tours,
         });
+
     } catch (error) {
         res.status(404).json({
             success: false,
@@ -115,6 +120,7 @@ export const getTourBySearch = async (req, res) => {
         });
     }
 };
+
 
 
 // get featured tour

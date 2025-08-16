@@ -43,6 +43,7 @@ const SearchBar = () => {
 
         setCitySuggestions(filtered)
         setShowSuggestions(true)
+        autoSearch(input)
     }
 
     const selectSuggestion = (city) => {
@@ -51,31 +52,31 @@ const SearchBar = () => {
     }
 
     // Search by location only
-    const searchHandler = async () => {
-        const location = locationInput.trim()
-
-        if (!location) {
-            alert('Please enter a location')
-            return
-        }
+    const autoSearch = async (location) => {
+        const trimmed = location.trim()
+        if (!trimmed) return
 
         try {
             const res = await fetch(
-                `${BASE_URL}/tours/search/getTourBySearch?city=${location}`
+                `${BASE_URL}/tours/search/getTourBySearch?city=${trimmed}`
             )
 
             if (!res.ok) {
-                alert('Search failed')
+                console.error("Search failed")
                 return
             }
 
             const result = await res.json()
-            navigate(`/tours/search?city=${location}`, {
+            // 🔥 update SearchResultList directly
+            navigate(`/tours/search?city=${trimmed}`, {
                 state: result.data
             })
         } catch (err) {
             console.error('Search error:', err)
         }
+    }
+    const searchHandler = () => {
+        autoSearch(locationInput)
     }
 
     return (
