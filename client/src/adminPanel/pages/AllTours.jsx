@@ -20,11 +20,15 @@ const Tours = () => {
     }, [page, tourCount, tours]);
 
     const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this tour?");
+        if (!confirmDelete) return;
+
         const token = localStorage.getItem("token");
 
         try {
             const res = await fetch(`http://localhost:4000/api/v1/tours/${id}`, {
                 method: "DELETE",
+                credentials: "include",
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -43,6 +47,7 @@ const Tours = () => {
             alert("Error deleting tour");
         }
     };
+
 
 
     return (
