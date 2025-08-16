@@ -19,13 +19,13 @@ const CreateTour = () => {
         city: '',
         desc: '',
         price: '',
-        maxGroupSize: '',
         featured: true,
+        category: [],
     });
 
     // Simulated admin check from cookie/localStorage
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user')); // Example, adapt as per your auth
+        const user = JSON.parse(localStorage.getItem('user'));
         if (user?.role === 'admin') {
             setIsAdmin(true);
         } else {
@@ -35,10 +35,25 @@ const CreateTour = () => {
 
     const handleChange = e => {
         const { name, value, type, checked } = e.target;
+        if (name === "category") return
         setFormData(prev => ({
             ...prev,
             [name]: type === 'checkbox' ? checked : value,
         }));
+    };
+
+    const handleCategoryChange = (e) => {
+        const value = e.target.value;
+
+        setFormData((prev) => {
+            if (prev.category.includes(value)) {
+                // remove if already exists (uncheck)
+                return { ...prev, category: prev.category.filter((item) => item !== value) };
+            } else {
+                // add if not exists (check)
+                return { ...prev, category: [...prev.category, value] };
+            }
+        });
     };
 
     const handlePhotoChange = e => {
@@ -62,7 +77,12 @@ const CreateTour = () => {
 
         const formDataToSend = new FormData();
         Object.entries(formData).forEach(([key, value]) => {
-            formDataToSend.append(key, value);
+            // formDataToSend.append(key, value);
+            if (Array.isArray(value)) {
+                value.forEach(v => formDataToSend.append(key, v));
+            } else {
+                formDataToSend.append(key, value);
+            }
         });
         formDataToSend.append('photo', photo);
 
@@ -81,8 +101,8 @@ const CreateTour = () => {
                     city: '',
                     desc: '',
                     price: '',
-                    maxGroupSize: '',
                     featured: false,
+                    category: [],
                 });
                 setPhoto(null);
                 setPreviewURL(null);
@@ -113,6 +133,36 @@ const CreateTour = () => {
                     </FormGroup>
 
                     <FormGroup>
+                        <Label>Category</Label>
+                        <div>
+                            <Input
+                                type="checkbox"
+                                value="Family Trip"
+                                checked={formData.category.includes("Family Trip")}
+                                onChange={handleCategoryChange}
+                            /> Family Trip
+                        </div>
+                        <div>
+                            <Input
+                                type="checkbox"
+                                value="Friends/Group"
+                                checked={formData.category.includes("Friends/Group")}
+                                onChange={handleCategoryChange}
+                            /> Friends/Group
+                        </div>
+                        <div>
+                            <Input
+                                type="checkbox"
+                                value="Solo Trip"
+                                checked={formData.category.includes("Solo Trip")}
+                                onChange={handleCategoryChange}
+                            /> Solo Trip
+                        </div>
+                    </FormGroup>
+
+
+
+                    <FormGroup>
                         <Label>Photo</Label>
                         <Input type="file" name="photo" accept="image/*" onChange={handlePhotoChange} />
                         {previewURL && (
@@ -125,10 +175,6 @@ const CreateTour = () => {
                         )}
                     </FormGroup>
 
-                    {/* <FormGroup>
-                        <Label>Description</Label>
-                        <Input type="textarea" name="desc" value={formData.desc} onChange={handleChange} required />
-                    </FormGroup> */}
                     <FormGroup>
                         <Label>Description</Label>
                         <ReactQuill
@@ -159,10 +205,7 @@ const CreateTour = () => {
                         <Input type="number" name="price" value={formData.price} onChange={handleChange} required />
                     </FormGroup>
 
-                    <FormGroup>
-                        <Label>Max Group Size</Label>
-                        <Input type="number" name="maxGroupSize" value={formData.maxGroupSize} onChange={handleChange} required />
-                    </FormGroup>
+
 
                     <FormGroup check className="mb-3">
                         <Label check>

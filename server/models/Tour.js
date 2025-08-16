@@ -15,15 +15,16 @@ const tourSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        category: {
+            type: [String],
+            enum: ["Family Trip", "Friends/Group", "Solo Trip"],
+            required: true,
+        },
         desc: {
             type: String,
             required: true,
         },
         price: {
-            type: Number,
-            required: true,
-        },
-        maxGroupSize: {
             type: Number,
             required: true,
         },

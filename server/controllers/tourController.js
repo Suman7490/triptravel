@@ -1,11 +1,10 @@
 import Tour from '../models/Tour.js'
 
-
 export const createTour = async (req, res) => {
     try {
         const photoPath = req.file
             ? `/uploads/${req.file.filename}`
-            : req.body.photo; // fallback
+            : req.body.photo;
         const newTour = new Tour({ ...req.body, photo: photoPath });
         const saved = await newTour.save();
         res.status(201).json({ success: true, data: saved });
@@ -15,7 +14,13 @@ export const createTour = async (req, res) => {
     }
 }
 
+
+
+
+
 // Update Tour
+
+
 export const updateTour = async (req, res) => {
     const id = req.params.id
 
