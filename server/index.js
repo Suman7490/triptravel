@@ -28,6 +28,9 @@ app.use(express.json())
 app.use(cookieParser())
 
 // Routes
+app.get('/', (req, res) => {
+    res.send({ success: true, message: "API is running" })
+})
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/tours', tourRoute)
 app.use('/api/v1/users', userRoute)
@@ -35,12 +38,16 @@ app.use('/api/v1/review', reviewRoute)
 app.use('/api/v1/booking', bookingRoute)
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')))
 
+
+let isConnected = false
 const connect = async () => {
+    if (isConnected) return
     try {
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
+        isConnected = true
         console.log('Database connected')
     } catch (err) {
         console.log('Database connection failed', err)
@@ -55,6 +62,8 @@ if (process.env.NODE_ENV !== 'production') {
             console.log(`Server running locally on port ${port}`)
         })
     })
+} else {
+    connect()
 }
 
 // 👉 Export for Vercel
