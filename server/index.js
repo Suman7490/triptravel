@@ -64,5 +64,5 @@ if (process.env.NODE_ENV !== 'production') {
     connect()
 }
 
-// 👉 Export for Vercel
+await connect();
 export default serverless(app);
