@@ -50,8 +50,7 @@ const connect = async () => {
     }
 }
 
-app.listen(port, () => {
-    connect();
-    console.log('Server listening o port', port)
-})
+
+connect();
+export default app
 
