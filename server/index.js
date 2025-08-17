@@ -50,7 +50,7 @@ const connect = async () => {
         isConnected = true
         console.log('Database connected')
     } catch (err) {
-        console.log('Database connection failed', err)
+        console.error('Database connection failed:', err.message);
     }
 }
 
