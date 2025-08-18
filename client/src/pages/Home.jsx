@@ -14,6 +14,9 @@ import FeaturedTourList from '../components/FeaturedTourList'
 import MasonryImagesGallery from '../components/Image-gallery/MasonryImagesGallery'
 import Testimonial from '../components/Testimonial'
 import Newsletter from '../shared/Newsletter'
+import TourFilters from '../shared/TourFilters'
+import CompositeFilters from '../shared/CompositeFilters'
+import { TripTypeFilter, BudgetFilter, LocationFilter, TourThemeFilter, DurationFilter, SeasonMonthFilter, ApplyResetButtons } from "../shared/TourFilters";
 
 const Home = () => {
     return (
@@ -59,6 +62,7 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
+
             {/******************************** Hero section start ********************************/}
             <section>
                 <Container>
@@ -80,7 +84,30 @@ const Home = () => {
                             <h5 className='services__subtitle'>Explore</h5>
                             <h2 className='featured__tour-title'>Our featured tours</h2>
                         </Col>
-                        <FeaturedTourList />
+                    </Row>
+                    <Row>
+                        {/* <Col lg='4'>
+                            <TripTypeFilter />
+                            <BudgetFilter />
+                            <LocationFilter />
+                            <TourThemeFilter />
+                            <DurationFilter />
+                            <SeasonMonthFilter />
+                            <ApplyResetButtons />
+                        </Col> */}
+                        {/* <FeaturedTourList /> */}
+                        <Col lg='3 border'>
+                            <TripTypeFilter />
+                            <BudgetFilter />
+                            <LocationFilter />
+                            <TourThemeFilter />
+                            <DurationFilter />
+                            <SeasonMonthFilter />
+                            <ApplyResetButtons />
+                        </Col>
+                        <Col lg='9 border d-flex flex-wrap gap-4'>
+                            <FeaturedTourList />
+                        </Col>
                     </Row>
                 </Container>
             </section>
