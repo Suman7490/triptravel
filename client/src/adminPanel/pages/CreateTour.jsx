@@ -9,6 +9,11 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
 
+const countries = {
+    India: ["Maharashtra", "Delhi", "Karnataka", "Rajasthan", "Kerala"],
+    USA: ["California", "Texas", "New York", "Florida", "Washington"],
+    UK: ["England", "Scotland", "Wales", "Northern Ireland"]
+};
 
 const CreateTour = () => {
     const [photo, setPhoto] = useState(null);
@@ -18,11 +23,13 @@ const CreateTour = () => {
 
     const [formData, setFormData] = useState({
         title: '',
+        country: 'India',
+        state: '',
         city: '',
+        category: [],
         desc: '',
         price: '',
         featured: true,
-        category: [],
     });
 
     // Simulated admin check from cookie/localStorage
@@ -95,11 +102,14 @@ const CreateTour = () => {
                 navigate("/tours");
                 setFormData({
                     title: '',
+                    country: 'India',
+                    state: '',
                     city: '',
+                    category: [],
                     desc: '',
                     price: '',
                     featured: false,
-                    category: [],
+
                 });
                 setPhoto(null);
                 setPreviewURL(null);
@@ -123,6 +133,39 @@ const CreateTour = () => {
                         <Label>Title</Label>
                         <Input name="title" value={formData.title} onChange={handleChange} required />
                     </FormGroup>
+
+                    {/* Country field */}
+                    <FormGroup>
+                        <Label>Country</Label>
+                        <Input
+                            type="select"
+                            name="country"
+                            value={formData.country}
+                            onChange={handleChange}
+                        >
+                            {Object.keys(countries).map(c => (
+                                <option key={c} value={c}>{c}</option>
+                            ))}
+                        </Input>
+                    </FormGroup>
+
+                    {/* State field (only when National or if country has states list) */}
+                    {countries[formData.country] && (
+                        <FormGroup>
+                            <Label>State</Label>
+                            <Input
+                                type="select"
+                                name="state"
+                                value={formData.state}
+                                onChange={handleChange}
+                            >
+                                <option value="">-- Select State --</option>
+                                {countries[formData.country]?.map(s => (
+                                    <option key={s} value={s}>{s}</option>
+                                ))}
+                            </Input>
+                        </FormGroup>
+                    )}
 
                     <FormGroup>
                         <Label>City</Label>

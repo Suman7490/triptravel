@@ -180,6 +180,45 @@ const Header = () => {
                                     aria-expanded="false"
                                     style={{ background: 'transparent', border: 'none' }}
                                 >
+                                    Destination Guide
+                                </a>
+                                <div className="dropdown-menu w-100 mt-0 p-4" aria-labelledby="honeymoonDropdown">
+                                    <div className="row">
+                                        <div className="col-md-4">
+                                            <h6 className="fw-bold">Indian Destinations</h6>
+                                            <ul className="list-unstyled">
+                                                <li><Link to="/destinations/kerala" className="dropdown-item">Kerala</Link></li>
+                                                <li><Link to="/destinations/goa" className="dropdown-item">Goa</Link></li>
+                                                <li><Link to="/destinations/uttarakhand" className="dropdown-item">Uttarakhand</Link></li>
+                                                <li><Link to="/destinations/view-all" className="dropdown-item text-primary">View All</Link></li>
+                                            </ul>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <h6 className="fw-bold">International Destinations</h6>
+                                            <ul className="list-unstyled">
+                                                <li><Link to="/destinations/bali" className="dropdown-item">Bali</Link></li>
+                                                <li><Link to="/destinations/maldives" className="dropdown-item">Maldives</Link></li>
+                                                <li><Link to="/destinations/thailand" className="dropdown-item">Thailand</Link></li>
+                                                <li><Link to="/destinations/view-all-intl" className="dropdown-item text-primary">View All</Link></li>
+                                            </ul>
+                                        </div>
+                                        <div className="col-md-4 d-none d-md-block">
+                                            <img src={gallery} alt="Promo" className="img-fluid rounded" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li className="nav-item dropdown position-static">
+                                <a
+                                    className="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="honeymoonDropdown"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    style={{ background: 'transparent', border: 'none' }}
+                                >
                                     Holidays Themes
                                 </a>
                                 <div className="dropdown-menu w-100 mt-0 p-4" aria-labelledby="honeymoonDropdown">
