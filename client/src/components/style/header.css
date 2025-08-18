@@ -1,75 +1,76 @@
-/* .header{
-    width: 100%;
-    height: 80px;
-    line-height: 80px;
-}
-.logo img{
-    width: 30%;
-}
-.menu{
-    margin-bottom: 0;
-}
-.nav_item a{
-  text-decoration: none;
-  color: var(--heading-color);
-  font-weight: 300;
-  font-size: 1.1rem;
-}
-.nav_item a:hover{
-    color: inherit;
-}
-.nav_item a.active_link{
-    color: var(--secondary-color);
-}
-.mobile_menu{
-    font-size: 1.3rem;
-    color: var(--heading-color);
-    display: none;
-}
-.sticky_header{
-    width: 100%;
-    height: 80px;
-    line-height: 80px;
-    background: #fff;
-    position: sticky;
-    top: 0;
-    left: 0;
-    box-shadow: 3px 3px 8px -3px #ddd;
-    z-index: 999;  
+/* Hover dropdown */
+.dropdown-hover:hover .dropdown-menu {
+  display: block;
+  margin-top: 0; /* align neatly */
 }
 
-@media only screen and(max-width:992) {
-    .logo img{
-        width: 20%;
-    }
-    .navigation{
-        width: 100%;
-        height: 100%;
-      position:  fixed;
-      top: 0;
-      left: 0;
-      background: rgba(0,0,0,0.411);
-      z-index: 999;
-    }
-    .menu{
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: calc(100% - 75%);
-        height: 100%;
-        background: #fff;
-flex-direction: column;
-line-height: 0.5rem;
-justify-content: center;
-z-index: 9999;
-    }
-    .show__menu{
-        display: block;
-    }
-    .mobile__menu{
-        display: block;
-    }
-} */
+/* Remove Bootstrap button look */
+.navbar-nav .nav-link {
+  cursor: pointer;
+}
+
+.dropdown-toggle::after {
+  margin-left: 0.4rem;
+  vertical-align: 0.15em;
+  border-top: 0.4em solid;
+  border-right: 0.4em solid transparent;
+  border-left: 0.4em solid transparent;
+}
+
+
+
+/* Sidebar for mobile */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 260px;
+  height: 100%;
+  background: #fff;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  transition: left 0.3s ease;
+  z-index: 1050;
+  overflow-y: auto;
+}
+
+.mobile-sidebar.open {
+  left: 0;
+}
+
+.mobile-sidebar .nav-link {
+  padding: 8px 0;
+  display: block;
+  color: #333;
+}
+
+
+/* Desktop: keep menu always visible */
+/* @media (min-width: 992px) {
+  #navbarContent.collapse {
+    display: flex !important;
+  } */
+   @media (max-width: 991.98px) {
+  #navbarContent.collapse:not(.show) {
+    display: none !important;
+  }
+}
+@media (min-width: 992px) {
+  #navbarContent.collapse:not(.show) {
+    display: flex !important;
+  }
+
+
+  /* Dropdown opens on hover */
+  .navbar .dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* remove spacing */
+  }
+
+  .navbar .dropdown-toggle::after {
+    margin-left: 0.3rem;
+  }
+}
+
 
 .logo img {
   width: 120px;

@@ -1,46 +1,70 @@
-import React, { useContext, useRef } from 'react'; // ✅
+import React, { useContext, useRef } from 'react';
 import { Container, Button } from 'reactstrap';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/images/logo.png';
 import { AuthContext } from '../context/authContext';
+import logo from '../assets/images/logo3.png';
+import gallery from '../assets/images/logo3.png';
+import gallery2 from '../assets/images/gallery-05.jpg';
 import './style/header.css';
 
 const Header = () => {
     const navigate = useNavigate();
     const { user, dispatch } = useContext(AuthContext);
-    const isAdmin = user?.role === 'admin';
     const navbarCollapseRef = useRef(null);
-
-    const filteredNavLinks = isAdmin
-        ? [
-            { path: '/', display: 'Dashboard' },
-            { path: '/dashboard/create-tour', display: 'Create Tour' },
-            { path: '/dashboard/tours', display: 'Tours' },
-            { path: '/dashboard/bookings', display: 'Bookings' }
-        ]
-        : [
-            { path: '/', display: 'Home' },
-            { path: '/tours', display: 'Tours' },
-        ];
 
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
         navigate('/');
-    };
-
-    const handleNavClick = () => {
         if (navbarCollapseRef.current?.classList.contains('show')) {
             navbarCollapseRef.current.classList.remove('show');
         }
     };
 
+    const handleNavClick = () => {
+        if (navbarCollapseRef.current?.classList.contains('show')) {
+            navbarCollapseRef.current.classList.remove('show');
+            const toggler = document.querySelector('.navbar-toggler');
+            if (toggler) {
+                toggler.setAttribute('aria-expanded', 'false');
+                toggler.classList.add('collapsed');
+            }
+        }
+    };
+
     return (
         <header className="header sticky-top bg-white shadow-sm">
+            {/* 🔹 Top Header Bar */}
+            <div className="top-header bg-light py-1 border-bottom">
+                <Container className="d-flex justify-content-between align-items-center flex-wrap">
+                    <Link className="navbar-brand" to="/">
+                        <img src={logo} alt="Logo" className="img-fluid" style={{ width: '60px' }} />
+                    </Link>
+                    <div className="d-flex align-items-center gap-3">
+                        <span className="text-dark fw-semibold">
+                            📞 6299-397-622
+                        </span>
+                        <Link to="/agent" className="text-decoration-none text-dark small">
+                            👤 Travel Agent? Join Us
+                        </Link>
+                    </div>
+                    <div className="d-flex align-items-center gap-3 small">
+                        <Link to="/blog" className="text-dark text-decoration-none">📰 Blog</Link>
+                        <Link to="/offers" className="text-dark text-decoration-none">🎁 Offers</Link>
+                        <Link to="/download" className="text-dark text-decoration-none">📱 Download App</Link>
+                        {user ? (
+                            <Button color="dark" size="sm" onClick={logout}>Logout</Button>
+                        ) : (
+                            <Link to="/login" className="text-dark fw-semibold text-decoration-none">LOGIN</Link>
+                        )}
+                    </div>
+                </Container>
+            </div>
+
+            {/* 🔹 Main Navbar */}
             <Container>
                 <nav className="navbar navbar-expand-lg navbar-light">
-                    <Link className="navbar-brand" to="/">
-                        <img src={logo} alt="Logo" className="img-fluid" style={{ width: '120px' }} />
-                    </Link>
+
+
                     <button
                         className="navbar-toggler"
                         type="button"
@@ -50,45 +74,189 @@ const Header = () => {
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
-                        <span className="navbar-toggler-icon" />
+                        <span className="navbar-toggler-icon"></span>
                     </button>
 
                     <div className="collapse navbar-collapse" id="navbarContent" ref={navbarCollapseRef}>
-                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                            {filteredNavLinks.map((item, index) => (
-                                <li className="nav-item" key={index}>
-                                    <NavLink
-                                        to={item.path}
-                                        onClick={handleNavClick}
-                                        className={({ isActive }) =>
-                                            `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
-                                        }
-                                    >
-                                        {item.display}
-                                    </NavLink>
-                                </li>
-                            ))}
-                        </ul>
+                        <ul className="navbar-nav mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <NavLink
+                                    to="/"
+                                    onClick={handleNavClick}
+                                    className={({ isActive }) =>
+                                        `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
+                                    }
+                                >
+                                    Home
+                                </NavLink>
+                            </li>
 
-                        <div className="d-flex align-items-center gap-3 ms-lg-4 mt-3 mt-lg-0">
-                            {user ? (
-                                <>
-                                    <span className="fw-semibold">{user.username}</span>
-                                    <Button color="dark" size="sm" onClick={logout}>
-                                        Logout
-                                    </Button>
-                                </>
-                            ) : (
-                                <>
-                                    <Link to="/login" className="btn btn-outline-primary btn-sm" onClick={handleNavClick}>
-                                        Login
-                                    </Link>
-                                    <Link to="/register" className="btn btn-primary btn-sm" onClick={handleNavClick}>
-                                        Register
-                                    </Link>
-                                </>
-                            )}
-                        </div>
+                            {/* 🔹 Example Mega Dropdown */}
+                            <li className="nav-item dropdown position-static">
+                                <a
+                                    className="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="honeymoonDropdown"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    style={{ background: 'transparent', border: 'none' }}
+                                >
+                                    Honeymoon Packages
+                                </a>
+                                <div className="dropdown-menu w-100 mt-0 p-4" aria-labelledby="honeymoonDropdown">
+                                    <div className="row">
+                                        <div className="col-md-4">
+                                            <h6 className="fw-bold">Indian Destinations</h6>
+                                            <ul className="list-unstyled">
+                                                <li><Link to="/destinations/kerala" className="dropdown-item">Kerala</Link></li>
+                                                <li><Link to="/destinations/goa" className="dropdown-item">Goa</Link></li>
+                                                <li><Link to="/destinations/uttarakhand" className="dropdown-item">Uttarakhand</Link></li>
+                                                <li><Link to="/destinations/view-all" className="dropdown-item text-primary">View All</Link></li>
+                                            </ul>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <h6 className="fw-bold">International Destinations</h6>
+                                            <ul className="list-unstyled">
+                                                <li><Link to="/destinations/bali" className="dropdown-item">Bali</Link></li>
+                                                <li><Link to="/destinations/maldives" className="dropdown-item">Maldives</Link></li>
+                                                <li><Link to="/destinations/thailand" className="dropdown-item">Thailand</Link></li>
+                                                <li><Link to="/destinations/view-all-intl" className="dropdown-item text-primary">View All</Link></li>
+                                            </ul>
+                                        </div>
+                                        <div className="col-md-4 d-none d-md-block">
+                                            <img src={gallery2} alt="Promo" className="img-fluid rounded" style={{ height: '300px' }} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li className="nav-item dropdown position-static">
+                                <a
+                                    className="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="honeymoonDropdown"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    style={{ background: 'transparent', border: 'none' }}
+                                >
+                                    Family Packages
+                                </a>
+                                <div className="dropdown-menu w-100 mt-0 p-4" aria-labelledby="honeymoonDropdown">
+                                    <div className="row">
+                                        <div className="col-md-4">
+                                            <h6 className="fw-bold">Indian Destinations</h6>
+                                            <ul className="list-unstyled">
+                                                <li><Link to="/destinations/kerala" className="dropdown-item">Kerala</Link></li>
+                                                <li><Link to="/destinations/goa" className="dropdown-item">Goa</Link></li>
+                                                <li><Link to="/destinations/uttarakhand" className="dropdown-item">Uttarakhand</Link></li>
+                                                <li><Link to="/destinations/view-all" className="dropdown-item text-primary">View All</Link></li>
+                                            </ul>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <h6 className="fw-bold">International Destinations</h6>
+                                            <ul className="list-unstyled">
+                                                <li><Link to="/destinations/bali" className="dropdown-item">Bali</Link></li>
+                                                <li><Link to="/destinations/maldives" className="dropdown-item">Maldives</Link></li>
+                                                <li><Link to="/destinations/thailand" className="dropdown-item">Thailand</Link></li>
+                                                <li><Link to="/destinations/view-all-intl" className="dropdown-item text-primary">View All</Link></li>
+                                            </ul>
+                                        </div>
+                                        <div className="col-md-4 d-none d-md-block">
+                                            <img src={gallery} alt="Promo" className="img-fluid rounded" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li className="nav-item dropdown position-static">
+                                <a
+                                    className="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="honeymoonDropdown"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    style={{ background: 'transparent', border: 'none' }}
+                                >
+                                    Holidays Themes
+                                </a>
+                                <div className="dropdown-menu w-100 mt-0 p-4" aria-labelledby="honeymoonDropdown">
+                                    <div className="row">
+                                        <div className="col-md-4">
+                                            <h6 className="fw-bold">Indian Destinations</h6>
+                                            <ul className="list-unstyled">
+                                                <li><Link to="/destinations/kerala" className="dropdown-item">Kerala</Link></li>
+                                                <li><Link to="/destinations/goa" className="dropdown-item">Goa</Link></li>
+                                                <li><Link to="/destinations/uttarakhand" className="dropdown-item">Uttarakhand</Link></li>
+                                                <li><Link to="/destinations/view-all" className="dropdown-item text-primary">View All</Link></li>
+                                            </ul>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <h6 className="fw-bold">International Destinations</h6>
+                                            <ul className="list-unstyled">
+                                                <li><Link to="/destinations/bali" className="dropdown-item">Bali</Link></li>
+                                                <li><Link to="/destinations/maldives" className="dropdown-item">Maldives</Link></li>
+                                                <li><Link to="/destinations/thailand" className="dropdown-item">Thailand</Link></li>
+                                                <li><Link to="/destinations/view-all-intl" className="dropdown-item text-primary">View All</Link></li>
+                                            </ul>
+                                        </div>
+                                        <div className="col-md-4 d-none d-md-block">
+                                            <img src={gallery} alt="Promo" className="img-fluid rounded" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {/* 🔹 Normal Links */}
+                            <li className="nav-item">
+                                <NavLink
+                                    to="/tours"
+                                    onClick={handleNavClick}
+                                    className={({ isActive }) =>
+                                        `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
+                                    }
+                                >
+                                    Tours
+                                </NavLink>
+                            </li>
+
+                            <li className="nav-item">
+                                <NavLink
+                                    to="/dashboard/create-tour"
+                                    onClick={handleNavClick}
+                                    className={({ isActive }) =>
+                                        `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
+                                    }
+                                >
+                                    Create Tour
+                                </NavLink>
+                            </li>
+
+                            <li className="nav-item">
+                                <NavLink
+                                    to="/dashboard/bookings"
+                                    onClick={handleNavClick}
+                                    className={({ isActive }) =>
+                                        `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
+                                    }
+                                >
+                                    Booking
+                                </NavLink>
+                            </li>
+
+                            <li className="nav-item">
+                                <NavLink
+                                    to="/luxury-holidays"
+                                    onClick={handleNavClick}
+                                    className={({ isActive }) =>
+                                        `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
+                                    }
+                                >
+                                    Luxury Holidays
+                                </NavLink>
+                            </li>
+                        </ul>
                     </div>
                 </nav>
             </Container>
