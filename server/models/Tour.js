@@ -7,11 +7,15 @@ const tourSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
-        city: {
+        country: {
             type: String,
             required: true,
         },
-        photo: {
+        state: {
+            type: String,
+            required: true,
+        },
+        city: {
             type: String,
             required: true,
         },
@@ -20,6 +24,11 @@ const tourSchema = new mongoose.Schema(
             enum: ["Family Trip", "Friends/Group", "Solo Trip"],
             required: true,
         },
+        photo: {
+            type: String,
+            required: true,
+        },
+
         desc: {
             type: String,
             required: true,
@@ -38,6 +47,7 @@ const tourSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+
     },
     {
         timestamps: true

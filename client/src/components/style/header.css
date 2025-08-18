@@ -75,3 +75,7 @@
 .logo img {
   width: 120px;
 }
+.nav-item{
+  padding: 5px;
+  font-size: 18px;
+}

@@ -2,17 +2,21 @@ import Tour from '../models/Tour.js'
 
 export const createTour = async (req, res) => {
     try {
-        const photoPath = req.file
-            ? `/uploads/${req.file.filename}`
-            : req.body.photo;
+        console.log("req.file:", req.file);
+        console.log("req.body:", req.body);
+
+        const photoPath = req.file ? req.file.path : req.body.photo;
+        console.log("photoPath:", photoPath);
+
         const newTour = new Tour({ ...req.body, photo: photoPath });
         const saved = await newTour.save();
         res.status(201).json({ success: true, data: saved });
     } catch (e) {
-        console.error(e);
-        res.status(500).json({ success: false, message: 'Something wrong', error: e.message });
+        console.error("Error in createTour:", e);
+        res.status(500).json({ success: false, message: e.message });
     }
-}
+};
+
 
 
 // Update Tour
