@@ -55,13 +55,13 @@ const Home = () => {
             </section>
 
             {/******************************** Search Bar ********************************/}
-            <section className='search-bar-wrapper'>
+            {/* <section className='search-bar-wrapper'>
                 <Container>
                     <Row>
                         <SearchBar />
                     </Row>
                 </Container>
-            </section>
+            </section> */}
 
             {/******************************** Hero section start ********************************/}
             <section>
@@ -105,7 +105,7 @@ const Home = () => {
                             <SeasonMonthFilter />
                             <ApplyResetButtons />
                         </Col>
-                        <Col lg='9 border d-flex flex-wrap gap-4'>
+                        <Col lg='9 border d-flex flex-wrap justify-content-between'>
                             <FeaturedTourList />
                         </Col>
                     </Row>

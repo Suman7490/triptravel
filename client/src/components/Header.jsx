@@ -39,18 +39,22 @@ const Header = () => {
                     <Link className="navbar-brand" to="/">
                         <img src={logo} alt="Logo" className="img-fluid" style={{ width: '60px' }} />
                     </Link>
-                    <div className="d-flex align-items-center gap-3">
-                        <span className="text-dark fw-semibold">
-                            📞 6299-397-622
-                        </span>
-                        <Link to="/agent" className="text-decoration-none text-dark small">
-                            👤 Travel Agent? Join Us
-                        </Link>
-                    </div>
                     <div className="d-flex align-items-center gap-3 small">
                         <Link to="/blog" className="text-dark text-decoration-none">📰 Blog</Link>
                         <Link to="/offers" className="text-dark text-decoration-none">🎁 Offers</Link>
                         <Link to="/download" className="text-dark text-decoration-none">📱 Download App</Link>
+
+                    </div>
+                    <div className="d-flex align-items-center gap-3">
+                        <span className="text-dark fw-semibold">
+                            📞 6299-397-622
+                        </span>
+                        <span className="text-dark fw-semibold">
+                            📞 9343-055-708
+                        </span>
+                        <Link to="/agent" className="text-decoration-none text-dark small">
+                            👤 Travel Agent? Join Us
+                        </Link>
                         {user ? (
                             <Button color="dark" size="sm" onClick={logout}>Logout</Button>
                         ) : (

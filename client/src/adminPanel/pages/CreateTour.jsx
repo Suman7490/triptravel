@@ -10,9 +10,10 @@ import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
 
 const countries = {
-    India: ["Maharashtra", "Delhi", "Karnataka", "Rajasthan", "Kerala"],
+    India: ["Maharashtra", "Delhi", "Karnataka", "Rajasthan", "Kerala", "Jammu & Kashmir"],
     USA: ["California", "Texas", "New York", "Florida", "Washington"],
-    UK: ["England", "Scotland", "Wales", "Northern Ireland"]
+    UK: ["England", "Scotland", "Wales", "Northern Ireland"],
+    Singapur: ["England", "Scotland", "Wales", "Northern Ireland"]
 };
 
 const CreateTour = () => {

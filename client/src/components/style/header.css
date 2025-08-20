@@ -63,7 +63,8 @@
   /* Dropdown opens on hover */
   .navbar .dropdown:hover .dropdown-menu {
     display: block;
-    margin-top: 0; /* remove spacing */
+    margin-top: 0;
+    top: 4.1rem; /* remove spacing */
   }
 
   .navbar .dropdown-toggle::after {

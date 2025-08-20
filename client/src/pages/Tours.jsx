@@ -68,7 +68,7 @@ const Tours = () => {
                                                 <td>{page * 8 + index + 1}</td>
                                                 <td>{tour.title}</td>
                                                 <td>{tour.city}</td>
-                                                <td>{tour.price}</td>
+                                                <td>{tour.price}/- PP</td>
                                                 <td><Link to={`/tour/${tour._id}`}>Get Details</Link></td>
                                             </tr>
                                         ))}

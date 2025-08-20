@@ -1,6 +1,6 @@
 import React from 'react'
 import TourCard from '../shared/TourCard'
-import { Col } from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'
 
 import useFetch from '../hooks/useFetch'
 import { BASE_URL } from '../utils/config'
@@ -18,7 +18,8 @@ const FeaturedTourList = () => {
                 error && <h4>{error}</h4>
             }
             {!loading && !error && featuredTours?.map(tour => (
-                <Col lg='3' className='mb-4' key={tour._id}>
+
+                <Col lg='4 p-1' className='mb-4' key={tour._id}>
                     <TourCard tour={tour} />
                 </Col>
             ))}
