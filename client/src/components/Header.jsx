@@ -50,7 +50,7 @@ const Header = () => {
                             📞 6299-397-622
                         </span>
                         <span className="text-dark fw-semibold">
-                            📞 9343-055-708
+                            📞 9971-347-577
                         </span>
                         <Link to="/agent" className="text-decoration-none text-dark small">
                             👤 Travel Agent? Join Us
