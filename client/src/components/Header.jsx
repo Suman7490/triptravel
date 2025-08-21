@@ -40,14 +40,33 @@ const Header = () => {
                         <img src={logo} alt="Logo" className="img-fluid" style={{ width: '60px' }} />
                     </Link>
                     <div className="d-flex align-items-center gap-3 small">
-                        <Link to="/blog" className="text-dark text-decoration-none">📰 Blog</Link>
+                        <a
+                            href="https://thesumantech.wordpress.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-dark text-decoration-none"
+                        >
+                            📰 Blog
+                        </a>
                         <Link to="/offers" className="text-dark text-decoration-none">🎁 Offers</Link>
-                        <Link to="/download" className="text-dark text-decoration-none">📱 Download App</Link>
+                        <a
+                            href="https://wa.me/916299397622"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-dark text-decoration-none"
+                        >
+                            📱 Chat with us
+                        </a>
 
                     </div>
                     <div className="d-flex align-items-center gap-3">
                         <span className="text-dark fw-semibold">
-                            📞 6299-397-622
+                            <a
+                                href="tel:+916299397622"
+                                className="text-dark fw-semibold text-decoration-none"
+                            >
+                                📞 6299-397-622
+                            </a>
                         </span>
                         <span className="text-dark fw-semibold">
                             📞 9971-347-577
