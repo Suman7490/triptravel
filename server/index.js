@@ -18,14 +18,30 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
+
+const allowedOrigins = [
+    process.env.CLIENT_URL,          // production frontend
+    "http://localhost:3000",         // local frontend dev
+];
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+// app.use(cors({
+//     origin: process.env.CLIENT_URL,
+//     credentials: true,
+// }));
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+        // allow requests with no origin (like Postman or curl)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        } else {
+            return callback(new Error("CORS not allowed for this origin: " + origin), false);
+        }
+    },
     credentials: true,
 }));
-
 // API routes
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/tours', tourRoute);
