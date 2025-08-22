@@ -1,59 +1,54 @@
-import express from 'express'
-import dotenv from 'dotenv'
-dotenv.config()
-import mongoose from 'mongoose'
-import cors from 'cors'
-import cookieParser from 'cookie-parser'
-import tourRoute from './routes/tours.js'
-import userRoute from './routes/users.js'
-import authRoute from './routes/auth.js'
-import reviewRoute from './routes/reviews.js'
-import bookingRoute from './routes/bookings.js'
+import express from 'express';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import tourRoute from './routes/tours.js';
+import userRoute from './routes/users.js';
+import authRoute from './routes/auth.js';
+import reviewRoute from './routes/reviews.js';
+import bookingRoute from './routes/bookings.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const app = express();
 
-const app = express()
-const port = process.env.PORT || 8000;
-const corsOptions = {
-    origin: 'http://localhost:3000',
+// Middleware
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({
+    origin: process.env.CLIENT_URL,
     credentials: true,
-}
-app.use(cors(corsOptions))
-mongoose.set("strictQuery", false);
-const connect = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('Database connected')
-        console.log("Cloud Name:", process.env.CLOUDINARY_CLOUD_NAME);
-        console.log("API Key:", process.env.CLOUDINARY_API_KEY);
-        console.log("API Secret:", process.env.CLOUDINARY_API_SECRET ? "Loaded" : "Missing");
+}));
 
-    } catch (err) {
-        console.log('Database connection failed')
-    }
-}
+// API routes
+app.use('/api/v1/auth', authRoute);
+app.use('/api/v1/tours', tourRoute);
+app.use('/api/v1/users', userRoute);
+app.use('/api/v1/review', reviewRoute);
+app.use('/api/v1/booking', bookingRoute);
 
-
-// ================Middleware==================
-app.use(express.json())
-app.use(cors(corsOptions))
-app.use(cookieParser())
-app.use('/api/v1/auth', authRoute)
-app.use('/api/v1/tours', tourRoute)
-app.use('/api/v1/users', userRoute)
-app.use('/api/v1/review', reviewRoute)
-app.use('/api/v1/booking', bookingRoute)
+// Static file serving (uploads)
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
+// Database connection
+mongoose.set("strictQuery", false);
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("✅ Database connected"))
+    .catch(err => console.error("❌ DB connection failed:", err.message));
 
-app.listen(port, () => {
-    connect();
-    console.log('Server listening o port', port)
-})
+// 🔑 If running locally, start server with app.listen
+if (process.env.NODE_ENV !== 'production') {
+    const port = process.env.PORT || 4000;
+    app.listen(port, () => {
+        console.log(`🚀 Server running locally on http://localhost:${port}`);
+    });
+}
+
+// Export app for Vercel
+export default app;
