@@ -75,7 +75,7 @@ const Login = () => {
                             <div className="user mb-3">
                                 <img src={userIcon} alt="user icon" />
                             </div>
-                            <h2 className="mb-4">Login</h2>
+                            <h2 className="mb-4">Login Page</h2>
 
                             <Form onSubmit={handleClick}>
                                 <FormGroup>
