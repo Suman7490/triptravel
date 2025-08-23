@@ -283,7 +283,7 @@ const Header = () => {
                                 </NavLink>
                             </li>
 
-                            <li className="nav-item">
+                            {/*  <li className="nav-item">
                                 <NavLink
                                     to="/dashboard/create-tour"
                                     onClick={handleNavClick}
@@ -305,7 +305,7 @@ const Header = () => {
                                 >
                                     Booking
                                 </NavLink>
-                            </li>
+                            </li> */}
 
                             <li className="nav-item">
                                 <NavLink
