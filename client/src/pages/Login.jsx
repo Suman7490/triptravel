@@ -1,21 +1,20 @@
-import React, { useState, useContext } from 'react'
-import { Container, Row, Col, Form, FormGroup, Button } from 'reactstrap'
-import '../styles/login.css'
-import { Link, useNavigate } from 'react-router-dom'
-import loginImg from '../assets/images/login.png'
-import userIcon from '../assets/images/user.png'
+import React, { useState, useContext } from 'react';
+import { Container, Row, Col, Form, FormGroup, Button } from 'reactstrap';
+// import '../styles/login.css';
+import { Link, useNavigate } from 'react-router-dom';
+import loginImg from '../assets/images/login.png';
+import userIcon from '../assets/images/user.png';
 
-import { AuthContext } from './../context/authContext'
-import { BASE_URL } from './../utils/config'
+import { AuthContext } from './../context/authContext';
+import { BASE_URL } from './../utils/config';
 
 const Login = () => {
-
     const [credentials, setCredentials] = useState({
         email: undefined,
         password: undefined
     });
 
-    const { dispatch } = useContext(AuthContext)
+    const { dispatch } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleChange = e => {
@@ -48,7 +47,7 @@ const Login = () => {
             dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
 
             if (result.data.role === 'admin') {
-                navigate('/dashboard/bookings');
+                navigate('/dashboard');
             } else {
                 navigate('/');
             }
@@ -58,39 +57,65 @@ const Login = () => {
         }
     };
 
-
     return (
-        <section>
+        <section className="login-section">
             <Container>
-                <Row>
-                    <Col lg='8' className='m-auto'>
-                        <div className='login__container d-flex justify-content-between'>
-                            <div className='login__img'>
-                                <img src={loginImg} alt='' />
-                            </div>
-                            <div className='login__form'>
-                                <div className='user'>
-                                    <img src={userIcon} alt='' />
-                                </div>
-                                <h2>Login</h2>
-                                <Form onSubmit={handleClick}>
-                                    <FormGroup>
-                                        <input type='email' placeholder='Email' id="email" required onChange={handleChange} />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <input type='password' placeholder='Password' id="password"
-                                            required onChange={handleChange} />
-                                    </FormGroup>
-                                    <Button className='btn secondary__btn auth__btn text-white' type="submit">Login</Button>
-                                </Form>
-                                <p>Don't have an account? <Link to='/register'>Create</Link> </p>
-                            </div>
+                <Row className="align-items-center">
+                    {/* Left Image */}
+                    <Col lg="1" md="6" sm="12"></Col>
+                    <Col lg="5" md="6" sm="12" className="">
+                        <div className="login__img text-center w-100" style={{ background: 'beige' }}>
+                            <img src={loginImg} alt="login" className="img-fluid" />
                         </div>
                     </Col>
+
+                    {/* Right Form */}
+                    <Col lg="4" md="6" sm="12">
+                        <div className="login__form text-center w-100" style={{ background: 'goldenrod' }}>
+                            <div className="user mb-3">
+                                <img src={userIcon} alt="user icon" />
+                            </div>
+                            <h2 className="mb-4">Login</h2>
+
+                            <Form onSubmit={handleClick}>
+                                <FormGroup>
+                                    <input
+                                        type='email'
+                                        placeholder='Email'
+                                        id="email"
+                                        required
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <input
+                                        type='password'
+                                        placeholder='Password'
+                                        id="password"
+                                        required
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </FormGroup>
+                                <Button
+                                    className='btn secondary__btn auth__btn text-white w-100'
+                                    type="submit"
+                                >
+                                    Login
+                                </Button>
+                            </Form>
+
+                            <p className="mt-3">
+                                Don't have an account? <Link to='/register'>Create</Link>
+                            </p>
+                        </div>
+                    </Col>
+                    <Col lg="2" md="6" sm="12"></Col>
                 </Row>
             </Container>
         </section>
     )
-}
+};
 
-export default Login
+export default Login;
