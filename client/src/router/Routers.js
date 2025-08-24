@@ -27,10 +27,11 @@ const Routers = () => {
       <Route path="/dashboard/*" element={
         <ProtectedRoute adminOnly>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="bookings" element={<AllBookings />} />
+            {/* <Route path="/" element={<Dashboard />} />         
+            <Route path="/tours" element={<AllTours />} /> */}
+            <Route path='/' element={<Dashboard />} />
             <Route path="create-tour" element={<CreateTour />} />
-            <Route path="/tours" element={<AllTours />} />
+            <Route path="bookings" element={<AllBookings />} />
           </Routes>
         </ProtectedRoute>
       } />
