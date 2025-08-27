@@ -26,10 +26,11 @@ const Sidebar = () => {
                         </NavLink>
                     </li>
                     <li className="nav-item mb-2">
-                        <NavLink to="/dashboard/create-tour" className="nav-link">
-                            <FaPlane className="me-2" /> Create Tour
+                        <NavLink to="/dashboard/tours" className="nav-link">
+                            <FaPlane className="me-2" /> Tours
                         </NavLink>
                     </li>
+
                     <li className="nav-item mb-2">
                         <NavLink to="/dashboard/bookings" className="nav-link">
                             <FaClipboardList className="me-2" /> All Bookings

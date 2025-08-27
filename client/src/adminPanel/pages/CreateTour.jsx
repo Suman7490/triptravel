@@ -7,7 +7,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Country, State } from "country-state-city";
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 
 const countries = {
     India: ["Maharashtra", "Delhi", "Karnataka", "Rajasthan", "Kerala", "Jammu & Kashmir"],
@@ -17,10 +20,15 @@ const countries = {
 };
 
 const CreateTour = () => {
+    const { id } = useParams();
+    const isEdit = Boolean(id);
+    const [themes, setThemes] = useState([]);
     const [photo, setPhoto] = useState(null);
     const [previewURL, setPreviewURL] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
+    const countriesList = Country.getAllCountries();
+    const statesList = State.getStatesOfCountry(formData.countryCode);
 
     const [formData, setFormData] = useState({
         title: '',
@@ -28,11 +36,12 @@ const CreateTour = () => {
         state: '',
         city: '',
         category: [],
+        bestTime: { from: '', to: '' },
+        duration: { nights: 0, days: 1 },
         desc: '',
         price: '',
-        featured: true,
+        featured: false,
     });
-
     // Simulated admin check from cookie/localStorage
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -43,6 +52,55 @@ const CreateTour = () => {
         }
     }, []);
 
+    // Fetch themes (categories)
+    useEffect(() => {
+        const fetchThemes = async () => {
+            try {
+                const res = await fetch(`${BASE_URL}/themes`);
+                const data = await res.json();
+                if (data.success) setThemes(data.data);
+            } catch (err) {
+                console.error("Error fetching themes:", err);
+            }
+        };
+        fetchThemes();
+    }, []);
+
+
+    useEffect(() => {
+        if (isEdit) {
+            const fetchTour = async () => {
+                try {
+                    const res = await fetch(`${BASE_URL}/tours/${id}`);
+                    const result = await res.json();
+                    if (res.ok && result.success) {
+                        setFormData({
+                            title: result.data.title || '',
+                            country: result.data.country || 'India',
+                            state: result.data.state || '',
+                            city: result.data.city || '',
+                            category: result.data.category || [],
+                            bestTime: result.data.bestTime || { from: '', to: '' },
+                            duration: result.data.duration || { nights: 0, days: 1 },
+                            desc: result.data.desc || '',
+                            price: result.data.price || '',
+                            featured: result.data.featured || false,
+                        });
+
+                        setPreviewURL(result.data.photo); // existing photo from Cloudinary
+                    } else {
+                        toast.error("Failed to load tour data");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    toast.error("Error fetching tour data");
+                }
+            };
+            fetchTour();
+        }
+    }, [id, isEdit]);
+
+
     const handleChange = e => {
         const { name, value, type, checked } = e.target;
         if (name === "category") return
@@ -52,14 +110,34 @@ const CreateTour = () => {
         }));
     };
 
-    const handleCategoryChange = (e) => {
-        const value = e.target.value;
-        setFormData((prev) => {
-            if (prev.category.includes(value)) {
-                return { ...prev, category: prev.category.filter((item) => item !== value) };
-            } else {
-                return { ...prev, category: [...prev.category, value] };
-            }
+    // Handle bestTime
+    const handleBestTime = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            bestTime: { ...prev.bestTime, [name]: value }
+        }));
+    };
+
+    // Handle duration (nights auto updates days)
+    const handleDurationChange = (e) => {
+        const nights = parseInt(e.target.value, 10) || 0;
+        setFormData(prev => ({
+            ...prev,
+            duration: { nights, days: nights + 1 }
+        }));
+    };
+
+    // Handle categories
+    const handleCategoryChange = (id) => {
+        setFormData(prev => {
+            const already = prev.category.includes(id);
+            return {
+                ...prev,
+                category: already
+                    ? prev.category.filter(c => c !== id)
+                    : [...prev.category, id],
+            };
         });
     };
 
@@ -73,62 +151,53 @@ const CreateTour = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        for (const key in formData) {
-            if (!formData[key] && key !== 'featured') {
-                return toast.warning(`Please fill in the ${key} field.`);
-            }
-        }
-        if (!photo) return toast.warning('Please upload a photo');
 
         const formDataToSend = new FormData();
         Object.entries(formData).forEach(([key, value]) => {
             if (Array.isArray(value)) {
                 value.forEach(v => formDataToSend.append(key, v));
+            } else if (typeof value === "object") {
+                formDataToSend.append(key, JSON.stringify(value));
             } else {
                 formDataToSend.append(key, value);
             }
         });
-        formDataToSend.append('photo', photo);
+
+        if (photo) {
+            formDataToSend.append("photo", photo);
+        }
 
         try {
-            const res = await fetch(`${BASE_URL}/tours`, {
-                method: 'POST',
-                credentials: 'include',
+            const url = isEdit ? `${BASE_URL}/tours/${id}` : `${BASE_URL}/tours`;
+            const method = isEdit ? "PUT" : "POST";
+
+            const res = await fetch(url, {
+                method,
+                credentials: "include",
                 body: formDataToSend,
             });
 
             const result = await res.json();
             if (res.ok) {
-                toast.success('Tour added successfully!');
-                navigate("/tours");
-                setFormData({
-                    title: '',
-                    country: 'India',
-                    state: '',
-                    city: '',
-                    category: [],
-                    desc: '',
-                    price: '',
-                    featured: false,
-
-                });
-                setPhoto(null);
-                setPreviewURL(null);
+                alert(isEdit ? "Tour updated successfully!" : "Tour added successfully!");
+                navigate("/dashboard/tours");
             } else {
-                toast.error(result.message || 'Failed to add tour');
+                toast.error(result.message || "Failed to save tour");
             }
         } catch (error) {
             console.error(error);
-            toast.error('Something went wrong');
+            toast.error("Something went wrong");
         }
     };
+
 
     if (!isAdmin) return <p className="text-center mt-5">You are not authorized to access this page.</p>;
 
     return (
         <>
-            <CommonSection title="Create Tour" />
-            <Container className="my-5">
+
+            <div className="my-5">
+                <h4 className='text-center'>Create Tour</h4>
                 <Form onSubmit={handleSubmit} className="shadow p-4 rounded bg-light">
                     <FormGroup>
                         <Label>Title</Label>
@@ -140,12 +209,13 @@ const CreateTour = () => {
                         <Label>Country</Label>
                         <Input
                             type="select"
-                            name="country"
-                            value={formData.country}
-                            onChange={handleChange}
+                            name="countryCode"
+                            value={formData.countryCode}
+                            onChange={handleCountryChange}
                         >
-                            {Object.keys(countries).map(c => (
-                                <option key={c} value={c}>{c}</option>
+                            <option value="">Select Country</option>
+                            {countriesList.map(c => (
+                                <option key={c.isoCode} value={c.isoCode}>{c.name}</option>
                             ))}
                         </Input>
                     </FormGroup>
@@ -160,9 +230,9 @@ const CreateTour = () => {
                                 value={formData.state}
                                 onChange={handleChange}
                             >
-                                <option value="">-- Select State --</option>
-                                {countries[formData.country]?.map(s => (
-                                    <option key={s} value={s}>{s}</option>
+                                <option value="">Select State</option>
+                                {State.getStatesOfCountry(formData.countryCode).map(s => (
+                                    <option key={s.isoCode} value={s.name}>{s.name}</option>
                                 ))}
                             </Input>
                         </FormGroup>
@@ -173,35 +243,55 @@ const CreateTour = () => {
                         <Input name="city" value={formData.city} onChange={handleChange} required />
                     </FormGroup>
 
+
+                    {/* Best Time */}
                     <FormGroup>
-                        <Label>Category</Label>
-                        <div>
-                            <Input
-                                type="checkbox"
-                                value="Family Trip"
-                                checked={formData.category.includes("Family Trip")}
-                                onChange={handleCategoryChange}
-                            /> Family Trip
-                        </div>
-                        <div>
-                            <Input
-                                type="checkbox"
-                                value="Friends/Group"
-                                checked={formData.category.includes("Friends/Group")}
-                                onChange={handleCategoryChange}
-                            /> Friends/Group
-                        </div>
-                        <div>
-                            <Input
-                                type="checkbox"
-                                value="Solo Trip"
-                                checked={formData.category.includes("Solo Trip")}
-                                onChange={handleCategoryChange}
-                            /> Solo Trip
+                        <Label>Best Time to Visit</Label>
+                        <div className="d-flex gap-2">
+                            <Input type="select" name="from" value={formData.bestTime?.from || ""} onChange={handleBestTime}>
+                                <option value="">From</option>
+                                {months.map(m => <option key={m} value={m}>{m}</option>)}
+                            </Input>
+                            <Input type="select" name="to" value={formData.bestTime.to} onChange={handleBestTime}>
+                                <option value="">To</option>
+                                {months.map(m => <option key={m} value={m}>{m}</option>)}
+                            </Input>
                         </div>
                     </FormGroup>
 
+                    {/* Duration */}
+                    <FormGroup>
+                        <Label>Duration</Label>
+                        <div className="d-flex gap-2 align-items-center">
+                            <Input
+                                type="number"
+                                min="0"
+                                value={formData.duration.nights}
+                                onChange={handleDurationChange}
+                            />
+                            <span>Nights/</span>
+                            <span className='form-control'>
+                                {formData.duration.days}
+                            </span>
+                            <span>Days</span>
+                        </div>
+                    </FormGroup>
 
+                    {/* Category from DB */}
+                    <FormGroup>
+                        <Label>Category (Themes)</Label>
+                        <div>
+                            {themes.map(theme => (
+                                <div key={theme._id}>
+                                    <Input
+                                        type="checkbox"
+                                        checked={formData.category.includes(theme._id)}
+                                        onChange={() => handleCategoryChange(theme._id)}
+                                    /> {theme.name}
+                                </div>
+                            ))}
+                        </div>
+                    </FormGroup>
 
                     <FormGroup>
                         <Label>Photo</Label>
@@ -255,11 +345,12 @@ const CreateTour = () => {
                         </Label>
                     </FormGroup>
 
-                    <Button color="primary" block>Add Tour</Button>
+                    <Button color="primary" block>
+                        {isEdit ? "Update Tour" : "Add Tour"}
+                    </Button>
                 </Form>
-            </Container>
+            </div>
 
-            <Newsletter />
             <ToastContainer position="top-center" />
         </>
     );

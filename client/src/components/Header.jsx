@@ -127,7 +127,7 @@ const Header = () => {
                                 >
                                     Honeymoon Packages
                                 </a>
-                                <div className="dropdown-menu w-100 mt-0 p-4" aria-labelledby="honeymoonDropdown">
+                                <div className="dropdown-menu mt-0 p-4" aria-labelledby="honeymoonDropdown">
                                     <div className="row">
                                         <div className="col-md-4">
                                             <h6 className="fw-bold">Indian Destinations</h6>
@@ -166,12 +166,12 @@ const Header = () => {
                                 >
                                     Family Packages
                                 </a>
-                                <div className="dropdown-menu w-100 mt-0 p-4" aria-labelledby="honeymoonDropdown">
+                                <div className="dropdown-menu mt-0 p-4" aria-labelledby="honeymoonDropdown">
                                     <div className="row">
                                         <div className="col-md-4">
                                             <h6 className="fw-bold">Indian Destinations</h6>
                                             <ul className="list-unstyled">
-                                                <li><Link to="/destinations/kerala" className="dropdown-item">Kerala</Link></li>
+                                                <li><Link to="/destinations/kerala" className="dropdown-item">Uttar Pradesh</Link></li>
                                                 <li><Link to="/destinations/goa" className="dropdown-item">Goa</Link></li>
                                                 <li><Link to="/destinations/uttarakhand" className="dropdown-item">Uttarakhand</Link></li>
                                                 <li><Link to="/destinations/view-all" className="dropdown-item text-primary">View All</Link></li>
@@ -205,7 +205,7 @@ const Header = () => {
                                 >
                                     Destination Guide
                                 </a>
-                                <div className="dropdown-menu w-100 mt-0 p-4" aria-labelledby="honeymoonDropdown">
+                                <div className="dropdown-menu mt-0 p-4" aria-labelledby="honeymoonDropdown">
                                     <div className="row">
                                         <div className="col-md-4">
                                             <h6 className="fw-bold">Indian Destinations</h6>
@@ -244,7 +244,7 @@ const Header = () => {
                                 >
                                     Holidays Themes
                                 </a>
-                                <div className="dropdown-menu w-100 mt-0 p-4" aria-labelledby="honeymoonDropdown">
+                                <div className="dropdown-menu mt-0 p-4" aria-labelledby="honeymoonDropdown">
                                     <div className="row">
                                         <div className="col-md-4">
                                             <h6 className="fw-bold">Indian Destinations</h6>
@@ -270,42 +270,6 @@ const Header = () => {
                                     </div>
                                 </div>
                             </li>
-                            {/* 🔹 Normal Links */}
-                            <li className="nav-item">
-                                <NavLink
-                                    to="/tours"
-                                    onClick={handleNavClick}
-                                    className={({ isActive }) =>
-                                        `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
-                                    }
-                                >
-                                    Tours
-                                </NavLink>
-                            </li>
-
-                            {/*  <li className="nav-item">
-                                <NavLink
-                                    to="/dashboard/create-tour"
-                                    onClick={handleNavClick}
-                                    className={({ isActive }) =>
-                                        `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
-                                    }
-                                >
-                                    Create Tour
-                                </NavLink>
-                            </li>
-
-                            <li className="nav-item">
-                                <NavLink
-                                    to="/dashboard/bookings"
-                                    onClick={handleNavClick}
-                                    className={({ isActive }) =>
-                                        `nav-link ${isActive ? 'active text-primary fw-bold' : ''}`
-                                    }
-                                >
-                                    Booking
-                                </NavLink>
-                            </li> */}
 
                             <li className="nav-item">
                                 <NavLink

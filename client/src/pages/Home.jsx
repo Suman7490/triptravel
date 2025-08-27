@@ -8,15 +8,12 @@ import heroVideo from '../assets/images/hero-video.mp4'
 import worldImg from '../assets/images/world.png'
 import experienceImg from '../assets/images/experience.png'
 import Subtitle from '../shared/Subtitle'
-import SearchBar from '../shared/SearchBar'
 import ServiceList from '../services/ServiceList'
 import FeaturedTourList from '../components/FeaturedTourList'
 import MasonryImagesGallery from '../components/Image-gallery/MasonryImagesGallery'
 import Testimonial from '../components/Testimonial'
 import Newsletter from '../shared/Newsletter'
-import TourFilters from '../shared/TourFilters'
-import CompositeFilters from '../shared/CompositeFilters'
-import { TripTypeFilter, BudgetFilter, LocationFilter, TourThemeFilter, DurationFilter, SeasonMonthFilter, ApplyResetButtons } from "../shared/TourFilters";
+import { TripTypeFilter, BudgetFilter, LocationFilter, TourThemeFilter, DurationFilter, SeasonFilter, MonthFilter, ApplyResetButtons } from "../shared/TourFilters";
 
 const Home = () => {
     return (
@@ -98,11 +95,10 @@ const Home = () => {
                         {/* <FeaturedTourList /> */}
                         <Col lg='3 border'>
                             <TripTypeFilter />
-                            <BudgetFilter />
                             <LocationFilter />
                             <TourThemeFilter />
                             <DurationFilter />
-                            <SeasonMonthFilter />
+                            <MonthFilter />
                             <ApplyResetButtons />
                         </Col>
                         <Col lg='9 border d-flex flex-wrap justify-content-between'>

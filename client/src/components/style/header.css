@@ -3,7 +3,12 @@
   display: block;
   margin-top: 0; /* align neatly */
 }
-
+.dropdown-menu {
+  max-width: 100vw;
+  overflow-x: auto;
+  left: 0;
+  right: 0;
+}
 /* Remove Bootstrap button look */
 .navbar-nav .nav-link {
   cursor: pointer;
@@ -52,6 +57,25 @@
    @media (max-width: 991.98px) {
   #navbarContent.collapse:not(.show) {
     display: none !important;
+  }
+  .dropdown-menu {
+    position: static !important;
+    width: 100% !important;
+    padding: 1rem;
+  }
+
+  .dropdown-menu .row {
+    display: block !important;
+  }
+
+  .dropdown-menu .col-md-4 {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+
+  .dropdown-menu img {
+    width: 100% !important;
+    height: auto !important;
   }
 }
 @media (min-width: 992px) {

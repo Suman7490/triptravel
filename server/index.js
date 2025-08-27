@@ -8,6 +8,7 @@ import userRoute from './routes/users.js';
 import authRoute from './routes/auth.js';
 import reviewRoute from './routes/reviews.js';
 import bookingRoute from './routes/bookings.js';
+import themeRoutes from "./routes/themes.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -48,6 +49,7 @@ app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/review', reviewRoute);
 app.use('/api/v1/booking', bookingRoute);
+app.use("/api/v1/themes", themeRoutes);
 
 // Static file serving (uploads)
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
@@ -58,7 +60,8 @@ mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 15000
-})
+}
+)
     .then(() => console.log("✅ Database connected"))
     .catch(err => console.error("❌ DB connection failed:", err.message));
 

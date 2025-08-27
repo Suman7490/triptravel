@@ -19,10 +19,21 @@ const tourSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        category: {
-            type: [String],
-            enum: ["Family Trip", "Friends/Group", "Solo Trip"],
-            required: true,
+        category: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Theme",
+                required: true,
+            },
+        ],
+        bestTime: {
+            from: { type: String, required: true },
+            to: { type: String, required: true },
+        },
+
+        duration: {
+            nights: { type: Number, required: true },
+            days: { type: Number, required: true },
         },
         photo: {
             type: String,

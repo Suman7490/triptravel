@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import '../styles/dashboardLayout.css';
+// DashboardLayout.jsx
+import React from "react";
+import Sidebar from "./Sidebar";
+import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
-
-
     return (
-        <div className="dashboard__layout">
-            <div className="dashboard__content">
-                <div className="dashboard__main">
-                    <Outlet />
+        <div className="container-fluid">
+            <div className="row min-vh-100">
+                {/* Sidebar - 25% */}
+                <div className="col-12 col-md-3 col-lg-3 p-0 border-end bg-light">
+                    <Sidebar />
+                </div>
+
+                {/* Main Content - 75% */}
+                <div className="col-12 col-md-9 col-lg-9 p-4">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h4 className="fw-bold">Admin Dashboard</h4>
+                    </div>
+                    <div className="main-content">
+                        <Outlet /> {/* ✅ Child pages go here */}
+                    </div>
                 </div>
             </div>
         </div>

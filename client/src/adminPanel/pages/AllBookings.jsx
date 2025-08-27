@@ -37,7 +37,6 @@ const AllBookings = () => {
 
     return (
         <>
-            <CommonSection title={"All bookings"} />
             <section className='pt-0'>
                 <Container>
                     {loading && <h4 className='text-center pt-5'>Loading...</h4>}
@@ -88,7 +87,6 @@ const AllBookings = () => {
 
                 </Container>
             </section>
-            <Newsletter />
             <ToastContainer position="top-center" />
         </>
     );

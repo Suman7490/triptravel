@@ -3,12 +3,13 @@ import CommonSection from '../../shared/CommonSection'
 import { Container, Row, Col } from 'reactstrap'
 import useFetch from '../../hooks/useFetch'
 import { BASE_URL } from '../../utils/config'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Tours = () => {
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(0);
     const [refresh, setRefresh] = useState(false);
-
+    const navigate = useNavigate();
 
     const { data: tours, loading, error } = useFetch(`${BASE_URL}/tours?page=${page}&refresh=${refresh}`)
     const { data: tourCount } = useFetch(`${BASE_URL}/tours/search/getTourCount`)
@@ -19,6 +20,9 @@ const Tours = () => {
         window.scrollTo(0, 0);
     }, [page, tourCount, tours]);
 
+
+
+
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this tour?");
         if (!confirmDelete) return;
@@ -26,7 +30,7 @@ const Tours = () => {
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch(`http://localhost:4000/api/v1/tours/${id}`, {
+            const res = await fetch(`${BASE_URL}/v1/tours/${id}`, {
                 method: "DELETE",
                 credentials: "include",
                 headers: {
@@ -52,7 +56,6 @@ const Tours = () => {
 
     return (
         <>
-            <CommonSection title={"All Tours"} />
 
             <section className='pt-0'>
                 <Container>
@@ -62,6 +65,11 @@ const Tours = () => {
 
                     < Row >
                         <Col lg='12'>
+                            <Link to='/dashboard/create-tour'>
+                                <button className='btn btn-success'>
+                                    Create Tour
+                                </button>
+                            </Link>
                             <table className="table table-bordered table-hover text-center">
                                 <thead className="table-dark">
                                     <tr>
@@ -82,7 +90,12 @@ const Tours = () => {
                                                 <td>{tour.price}</td>
                                                 <td>
                                                     <div className='d-flex justify-content-around align-items-center'>
-                                                        <button className='btn btn-primary'>Edit</button>
+                                                        <button
+                                                            className='btn btn-primary'
+                                                            onClick={() => navigate(`/dashboard/create-tour/${tour._id}`)}
+                                                        >
+                                                            Edit
+                                                        </button>
                                                         <button
                                                             className='btn btn-danger'
                                                             onClick={() => handleDelete(tour._id)}
