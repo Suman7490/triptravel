@@ -1,5 +1,5 @@
 // controllers/themeController.js
-import Themes from "../models/themes.js";
+import Themes from "../models/Themes.js";
 
 
 // Create Theme
