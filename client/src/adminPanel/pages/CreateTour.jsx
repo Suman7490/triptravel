@@ -27,12 +27,12 @@ const CreateTour = () => {
     const [previewURL, setPreviewURL] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
-    const countriesList = Country.getAllCountries();
-    const statesList = State.getStatesOfCountry(formData.countryCode);
+
 
     const [formData, setFormData] = useState({
         title: '',
         country: 'India',
+        countryCode: '',
         state: '',
         city: '',
         category: [],
@@ -42,6 +42,10 @@ const CreateTour = () => {
         price: '',
         featured: false,
     });
+    const countriesList = Country.getAllCountries();
+    const statesList = formData.countryCode
+        ? State.getStatesOfCountry(formData.countryCode)
+        : [];
     // Simulated admin check from cookie/localStorage
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -148,6 +152,17 @@ const CreateTour = () => {
             setPreviewURL(URL.createObjectURL(file));
         }
     };
+    const handleCountryChange = (e) => {
+        const code = e.target.value;
+        const country = countriesList.find(c => c.isoCode === code);
+
+        setFormData(prev => ({
+            ...prev,
+            countryCode: code,
+            country: country ? country.name : '',
+            state: '' // reset state when country changes
+        }));
+    };
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -221,23 +236,21 @@ const CreateTour = () => {
                     </FormGroup>
 
                     {/* State field (only when National or if country has states list) */}
-                    {countries[formData.country] && (
-                        <FormGroup>
-                            <Label>State</Label>
-                            <Input
-                                type="select"
-                                name="state"
-                                value={formData.state}
-                                onChange={handleChange}
-                            >
-                                <option value="">Select State</option>
-                                {State.getStatesOfCountry(formData.countryCode).map(s => (
-                                    <option key={s.isoCode} value={s.name}>{s.name}</option>
-                                ))}
-                            </Input>
-                        </FormGroup>
-                    )}
 
+                    <FormGroup>
+                        <Label>State</Label>
+                        <Input
+                            type="select"
+                            name="state"
+                            value={formData.state}
+                            onChange={handleChange}
+                        >
+                            <option value="">Select State</option>
+                            {State.getStatesOfCountry(formData.countryCode).map(s => (
+                                <option key={s.isoCode} value={s.name}>{s.name}</option>
+                            ))}
+                        </Input>
+                    </FormGroup>
                     <FormGroup>
                         <Label>City</Label>
                         <Input name="city" value={formData.city} onChange={handleChange} required />

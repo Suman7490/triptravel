@@ -22,7 +22,7 @@ const tourSchema = new mongoose.Schema(
         category: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Theme",
+                ref: "Themes",
                 required: true,
             },
         ],

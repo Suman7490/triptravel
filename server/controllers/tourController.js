@@ -8,7 +8,36 @@ export const createTour = async (req, res) => {
         const photoPath = req.file ? req.file.path : req.body.photo;
         console.log("photoPath:", photoPath);
 
-        const newTour = new Tour({ ...req.body, photo: photoPath });
+        let tourData = { ...req.body };
+
+        // Parse nested fields
+        if (tourData.bestTime) {
+            try {
+                tourData.bestTime = JSON.parse(tourData.bestTime);
+            } catch (err) {
+                console.error("Invalid bestTime JSON:", err);
+            }
+        }
+
+        if (tourData.duration) {
+            try {
+                tourData.duration = JSON.parse(tourData.duration);
+            } catch (err) {
+                console.error("Invalid duration JSON:", err);
+            }
+        }
+
+        if (tourData.category) {
+            try {
+                tourData.category = Array.isArray(tourData.category)
+                    ? tourData.category
+                    : [tourData.category]; // ensure it's always an array
+            } catch (err) {
+                console.error("Invalid category:", err);
+            }
+        }
+
+        const newTour = new Tour({ ...tourData, photo: photoPath });
         const saved = await newTour.save();
         res.status(201).json({ success: true, data: saved });
     } catch (e) {
@@ -16,6 +45,7 @@ export const createTour = async (req, res) => {
         res.status(500).json({ success: false, message: e.message });
     }
 };
+
 
 
 
@@ -113,6 +143,7 @@ export const getAllTour = async (req, res) => {
     try {
         const tours = await Tour.find({})
             .populate("reviews")
+            .populate("category", "name")
             .skip(page * 8)
             .limit(8);
 
