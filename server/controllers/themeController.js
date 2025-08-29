@@ -1,4 +1,3 @@
-// controllers/themeController.js
 import Themes from "../models/Themes.js";
 
 

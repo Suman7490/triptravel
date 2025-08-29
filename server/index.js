@@ -51,6 +51,19 @@ app.use('/api/v1/review', reviewRoute);
 app.use('/api/v1/booking', bookingRoute);
 app.use("/api/v1/themes", themeRoutes);
 
+app.use((req, res, next) => {
+    res.status(404).json({ success: false, message: "Route not found" });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    console.error("❌ Server Error:", err);
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || "Internal Server Error",
+        stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
+    });
+});
 // Static file serving (uploads)
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 

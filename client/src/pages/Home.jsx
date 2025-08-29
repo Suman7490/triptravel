@@ -14,6 +14,7 @@ import MasonryImagesGallery from '../components/Image-gallery/MasonryImagesGalle
 import Testimonial from '../components/Testimonial'
 import Newsletter from '../shared/Newsletter'
 import { TripTypeFilter, BudgetFilter, LocationFilter, TourThemeFilter, DurationFilter, SeasonFilter, MonthFilter, ApplyResetButtons } from "../shared/TourFilters";
+import ThemesSlider from './ThemesSlider'
 
 const Home = () => {
     return (
@@ -61,6 +62,10 @@ const Home = () => {
             </section> */}
 
             {/******************************** Hero section start ********************************/}
+            <section>
+                <ThemesSlider />
+            </section>
+
             <section>
                 <Container>
                     <Row>
