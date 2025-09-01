@@ -1,3 +1,4 @@
+import Tour from '../models/Tour.js';
 // @route   GET /api/filters/countries
 export const getDistinctCountries = async (req, res) => {
     try {
@@ -9,7 +10,7 @@ export const getDistinctCountries = async (req, res) => {
     }
 };
 
-// @route   GET /api/filters/states/:country
+// @route   GET /api/filters/states/:country    
 export const getStatesByCountry = async (req, res) => {
     const country = req.params.country;
     try {

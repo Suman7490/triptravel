@@ -44,7 +44,7 @@ app.use('/api/v1/users', userRoute);
 app.use('/api/v1/review', reviewRoute);
 app.use('/api/v1/booking', bookingRoute);
 app.use("/api/v1/themes", themeRoutes);
-app.use("/api/filters", filterRoutes);
+app.use("/api/v1/filters", filterRoutes);
 
 app.use((req, res, next) => {
     res.status(404).json({ success: false, message: "Route not found" });

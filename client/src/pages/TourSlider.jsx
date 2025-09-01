@@ -9,19 +9,32 @@ const TourSlider = ({ filters }) => {
 
     useEffect(() => {
         const fetchTours = async () => {
+            let query = "";
+
+            if (filters?.domestic && !filters?.international) {
+                // Only domestic selected
+                query = `country=India`;
+            } else if (!filters?.domestic && filters?.international) {
+                // Only international selected
+                query = `country_ne=India`; // backend must support this
+            } else if ((filters?.domestic && filters?.international) || (!filters?.domestic && !filters?.international)) {
+                // Both selected OR none selected → fetch all
+                query = "";
+            }
+
             try {
-                let query = "";
-
-                if (filters?.country) query += `country=${filters.country}&`;
-                if (filters?.state) query += `state=${filters.state}&`;
-
-                const res = await fetch(`${BASE_URL}/tours?${query}`);
+                const res = await fetch(`${BASE_URL}/tours${query ? `?${query}` : ""}`);
                 const result = await res.json();
+                console.log("Fetched tours with filters:", filters, result);
+
                 if (result.success) setTours(result.data);
+                else setTours([]);
             } catch (err) {
                 console.error("Error fetching tours:", err);
+                setTours([]);
             }
         };
+
         fetchTours();
     }, [filters]);
 
@@ -88,7 +101,6 @@ const TourSlider = ({ filters }) => {
         <Container>
             <Row>
                 <Col lg='12'>
-                    <h2 className="text-2xl font-bold mb-4">Explore Featured Tours</h2>
                     <Slider {...settings}>
                         {tours.map((tour) => (
                             <div key={tour._id} className="tour-item position-relative p-1">

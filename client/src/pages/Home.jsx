@@ -13,12 +13,16 @@ import FeaturedTourList from '../components/FeaturedTourList'
 import MasonryImagesGallery from '../components/Image-gallery/MasonryImagesGallery'
 import Testimonial from '../components/Testimonial'
 import Newsletter from '../shared/Newsletter'
-import { TripTypeFilter, BudgetFilter, LocationFilter, TourThemeFilter, DurationFilter, SeasonFilter, MonthFilter, ApplyResetButtons } from "../shared/TourFilters";
+import { TripTypeFilter, BudgetFilter, TourThemeFilter, DurationFilter, SeasonFilter, MonthFilter, ApplyResetButtons } from "../shared/TourFilters";
+import { LocationFilter } from '../shared/LocationFilter'
 import ThemesSlider from './ThemesSlider'
 import TourSlider from './TourSlider'
 
 const Home = () => {
-    const [filters, setFilters] = useState({});
+    const [filters, setFilters] = useState({ country: "", state: "" });
+    const handleFilterChange = (filters) => {
+        setFilters(filters);
+    };
     return (
 
         <>
@@ -71,7 +75,7 @@ const Home = () => {
                 <Container>
                     <Row>
                         <Col lg='12 d-flex'>
-                            <LocationFilter onFilterChange={setFilters} />
+                            <LocationFilter onFilterChange={handleFilterChange} />
                         </Col>
                         <Col lg='12 d-flex'>
                             <TourSlider filters={filters} />
@@ -114,7 +118,6 @@ const Home = () => {
                         {/* <FeaturedTourList /> */}
                         <Col lg='3 border'>
                             <TripTypeFilter />
-                            <LocationFilter />
                             <TourThemeFilter />
                             <DurationFilter />
                             <MonthFilter />
