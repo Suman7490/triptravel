@@ -88,3 +88,52 @@ font-size: 0.9rem;
 padding: 40px 0;
   }
 }
+/* Show multiple items per slide */
+#themesCarousel .carousel-inner {
+  display: flex;
+}
+
+#themesCarousel .carousel-item {
+  flex: 0 0 25%;   /* 4 items per view (25% each) */
+  display: block;
+}
+
+@media (max-width: 768px) {
+  #themesCarousel .carousel-item {
+    flex: 0 0 50%;  /* 2 per row on tablets */
+  }
+}
+
+@media (max-width: 576px) {
+  #themesCarousel .carousel-item {
+    flex: 0 0 100%; /* 1 per row on mobile */
+  }
+}
+
+
+/* TourSlider CSS */
+.tour-item {
+    position: relative;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.view-btn {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.3s ease;
+}
+
+.tour-item:hover .view-btn {
+    display: block;
+}
+
+.card-body:hover .view-btn {
+    opacity: 1;
+}
+/* Style for Next and Prev buttons */

@@ -1,6 +1,7 @@
 import React from "react";
 import { FaClock } from "react-icons/fa";
 import { FaUser, FaUserFriends, FaHeart, FaUmbrellaBeach } from "react-icons/fa";
+
 export const TripTypeFilter = () => (
     <div className="mb-4">
         <label className="fw-semibold mb-2 d-block">Trip Type</label>

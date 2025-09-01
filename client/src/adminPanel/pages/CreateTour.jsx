@@ -78,12 +78,14 @@ const CreateTour = () => {
                     const res = await fetch(`${BASE_URL}/tours/${id}`);
                     const result = await res.json();
                     if (res.ok && result.success) {
+                        const foundCountry = countriesList.find(c => c.name === result.data.country);
                         setFormData({
                             title: result.data.title || '',
                             country: result.data.country || 'India',
+                            countryCode: foundCountry ? foundCountry.isoCode : '',
                             state: result.data.state || '',
                             city: result.data.city || '',
-                            category: result.data.category || [],
+                            category: result.data.category?.map(c => c._id) || [],
                             bestTime: result.data.bestTime || { from: '', to: '' },
                             duration: result.data.duration || { nights: 0, days: 1 },
                             desc: result.data.desc || '',
@@ -91,7 +93,7 @@ const CreateTour = () => {
                             featured: result.data.featured || false,
                         });
 
-                        setPreviewURL(result.data.photo); // existing photo from Cloudinary
+                        setPreviewURL(result.data.photo);
                     } else {
                         toast.error("Failed to load tour data");
                     }

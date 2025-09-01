@@ -50,28 +50,76 @@ export const createTour = async (req, res) => {
 
 
 // Update Tour
+// export const updateTour = async (req, res) => {
+//     const id = req.params.id;
+
+//     try {
+//         let updateData = { ...req.body };
+//         if (updateData.bestTime) {
+//             try {
+//                 updateData.bestTime = JSON.parse(updateData.bestTime);
+//             } catch (err) {
+//                 console.error("Invalid bestTime JSON:", err);
+//             }
+//         }
+
+//         if (updateData.duration) {
+//             try {
+//                 updateData.duration = JSON.parse(updateData.duration);
+//             } catch (err) {
+//                 console.error("Invalid duration JSON:", err);
+//             }
+//         }
+//         if (req.file) {
+//             updateData.photo = req.file.path;
+//         }
+
+//         const updatedTour = await Tour.findByIdAndUpdate(
+//             id,
+//             { $set: updateData },
+//             { new: true, runValidators: true }
+//         );
+
+//         if (!updatedTour) {
+//             return res.status(404).json({ success: false, message: "Tour not found" });
+//         }
+
+//         res.status(200).json({
+//             success: true,
+//             message: "Successfully updated",
+//             data: updatedTour,
+//         });
+//     } catch (err) {
+//         console.error("Error in updateTour:", err);
+//         res.status(500).json({
+//             success: false,
+//             message: "Failed to update",
+//             error: err.message,
+//         });
+//     }
+// };
 export const updateTour = async (req, res) => {
     const id = req.params.id;
 
     try {
         let updateData = { ...req.body };
-        if (updateData.bestTime) {
-            try {
-                updateData.bestTime = JSON.parse(updateData.bestTime);
-            } catch (err) {
-                console.error("Invalid bestTime JSON:", err);
-            }
+
+        // Parse if strings
+        if (typeof updateData.bestTime === "string") {
+            updateData.bestTime = JSON.parse(updateData.bestTime);
         }
 
-        if (updateData.duration) {
-            try {
-                updateData.duration = JSON.parse(updateData.duration);
-            } catch (err) {
-                console.error("Invalid duration JSON:", err);
-            }
+        if (typeof updateData.duration === "string") {
+            updateData.duration = JSON.parse(updateData.duration);
         }
+
+        if (typeof updateData.category === "string") {
+            updateData.category = JSON.parse(updateData.category);
+        }
+
+        // Update photo if file uploaded
         if (req.file) {
-            updateData.photo = req.file.path;
+            updateData.photo = req.file.path; // or cloudinary URL if using Cloudinary
         }
 
         const updatedTour = await Tour.findByIdAndUpdate(
@@ -89,6 +137,7 @@ export const updateTour = async (req, res) => {
             message: "Successfully updated",
             data: updatedTour,
         });
+
     } catch (err) {
         console.error("Error in updateTour:", err);
         res.status(500).json({
@@ -138,10 +187,40 @@ export const getSingleTour = async (req, res) => {
 }
 
 // Get All Tour
+// export const getAllTour = async (req, res) => {
+//     const page = parseInt(req.query.page) || 0;
+//     try {
+//         const tours = await Tour.find({})
+//             .populate("reviews")
+//             .populate("category", "name")
+//             .skip(page * 8)
+//             .limit(8);
+
+//         res.status(200).json({
+//             success: true,
+//             count: tours.length,
+//             message: "Fatch Data Successfully",
+//             data: tours
+//         })
+//     } catch (err) {
+//         console.error("Error in getAllTour:", err);
+//         res.status(404).json({
+//             success: false,
+//             message: "not found",
+//         })
+//     }
+// }
 export const getAllTour = async (req, res) => {
     const page = parseInt(req.query.page) || 0;
+    const { country, state } = req.query;
+
+    let query = {};
+
+    if (country) query.country = country;
+    if (state) query.state = state;
+
     try {
-        const tours = await Tour.find({})
+        const tours = await Tour.find(query)
             .populate("reviews")
             .populate("category", "name")
             .skip(page * 8)
@@ -150,17 +229,18 @@ export const getAllTour = async (req, res) => {
         res.status(200).json({
             success: true,
             count: tours.length,
-            message: "Fatch Data Successfully",
+            message: "Fetch Data Successfully",
             data: tours
-        })
+        });
     } catch (err) {
         console.error("Error in getAllTour:", err);
         res.status(404).json({
             success: false,
             message: "not found",
-        })
+        });
     }
-}
+};
+
 
 // Get Tour by Search
 export const getTourBySearch = async (req, res) => {
@@ -216,3 +296,4 @@ export const getTourCount = async (req, res) => {
         res.status(500).json({ success: false, message: "failed to fetch" })
     }
 }
+

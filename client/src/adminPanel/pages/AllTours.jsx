@@ -30,7 +30,7 @@ const Tours = () => {
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch(`${BASE_URL}/v1/tours/${id}`, {
+            const res = await fetch(`${BASE_URL}/tours/${id}`, {
                 method: "DELETE",
                 credentials: "include",
                 headers: {
@@ -76,6 +76,9 @@ const Tours = () => {
                                         <th>Sr No.</th>
                                         <th>Tour Name</th>
                                         <th>Price</th>
+                                        <th>Country</th>
+                                        <th>State</th>
+                                        <th>City</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -88,6 +91,9 @@ const Tours = () => {
                                                 <td>{page * 8 + index + 1}</td>
                                                 <td>{tour.title}</td>
                                                 <td>{tour.price}</td>
+                                                <td>{tour.country}</td>
+                                                <td>{tour.state}</td>
+                                                <td>{tour.city}</td>
                                                 <td>
                                                     <div className='d-flex justify-content-around align-items-center'>
                                                         <button

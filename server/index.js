@@ -9,6 +9,7 @@ import authRoute from './routes/auth.js';
 import reviewRoute from './routes/reviews.js';
 import bookingRoute from './routes/bookings.js';
 import themeRoutes from "./routes/themes.js";
+import filterRoutes from "./routes/filterRoutes.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -21,19 +22,12 @@ const app = express();
 
 
 const allowedOrigins = [
-    process.env.CLIENT_URL,          // production frontend
-    "http://localhost:3000",         // local frontend dev
+    "http://localhost:3000",
 ];
-// Middleware
 app.use(express.json());
 app.use(cookieParser());
-// app.use(cors({
-//     origin: process.env.CLIENT_URL,
-//     credentials: true,
-// }));
 app.use(cors({
     origin: function (origin, callback) {
-        // allow requests with no origin (like Postman or curl)
         if (!origin) return callback(null, true);
         if (allowedOrigins.includes(origin)) {
             return callback(null, true);
@@ -50,6 +44,7 @@ app.use('/api/v1/users', userRoute);
 app.use('/api/v1/review', reviewRoute);
 app.use('/api/v1/booking', bookingRoute);
 app.use("/api/v1/themes", themeRoutes);
+app.use("/api/filters", filterRoutes);
 
 app.use((req, res, next) => {
     res.status(404).json({ success: false, message: "Route not found" });

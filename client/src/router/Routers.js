@@ -13,6 +13,7 @@ import Dashboard from '../adminPanel/Dashboard';
 import AllTours from '../adminPanel/pages/AllTours';
 import SearchResultList from '../pages/SearchResultList';
 import Themes from '../adminPanel/pages/Themes'
+import TourSlider from '../pages/TourSlider';
 
 const Routers = () => {
   return (
@@ -22,8 +23,9 @@ const Routers = () => {
       <Route path="/tours" element={<Tours />} />
       <Route path="/tour/:id" element={<TourDetails />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/login" element={<Tours />} />
+      {/* <Route path="/login" element={<Tours />} /> */}
       <Route path="/register" element={<Register />} />
+      <Route path="/tourSlider" element={<TourSlider />} />
       <Route path="/tours/search" element={<SearchResultList />} />
       <Route path="/thank-you" element={<ThankYou />} />
 

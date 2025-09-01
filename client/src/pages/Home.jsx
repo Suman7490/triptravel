@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/home.css'
 
 import { Container, Row, Col } from 'reactstrap'
@@ -15,8 +15,10 @@ import Testimonial from '../components/Testimonial'
 import Newsletter from '../shared/Newsletter'
 import { TripTypeFilter, BudgetFilter, LocationFilter, TourThemeFilter, DurationFilter, SeasonFilter, MonthFilter, ApplyResetButtons } from "../shared/TourFilters";
 import ThemesSlider from './ThemesSlider'
+import TourSlider from './TourSlider'
 
 const Home = () => {
+    const [filters, setFilters] = useState({});
     return (
 
         <>
@@ -64,6 +66,18 @@ const Home = () => {
             {/******************************** Hero section start ********************************/}
             <section>
                 <ThemesSlider />
+            </section>
+            <section>
+                <Container>
+                    <Row>
+                        <Col lg='12 d-flex'>
+                            <LocationFilter onFilterChange={setFilters} />
+                        </Col>
+                        <Col lg='12 d-flex'>
+                            <TourSlider filters={filters} />
+                        </Col>
+                    </Row>
+                </Container>
             </section>
 
             <section>

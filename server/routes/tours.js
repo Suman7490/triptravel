@@ -13,11 +13,11 @@ router.get("/search/getFeaturedTour", getFeaturedTour);
 router.get("/search/getTourCount", getTourCount);
 
 router.post('/', verifyToken, verifyAdmin, upload.single('photo'), createTour);
-router.put("/:id", verifyAdmin, updateTour);  // Update tour
+router.put("/:id", verifyAdmin, upload.single('photo'), updateTour);  // Update tour
 router.delete("/:id", verifyToken, verifyAdmin, deleteTour);  // Delete tour
 router.get("/:id", getSingleTour);  // Get Single tour
 router.get("/", getAllTour);  // Get All tour
-
+s
 
 
 export default router;
