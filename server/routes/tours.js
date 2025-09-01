@@ -17,7 +17,7 @@ router.put("/:id", verifyAdmin, upload.single('photo'), updateTour);  // Update 
 router.delete("/:id", verifyToken, verifyAdmin, deleteTour);  // Delete tour
 router.get("/:id", getSingleTour);  // Get Single tour
 router.get("/", getAllTour);  // Get All tour
-s
+
 
 
 export default router;
