@@ -49,55 +49,6 @@ export const createTour = async (req, res) => {
 
 
 
-// Update Tour
-// export const updateTour = async (req, res) => {
-//     const id = req.params.id;
-
-//     try {
-//         let updateData = { ...req.body };
-//         if (updateData.bestTime) {
-//             try {
-//                 updateData.bestTime = JSON.parse(updateData.bestTime);
-//             } catch (err) {
-//                 console.error("Invalid bestTime JSON:", err);
-//             }
-//         }
-
-//         if (updateData.duration) {
-//             try {
-//                 updateData.duration = JSON.parse(updateData.duration);
-//             } catch (err) {
-//                 console.error("Invalid duration JSON:", err);
-//             }
-//         }
-//         if (req.file) {
-//             updateData.photo = req.file.path;
-//         }
-
-//         const updatedTour = await Tour.findByIdAndUpdate(
-//             id,
-//             { $set: updateData },
-//             { new: true, runValidators: true }
-//         );
-
-//         if (!updatedTour) {
-//             return res.status(404).json({ success: false, message: "Tour not found" });
-//         }
-
-//         res.status(200).json({
-//             success: true,
-//             message: "Successfully updated",
-//             data: updatedTour,
-//         });
-//     } catch (err) {
-//         console.error("Error in updateTour:", err);
-//         res.status(500).json({
-//             success: false,
-//             message: "Failed to update",
-//             error: err.message,
-//         });
-//     }
-// };
 export const updateTour = async (req, res) => {
     const id = req.params.id;
 

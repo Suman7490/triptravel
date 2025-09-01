@@ -1,5 +1,35 @@
 import Themes from "../models/Themes.js";
+import Tour from "../models/Tour.js";
 
+
+
+// Get tour by theme
+export const getToursByTheme = async (req, res) => {
+    try {
+        const { themeId } = req.params;
+
+        // validate theme exists
+        const theme = await Themes.findById(themeId);
+        if (!theme) {
+            return res.status(404).json({ success: false, message: "Theme not found" });
+        }
+
+        // find tours under that theme
+        const tours = await Tour.find({ category: themeId })
+            .populate("category", "name")
+            .populate("reviews");
+
+        res.status(200).json({
+            success: true,
+            theme: theme.name,
+            count: tours.length,
+            data: tours
+        });
+    } catch (err) {
+        console.error("Error fetching tours by theme:", err);
+        res.status(500).json({ success: false, message: "Failed to fetch tours" });
+    }
+};
 
 // Create Theme
 export const createTheme = async (req, res) => {

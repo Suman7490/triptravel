@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from 'reactstrap'
 import Slider from "react-slick";
 import { BASE_URL } from "../utils/config";
+import { Link } from 'react-router-dom'
 
 const ThemesSlider = () => {
     const [themes, setThemes] = useState([]);
@@ -88,20 +89,22 @@ const ThemesSlider = () => {
                                 className="col-6 col-md-3 col-lg-3 px-2 themes-slide"
                                 style={{ flex: "0 0 auto" }}
                             >
-                                <div className="card border-0 shadow-sm h-100">
-                                    <img
-                                        src={theme.photo}
-                                        className="card-img-top"
-                                        alt={theme.name}
-                                        style={{ height: 160, objectFit: "cover" }}
-                                    />
-                                    <div className="card-body text-center">
-                                        <h6 className="fw-bold">{theme.name}</h6>
-                                        <small className="text-muted">
-                                            {Math.floor(Math.random() * 100) + 20}+ destinations
-                                        </small>
+                                <Link to={`/themes/${theme._id}/tours`} style={{ textDecoration: "none" }}>
+                                    <div className="card border-0 shadow-sm h-100">
+                                        <img
+                                            src={theme.photo}
+                                            className="card-img-top"
+                                            alt={theme.name}
+                                            style={{ height: 160, objectFit: "cover" }}
+                                        />
+                                        <div className="card-body text-center">
+                                            <h6 className="fw-bold">{theme.name}</h6>
+                                            <small className="text-muted">
+                                                {Math.floor(Math.random() * 100) + 20}+ destinations
+                                            </small>
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             </div>
                         ))}
                     </Slider>
