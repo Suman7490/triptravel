@@ -112,3 +112,5 @@ export const ApplyResetButtons = () => (
         <button className="btn btn-primary btn-sm">Apply</button>
     </div>
 );
+
+

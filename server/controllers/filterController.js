@@ -21,3 +21,28 @@ export const getStatesByCountry = async (req, res) => {
         res.status(500).json({ message: "Failed to fetch states" });
     }
 };
+
+// Get tour by State
+
+export const getTourByState = async (req, res) => {
+    try {
+        const { stateName } = req.params;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const regex = new RegExp(state.replace(/-/g, " "), "i");
+        const tours = await Tour.find({ state: regex })
+            .skip((page - 1) * limit)
+            .limit(limit);
+        const total = await Tour.countDocuments({ state: regex });
+        res.status(200).json({
+            success: true,
+            count: tours.length,
+            total,
+            page,
+            pages: Math.ceil(total / limit),
+            data: tours,
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+}

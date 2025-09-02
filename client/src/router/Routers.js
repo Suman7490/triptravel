@@ -15,6 +15,7 @@ import SearchResultList from '../pages/SearchResultList';
 import Themes from '../adminPanel/pages/Themes'
 import TourSlider from '../pages/TourSlider';
 import ThemeToursPage from '../pages/ThemeToursPage';
+import ToursByState from "../pages/ToursByState";
 
 const Routers = () => {
   return (
@@ -30,6 +31,7 @@ const Routers = () => {
       <Route path="/tours/search" element={<SearchResultList />} />
       <Route path="/thank-you" element={<ThankYou />} />
       <Route path="/themes/:themeId/tours" element={<ThemeToursPage />} />
+      <Route path="/state/:stateName" element={<ToursByState />} />
 
       {/* Dashboard Routes */}
       <Route

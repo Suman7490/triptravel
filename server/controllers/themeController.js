@@ -31,6 +31,24 @@ export const getToursByTheme = async (req, res) => {
     }
 };
 
+// GET /api/states/:stateName/themes
+export const getStateThemes = async (req, res) => {
+    try {
+        const { stateName } = req.params;
+
+        // Find themes available in tours of that state
+        const tours = await Tour.find({ state: stateName }).populate("theme");
+        const themes = [...new Map(tours.map(t => [t.theme._id, t.theme])).values()];
+
+        res.status(200).json({ success: true, data: themes });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Failed to fetch state themes" });
+    }
+};
+
+
+
 // Create Theme
 export const createTheme = async (req, res) => {
     try {

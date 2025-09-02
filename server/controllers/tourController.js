@@ -138,29 +138,6 @@ export const getSingleTour = async (req, res) => {
 }
 
 // Get All Tour
-// export const getAllTour = async (req, res) => {
-//     const page = parseInt(req.query.page) || 0;
-//     try {
-//         const tours = await Tour.find({})
-//             .populate("reviews")
-//             .populate("category", "name")
-//             .skip(page * 8)
-//             .limit(8);
-
-//         res.status(200).json({
-//             success: true,
-//             count: tours.length,
-//             message: "Fatch Data Successfully",
-//             data: tours
-//         })
-//     } catch (err) {
-//         console.error("Error in getAllTour:", err);
-//         res.status(404).json({
-//             success: false,
-//             message: "not found",
-//         })
-//     }
-// }
 export const getAllTour = async (req, res) => {
     const page = parseInt(req.query.page) || 0;
     const { country, state } = req.query;
@@ -191,6 +168,7 @@ export const getAllTour = async (req, res) => {
         });
     }
 };
+
 
 
 // Get Tour by Search

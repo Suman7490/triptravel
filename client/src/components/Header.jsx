@@ -31,6 +31,8 @@ const Header = () => {
         }
     };
 
+
+
     return (
         <header className="header sticky-top bg-white shadow-sm">
             {/* 🔹 Top Header Bar */}
@@ -132,9 +134,9 @@ const Header = () => {
                                         <div className="col-md-4">
                                             <h6 className="fw-bold">Indian Destinations</h6>
                                             <ul className="list-unstyled">
-                                                <li><Link to="/destinations/kerala" className="dropdown-item">Kerala</Link></li>
-                                                <li><Link to="/destinations/goa" className="dropdown-item">Goa</Link></li>
-                                                <li><Link to="/destinations/uttarakhand" className="dropdown-item">Uttarakhand</Link></li>
+                                                <li><Link to="/state/kerala" className="dropdown-item">Kerala</Link></li>
+                                                <li><Link to="/state/goa" className="dropdown-item">Goa</Link></li>
+                                                <li><Link to="/state/uttarakhand" className="dropdown-item">Uttarakhand</Link></li> <li><Link to="/state/uttar-pradesh" className="dropdown-item">Uttar Pradesh</Link></li>
                                                 <li><Link to="/destinations/view-all" className="dropdown-item text-primary">View All</Link></li>
                                             </ul>
                                         </div>
