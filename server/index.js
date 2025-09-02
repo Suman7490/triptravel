@@ -24,6 +24,8 @@ const app = express();
 const allowedOrigins = [
     "http://localhost:3000",
     "https://go4holidays.vercel.app",
+    "https://www.go4holidays.com",
+    "https://go4holidays.com"
 ];
 app.use(express.json());
 app.use(cookieParser());
