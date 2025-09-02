@@ -23,7 +23,6 @@ const app = express();
 
 const allowedOrigins = [
     "http://localhost:3000",
-    "https://triptravel-opal.vercel.app",
     "https://go4holidays.vercel.app",
 ];
 app.use(express.json());
