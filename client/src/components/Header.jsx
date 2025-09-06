@@ -32,15 +32,19 @@ const Header = () => {
 
     const handleNavClick = () => {
         setIsMobileMenuOpen(false);
-        if (navbarCollapseRef.current?.classList.contains('show')) {
-            navbarCollapseRef.current.classList.remove('show');
-            const toggler = document.querySelector('.navbar-toggler');
-            if (toggler) {
-                toggler.setAttribute('aria-expanded', 'false');
-                toggler.classList.add('collapsed');
-            }
+        const collapse = navbarCollapseRef.current;
+        if (collapse && collapse.classList.contains('show')) {
+            collapse.classList.remove('show');
+        }
+
+        const toggler = document.querySelector('.navbar-toggler');
+        if (toggler) {
+            toggler.setAttribute('aria-expanded', 'false');
+            toggler.classList.remove('active');
+            toggler.classList.add('collapsed');
         }
     };
+
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -79,7 +83,7 @@ const Header = () => {
                             </a>
                         </div>
                     </div>
-                    
+
                     <div className="d-flex align-items-center gap-3">
                         <div className="d-none d-md-flex align-items-center gap-3">
                             <a href="tel:+916299397622" className="contact-link">
@@ -145,7 +149,7 @@ const Header = () => {
                                     >
                                         <i className="ri-heart-line"></i> Honeymoon Packages
                                     </a>
-                                    <div className="dropdown-menu mega-menu" style={{minWidth: '1000px', maxWidth: '1200px', width: '100vw'}}>
+                                    <div className="dropdown-menu mega-menu" style={{ minWidth: '1000px', maxWidth: '1200px', width: '100vw' }}>
                                         <div className="mega-menu-content">
                                             <div className="row">
                                                 <div className="col-lg-3 col-md-6">
@@ -154,13 +158,13 @@ const Header = () => {
                                                             <i className="ri-map-pin-line"></i> Indian Destinations
                                                         </h6>
                                                         <ul className="mega-menu-list">
-                                                            <li><Link to="/state/kerala" className="mega-menu-item">Kerala</Link></li>
-                                                            <li><Link to="/state/goa" className="mega-menu-item">Goa</Link></li>
+                                                            <li><Link to="/state/kerala" className="mega-menu-item" onClick={handleNavClick}>Kerala</Link></li>
+                                                            <li><Link to="/state/goa" className="mega-menu-item" onClick={handleNavClick}>Goa</Link></li>
                                                             <li><Link to="/state/uttarakhand" className="mega-menu-item">Uttarakhand</Link></li>
-                                                            <li><Link to="/state/uttar-pradesh" className="mega-menu-item">Uttar Pradesh</Link></li>
-                                                            <li><Link to="/state/rajasthan" className="mega-menu-item">Rajasthan</Link></li>
-                                                            <li><Link to="/state/himachal-pradesh" className="mega-menu-item">Himachal Pradesh</Link></li>
-                                                            <li><Link to="/destinations/view-all" className="mega-menu-item view-all">View All</Link></li>
+                                                            <li><Link to="/state/uttar-pradesh" onClick={handleNavClick} className="mega-menu-item">Uttar Pradesh</Link></li>
+                                                            <li><Link to="/state/rajasthan" onClick={handleNavClick} className="mega-menu-item">Rajasthan</Link></li>
+                                                            <li><Link to="/state/himachal-pradesh" onClick={handleNavClick} className="mega-menu-item">Himachal Pradesh</Link></li>
+                                                            <li><Link to="/destinations/view-all" onClick={handleNavClick} className="mega-menu-item view-all">View All</Link></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -171,11 +175,11 @@ const Header = () => {
                                                         </h6>
                                                         <ul className="mega-menu-list">
                                                             <li><Link to="/destinations/bali" className="mega-menu-item">Bali</Link></li>
-                                                            <li><Link to="/destinations/maldives" className="mega-menu-item">Maldives</Link></li>
-                                                            <li><Link to="/destinations/thailand" className="mega-menu-item">Thailand</Link></li>
-                                                            <li><Link to="/destinations/dubai" className="mega-menu-item">Dubai</Link></li>
-                                                            <li><Link to="/destinations/singapore" className="mega-menu-item">Singapore</Link></li>
-                                                            <li><Link to="/destinations/malaysia" className="mega-menu-item">Malaysia</Link></li>
+                                                            <li><Link to="/destinations/maldives" className="mega-menu-item" onClick={handleNavClick}>Maldives</Link></li>
+                                                            <li><Link to="/destinations/thailand" className="mega-menu-item" onClick={handleNavClick}>Thailand</Link></li>
+                                                            <li><Link to="/destinations/dubai" className="mega-menu-item" onClick={handleNavClick}>Dubai</Link></li>
+                                                            <li><Link to="/destinations/singapore" className="mega-menu-item" onClick={handleNavClick}>Singapore</Link></li>
+                                                            <li><Link to="/destinations/malaysia" className="mega-menu-item" onClick={handleNavClick}>Malaysia</Link></li>
                                                             <li><Link to="/destinations/view-all-intl" className="mega-menu-item view-all">View All</Link></li>
                                                         </ul>
                                                     </div>
@@ -186,11 +190,11 @@ const Header = () => {
                                                             <i className="ri-heart-line"></i> Special Packages
                                                         </h6>
                                                         <ul className="mega-menu-list">
-                                                            <li><Link to="/packages/beach-honeymoon" className="mega-menu-item">Beach Honeymoon</Link></li>
+                                                            <li><Link to="/packages/beach-honeymoon" className="mega-menu-item" onClick={handleNavClick}>Beach Honeymoon</Link></li>
                                                             <li><Link to="/packages/hill-station" className="mega-menu-item">Hill Station</Link></li>
-                                                            <li><Link to="/packages/luxury-honeymoon" className="mega-menu-item">Luxury Honeymoon</Link></li>
-                                                            <li><Link to="/packages/budget-honeymoon" className="mega-menu-item">Budget Honeymoon</Link></li>
-                                                            <li><Link to="/packages/adventure-honeymoon" className="mega-menu-item">Adventure Honeymoon</Link></li>
+                                                            <li><Link to="/packages/luxury-honeymoon" className="mega-menu-item" onClick={handleNavClick}>Luxury Honeymoon</Link></li>
+                                                            <li><Link to="/packages/budget-honeymoon" className="mega-menu-item" onClick={handleNavClick}>Budget Honeymoon</Link></li>
+                                                            <li><Link to="/packages/adventure-honeymoon" className="mega-menu-item" onClick={handleNavClick}>Adventure Honeymoon</Link></li>
                                                             <li><Link to="/packages/view-all-packages" className="mega-menu-item view-all">View All Packages</Link></li>
                                                         </ul>
                                                     </div>
@@ -207,7 +211,7 @@ const Header = () => {
                                             </div>
                                         </div>
                                     </div>
-                            </li>
+                                </li>
 
                                 <li className="nav-item dropdown mega-dropdown">
                                     <a
@@ -219,7 +223,7 @@ const Header = () => {
                                     >
                                         <i className="ri-group-line"></i> Family Packages
                                     </a>
-                                    <div className="dropdown-menu mega-menu" style={{minWidth: '1000px', maxWidth: '1200px', width: '100vw'}}>
+                                    <div className="dropdown-menu mega-menu" style={{ minWidth: '1000px', maxWidth: '1200px', width: '100vw' }}>
                                         <div className="mega-menu-content">
                                             <div className="row">
                                                 <div className="col-lg-3 col-md-6">
