@@ -51,29 +51,45 @@ export const LocationFilter = ({ onFilterChange = () => { } }) => {
         }));
     };
 
+    const handleButtonClick = (filterType) => {
+        setSelectedFilters((prev) => {
+            // If clicking the same filter, toggle it
+            if (prev[filterType]) {
+                return {
+                    ...prev,
+                    [filterType]: false,
+                };
+            } else {
+                // If clicking a different filter, deselect the other and select this one
+                return {
+                    international: filterType === 'international',
+                    domestic: filterType === 'domestic',
+                };
+            }
+        });
+    };
+
     return (
-        <div className="mb-4 d-flex align-items-center gap-4">
-            <h2 className="me-2">Explore best selling packages for</h2>
-
-            <label className="d-flex align-items-center gap-1">
-                <input
-                    type="checkbox"
-                    name="international"
-                    checked={selectedFilters.international}
-                    onChange={handleCheckboxChange}
-                />
-                <span>International Destinations</span>
-            </label>
-
-            <label className="d-flex align-items-center gap-1">
-                <input
-                    type="checkbox"
-                    name="domestic"
-                    checked={selectedFilters.domestic}
-                    onChange={handleCheckboxChange}
-                />
-                <span>Destinations within India</span>
-            </label>
+        <div className="location-filter-wrapper">
+            <div className="filter-content">
+                <h3 className="filter-title">Explore best selling packages for</h3>
+                <div className="filter-buttons">
+                    <button
+                        className={`filter-btn ${selectedFilters.international ? 'active' : ''}`}
+                        onClick={() => handleButtonClick('international')}
+                    >
+                        <span className="btn-icon">🌍</span>
+                        <span className="btn-text">International</span>
+                    </button>
+                    <button
+                        className={`filter-btn ${selectedFilters.domestic ? 'active' : ''}`}
+                        onClick={() => handleButtonClick('domestic')}
+                    >
+                        <span className="btn-icon">🇮🇳</span>
+                        <span className="btn-text">India</span>
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

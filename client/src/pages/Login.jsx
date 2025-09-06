@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Container, Row, Col, Form, FormGroup, Button } from 'reactstrap';
-// import '../styles/login.css';
+import '../styles/login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import loginImg from '../assets/images/login.png';
 import userIcon from '../assets/images/user.png';
@@ -58,63 +58,136 @@ const Login = () => {
     };
 
     return (
-        <section className="login-section">
-            <Container>
-                <Row className="align-items-center">
-                    {/* Left Image */}
-                    <Col lg="1" md="6" sm="12"></Col>
-                    <Col lg="5" md="6" sm="12" className="">
-                        <div className="login__img text-center w-100" style={{ background: 'beige' }}>
-                            <img src={loginImg} alt="login" className="img-fluid" />
-                        </div>
-                    </Col>
-
-                    {/* Right Form */}
-                    <Col lg="4" md="6" sm="12">
-                        <div className="login__form text-center w-100" style={{ background: 'goldenrod' }}>
-                            <div className="user mb-3">
-                                <img src={userIcon} alt="user icon" />
+        <>
+            <section className="login-section">
+                <div className="login-background">
+                    <div className="floating-shapes">
+                        <div className="shape shape-1"></div>
+                        <div className="shape shape-2"></div>
+                        <div className="shape shape-3"></div>
+                        <div className="shape shape-4"></div>
+                    </div>
+                </div>
+                
+                <Container>
+                    <Row className="align-items-center min-vh-100">
+                    {/* Left Side - Image and Content */}
+                    <Col lg="6" md="12" className="order-2 order-lg-1">
+                        <div className="login-content">
+                            <div className="login-welcome">
+                                <h1 className="welcome-title">
+                                    Welcome Back to
+                                    <span className="brand-name"> TripTravel</span>
+                                </h1>
+                                <p className="welcome-subtitle">
+                                    Your journey to amazing destinations starts here. 
+                                    Sign in to continue your adventure and discover the world.
+                                </p>
                             </div>
-                            <h2 className="mb-4">Login Page</h2>
-
-                            <Form onSubmit={handleClick}>
-                                <FormGroup>
-                                    <input
-                                        type='email'
-                                        placeholder='Email'
-                                        id="email"
-                                        required
-                                        onChange={handleChange}
-                                        className="form-control"
-                                    />
-                                </FormGroup>
-                                <FormGroup>
-                                    <input
-                                        type='password'
-                                        placeholder='Password'
-                                        id="password"
-                                        required
-                                        onChange={handleChange}
-                                        className="form-control"
-                                    />
-                                </FormGroup>
-                                <Button
-                                    className='btn secondary__btn auth__btn text-white w-100'
-                                    type="submit"
-                                >
-                                    Login
-                                </Button>
-                            </Form>
-
-                            <p className="mt-3">
-                                Don't have an account? <Link to='/register'>Create</Link>
-                            </p>
+                            
+                            <div className="login-image-wrapper">
+                                <img src={loginImg} alt="Travel Login" className="login-image" />
+                                <div className="image-overlay">
+                                    <div className="overlay-content">
+                                        <i className="ri-plane-line"></i>
+                                        <h4>Explore the World</h4>
+                                        <p>Join thousands of travelers discovering amazing destinations</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </Col>
-                    <Col lg="2" md="6" sm="12"></Col>
-                </Row>
-            </Container>
-        </section>
+
+                    {/* Right Side - Login Form */}
+                    <Col lg="6" md="12" className="order-1 order-lg-2">
+                        <div className="login-form-container">
+                            <div className="login-form-card">
+                                <div className="form-header">
+                                    <div className="user-avatar">
+                                        <img src={userIcon} alt="User" />
+                                    </div>
+                                    <h2 className="form-title">Sign In</h2>
+                                    <p className="form-subtitle">Enter your credentials to access your account</p>
+                                </div>
+
+                                <Form onSubmit={handleClick} className="login-form">
+                                    <FormGroup className="form-group">
+                                        <div className="input-wrapper">
+                                            <i className="ri-mail-line input-icon"></i>
+                                            <input
+                                                type='email'
+                                                placeholder='Enter your email address'
+                                                id="email"
+                                                required
+                                                onChange={handleChange}
+                                                className="form-input"
+                                            />
+                                        </div>
+                                    </FormGroup>
+                                    
+                                    <FormGroup className="form-group">
+                                        <div className="input-wrapper">
+                                            <i className="ri-lock-line input-icon"></i>
+                                            <input
+                                                type='password'
+                                                placeholder='Enter your password'
+                                                id="password"
+                                                required
+                                                onChange={handleChange}
+                                                className="form-input"
+                                            />
+                                        </div>
+                                    </FormGroup>
+
+                                    <div className="form-options">
+                                        <div className="remember-me">
+                                            <input type="checkbox" id="remember" className="checkbox" />
+                                            <label htmlFor="remember">Remember me</label>
+                                        </div>
+                                        <Link to="/forgot-password" className="forgot-password">
+                                            Forgot Password?
+                                        </Link>
+                                    </div>
+
+                                    <Button
+                                        className='login-btn'
+                                        type="submit"
+                                    >
+                                        <i className="ri-login-box-line"></i>
+                                        Sign In
+                                    </Button>
+                                </Form>
+
+                                <div className="form-footer">
+                                    <p className="signup-text">
+                                        Don't have an account? 
+                                        <Link to='/register' className="signup-link">
+                                            Create Account
+                                        </Link>
+                                    </p>
+                                    
+                                    <div className="divider">
+                                        <span>Or continue with</span>
+                                    </div>
+                                    
+                                    <div className="social-login">
+                                        <button className="social-btn google-btn">
+                                            <i className="ri-google-fill"></i>
+                                            Google
+                                        </button>
+                                        <button className="social-btn facebook-btn">
+                                            <i className="ri-facebook-fill"></i>
+                                            Facebook
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Col>
+                    </Row>
+                </Container>
+            </section>
+        </>
     )
 };
 
