@@ -62,17 +62,28 @@ const TourSlider = ({ filters }) => {
         dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 5,
+        slidesToShow: 4,
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
-        centerMode: true,
-        focusOnSelect: true,
+        centerMode: false,
+        focusOnSelect: false,
+        variableWidth: false,
+        adaptiveHeight: true,
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 1200,
                 settings: {
                     slidesToShow: 3,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: false,
+                },
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 2,
                     slidesToScroll: 1,
                     infinite: true,
                     dots: false,
@@ -86,7 +97,7 @@ const TourSlider = ({ filters }) => {
                 },
             },
             {
-                breakpoint: 480,
+                breakpoint: 576,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
@@ -103,27 +114,26 @@ const TourSlider = ({ filters }) => {
                 <Col lg='12'>
                     <Slider {...settings}>
                         {tours.map((tour) => (
-                            <div key={tour._id} className="tour-item position-relative p-1">
+                            <div key={tour._id} className="tour-item">
                                 <div className="card border-0 shadow-sm h-100">
-                                    <img
-                                        src={tour.photo}
-                                        className="card-img-top"
-                                        alt={tour.title}
-                                        style={{ height: 200, objectFit: "cover" }}
-                                    />
-                                    <div className="card-body text-center">
-                                        <div className="d-flex justify-content-between">
-                                            <h6 className="fw-bold">{tour.city}</h6>
-                                            {/* Added safe check for bestTime */}
-                                            <span className="text-muted">
+                                    <div className="card-img-wrapper">
+                                        <img
+                                            src={tour.photo}
+                                            className="card-img-top"
+                                            alt={tour.title}
+                                        />
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="tour-header">
+                                            <h6 className="tour-city">{tour.city}</h6>
+                                            <span className="tour-time">
                                                 {tour.bestTime?.from || 'N/A'} - {tour.bestTime?.to || 'N/A'}
                                             </span>
                                         </div>
-                                        <div className="d-flex justify-content-between">
-                                            <span className="fw-bold">₹{tour.price}</span>
-                                            <Link to={`/tour/${tour._id}`}>
-                                                <Button className="btn rounded-0 bg-none" style={{ fontSize: '12px', }}> View Packages
-                                                </Button>
+                                        <div className="tour-footer">
+                                            <div className="tour-price">₹{tour.price}</div>
+                                            <Link to={`/tour/${tour._id}`} className="tour-btn">
+                                                View Packages
                                             </Link>
                                         </div>
                                     </div>

@@ -12,7 +12,6 @@ import ServiceList from '../services/ServiceList'
 import FeaturedTourList from '../components/FeaturedTourList'
 import MasonryImagesGallery from '../components/Image-gallery/MasonryImagesGallery'
 import Testimonial from '../components/Testimonial'
-import Newsletter from '../shared/Newsletter'
 import { TripTypeFilter, BudgetFilter, TourThemeFilter, DurationFilter, SeasonFilter, MonthFilter, ApplyResetButtons } from "../shared/TourFilters";
 import { LocationFilter } from '../shared/LocationFilter'
 import ThemesSlider from './ThemesSlider'
@@ -20,11 +19,50 @@ import TourSlider from './TourSlider'
 
 const Home = () => {
     const [filters, setFilters] = useState({ country: "", state: "" });
+    const [featuredFilters, setFeaturedFilters] = useState({
+        tripType: "",
+        theme: "",
+        duration: "",
+        month: "",
+        budget: { min: 1000, max: 100000 }
+    });
+    const [tempFilters, setTempFilters] = useState({
+        tripType: "",
+        theme: "",
+        duration: "",
+        month: "",
+        budget: { min: 1000, max: 100000 }
+    });
+    const [filterKey, setFilterKey] = useState(0);
     const [isVisible, setIsVisible] = useState({});
     const refs = useRef({});
 
     const handleFilterChange = (filters) => {
         setFilters(filters);
+    };
+
+    const handleFeaturedFilterChange = (filterType, value) => {
+        setTempFilters(prev => ({
+            ...prev,
+            [filterType]: value
+        }));
+    };
+
+    const handleApplyFilters = () => {
+        setFeaturedFilters(tempFilters);
+    };
+
+    const handleResetFilters = () => {
+        const resetFilters = {
+            tripType: "",
+            theme: "",
+            duration: "",
+            month: "",
+            budget: { min: 1000, max: 100000 }
+        };
+        setTempFilters(resetFilters);
+        setFeaturedFilters(resetFilters);
+        setFilterKey(prev => prev + 1); // Force re-render of filter components
     };
 
     // Intersection Observer for scroll animations
@@ -219,17 +257,41 @@ const Home = () => {
                             <div className={`filters-sidebar ${isVisible['featured-tours'] ? 'animate-fade-in-left' : ''}`}>
                                 <div className="filters-card">
                                     <h6 className="filters-title">Filter Tours</h6>
-                                    <TripTypeFilter />
-                                    <TourThemeFilter />
-                                    <DurationFilter />
-                                    <MonthFilter />
-                                    <ApplyResetButtons />
+                                    <TripTypeFilter 
+                                        key={`tripType-${filterKey}`}
+                                        onFilterChange={handleFeaturedFilterChange}
+                                        currentValue={tempFilters.tripType}
+                                    />
+                                    <TourThemeFilter 
+                                        key={`theme-${filterKey}`}
+                                        onFilterChange={handleFeaturedFilterChange}
+                                        currentValue={tempFilters.theme}
+                                    />
+                                    <DurationFilter 
+                                        key={`duration-${filterKey}`}
+                                        onFilterChange={handleFeaturedFilterChange}
+                                        currentValue={tempFilters.duration}
+                                    />
+                                    <MonthFilter 
+                                        key={`month-${filterKey}`}
+                                        onFilterChange={handleFeaturedFilterChange}
+                                        currentValue={tempFilters.month}
+                                    />
+                                    <BudgetFilter 
+                                        key={`budget-${filterKey}`}
+                                        onFilterChange={handleFeaturedFilterChange}
+                                        currentValue={tempFilters.budget}
+                                    />
+                                    <ApplyResetButtons 
+                                        onReset={handleResetFilters}
+                                        onApply={handleApplyFilters}
+                                    />
                                 </div>
                             </div>
                         </Col>
                         <Col lg='9'>
                             <div className={`tours-grid ${isVisible['featured-tours'] ? 'animate-fade-in-right' : ''}`}>
-                                <FeaturedTourList />
+                                <FeaturedTourList filters={featuredFilters} />
                             </div>
                         </Col>
                     </Row>
@@ -328,18 +390,6 @@ const Home = () => {
                 </Container>
             </section>
 
-            {/********************************* Newsletter Section ********************************/}
-            <section className="newsletter-section" ref={setRef('newsletter')}>
-                <Container>
-                    <Row>
-                        <Col lg='12'>
-                            <div className={`newsletter-container ${isVisible.newsletter ? 'animate-fade-in-up' : ''}`}>
-                                <Newsletter />
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>
-            </section>
 
         </>
     )
