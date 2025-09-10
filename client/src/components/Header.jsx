@@ -118,13 +118,15 @@ const Header = () => {
                             type="button"
                             onClick={toggleMobileMenu}
                             aria-label="Toggle navigation"
+                            aria-controls="navbarContent"
+                            aria-expanded={isMobileMenuOpen}
                         >
                             <span></span>
                             <span></span>
                             <span></span>
                         </button>
 
-                        <div className={`navbar-collapse ${isMobileMenuOpen ? 'show' : ''}`} ref={navbarCollapseRef}>
+                        <div id="navbarContent" className={`navbar-collapse collapse ${isMobileMenuOpen ? 'show' : ''}`} ref={navbarCollapseRef}>
                             <ul className="navbar-nav">
                                 <li className="nav-item">
                                     <NavLink
