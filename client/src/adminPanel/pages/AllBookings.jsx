@@ -26,10 +26,12 @@ const AllBookings = () => {
     }, []);
 
     useEffect(() => {
-        const pages = Math.ceil(bookingsCount / 8);
-        setPageCount(pages);
+        if (bookingsCount) {
+            const pages = Math.ceil(bookingsCount / 8);
+            setPageCount(pages);
+        }
         window.scrollTo(0, 0);
-    }, [page, bookingsCount, bookings]);
+    }, [bookingsCount]);
 
     if (!isAdmin) {
         return <p className='text-center mt-5'>You are not authorized to access this page.</p>;
@@ -76,8 +78,13 @@ const AllBookings = () => {
                         </Col>
                         <Col lg='12'>
                             <div className='pagination d-flex align-items-center justify-content-center mt-4 gap-3'>
-                                {Array.from({ length: Math.max(0, parseInt(pageCount) || 0) })?.keys().map(number => (
-                                    <span key={number} onClick={() => setPage(number)} className={page === number ? "active__page" : ""}>
+                                {[...Array(pageCount).keys()].map((number) => (
+                                    <span
+                                        key={number}
+                                        onClick={() => setPage(number)}
+                                        className={page === number ? "active__page" : ""}
+                                        style={{ cursor: "pointer" }}
+                                    >
                                         {number + 1}
                                     </span>
                                 ))}
