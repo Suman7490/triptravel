@@ -5,8 +5,8 @@ import { createBooking, getAllBooking, getBooking, getBookingCount } from '../co
 const router = express.Router()
 
 router.post('/', verifyUser, createBooking)
-router.get('/:id', verifyUser, getBooking)
-router.get('/', verifyToken, verifyAdmin, getAllBooking)
 router.get('/search/getBookingCount', verifyToken, verifyAdmin, getBookingCount)
+router.get('/', verifyToken, verifyAdmin, getAllBooking)
+router.get('/:id', verifyUser, getBooking)
 
 export default router
