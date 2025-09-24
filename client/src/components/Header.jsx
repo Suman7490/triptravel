@@ -114,7 +114,7 @@ const Header = () => {
                 <Container>
                     <nav className="navbar navbar-expand-lg">
                         <button
-                            className={`navbar-toggler ${isMobileMenuOpen ? 'active' : ''}`}
+                            className={`navbar-toggler ${isMobileMenuOpen ? 'active' : ''} border-0`}
                             type="button"
                             onClick={toggleMobileMenu}
                             aria-label="Toggle navigation"
@@ -234,13 +234,13 @@ const Header = () => {
                                                             <i className="ri-map-pin-line"></i> Indian Destinations
                                                         </h6>
                                                         <ul className="mega-menu-list">
-                                                            <li><Link to="/destinations/kerala" className="mega-menu-item">Kerala</Link></li>
-                                                            <li><Link to="/destinations/goa" className="mega-menu-item">Goa</Link></li>
-                                                            <li><Link to="/destinations/uttarakhand" className="mega-menu-item">Uttarakhand</Link></li>
-                                                            <li><Link to="/destinations/rajasthan" className="mega-menu-item">Rajasthan</Link></li>
-                                                            <li><Link to="/destinations/kashmir" className="mega-menu-item">Kashmir</Link></li>
-                                                            <li><Link to="/destinations/himachal" className="mega-menu-item">Himachal Pradesh</Link></li>
-                                                            <li><Link to="/destinations/view-all" className="mega-menu-item view-all">View All</Link></li>
+                                                            <li><Link to="/state/kerala" className="mega-menu-item" onClick={handleNavClick}>Kerala</Link></li>
+                                                            <li><Link to="/state/goa" className="mega-menu-item" onClick={handleNavClick}>Goa</Link></li>
+                                                            <li><Link to="/state/uttarakhand" className="mega-menu-item">Uttarakhand</Link></li>
+                                                            <li><Link to="/state/uttar-pradesh" onClick={handleNavClick} className="mega-menu-item">Uttar Pradesh</Link></li>
+                                                            <li><Link to="/state/rajasthan" onClick={handleNavClick} className="mega-menu-item">Rajasthan</Link></li>
+                                                            <li><Link to="/state/himachal-pradesh" onClick={handleNavClick} className="mega-menu-item">Himachal Pradesh</Link></li>
+                                                            <li><Link to="/destinations/view-all" onClick={handleNavClick} className="mega-menu-item view-all">View All</Link></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -251,11 +251,11 @@ const Header = () => {
                                                         </h6>
                                                         <ul className="mega-menu-list">
                                                             <li><Link to="/destinations/bali" className="mega-menu-item">Bali</Link></li>
-                                                            <li><Link to="/destinations/maldives" className="mega-menu-item">Maldives</Link></li>
-                                                            <li><Link to="/destinations/thailand" className="mega-menu-item">Thailand</Link></li>
-                                                            <li><Link to="/destinations/dubai" className="mega-menu-item">Dubai</Link></li>
-                                                            <li><Link to="/destinations/singapore" className="mega-menu-item">Singapore</Link></li>
-                                                            <li><Link to="/destinations/malaysia" className="mega-menu-item">Malaysia</Link></li>
+                                                            <li><Link to="/destinations/maldives" className="mega-menu-item" onClick={handleNavClick}>Maldives</Link></li>
+                                                            <li><Link to="/destinations/thailand" className="mega-menu-item" onClick={handleNavClick}>Thailand</Link></li>
+                                                            <li><Link to="/destinations/dubai" className="mega-menu-item" onClick={handleNavClick}>Dubai</Link></li>
+                                                            <li><Link to="/destinations/singapore" className="mega-menu-item" onClick={handleNavClick}>Singapore</Link></li>
+                                                            <li><Link to="/destinations/malaysia" className="mega-menu-item" onClick={handleNavClick}>Malaysia</Link></li>
                                                             <li><Link to="/destinations/view-all-intl" className="mega-menu-item view-all">View All</Link></li>
                                                         </ul>
                                                     </div>
@@ -263,24 +263,24 @@ const Header = () => {
                                                 <div className="col-lg-3 col-md-6">
                                                     <div className="mega-menu-section">
                                                         <h6 className="section-title">
-                                                            <i className="ri-group-line"></i> Family Activities
+                                                            <i className="ri-heart-line"></i> Special Packages
                                                         </h6>
                                                         <ul className="mega-menu-list">
-                                                            <li><Link to="/activities/beach-vacation" className="mega-menu-item">Beach Vacation</Link></li>
-                                                            <li><Link to="/activities/hill-station" className="mega-menu-item">Hill Station</Link></li>
-                                                            <li><Link to="/activities/wildlife-safari" className="mega-menu-item">Wildlife Safari</Link></li>
-                                                            <li><Link to="/activities/theme-parks" className="mega-menu-item">Theme Parks</Link></li>
-                                                            <li><Link to="/activities/cultural-tours" className="mega-menu-item">Cultural Tours</Link></li>
-                                                            <li><Link to="/activities/view-all-activities" className="mega-menu-item view-all">View All Activities</Link></li>
+                                                            <li><Link to="/packages/beach-honeymoon" className="mega-menu-item" onClick={handleNavClick}>Beach Honeymoon</Link></li>
+                                                            <li><Link to="/packages/hill-station" className="mega-menu-item">Hill Station</Link></li>
+                                                            <li><Link to="/packages/luxury-honeymoon" className="mega-menu-item" onClick={handleNavClick}>Luxury Honeymoon</Link></li>
+                                                            <li><Link to="/packages/budget-honeymoon" className="mega-menu-item" onClick={handleNavClick}>Budget Honeymoon</Link></li>
+                                                            <li><Link to="/packages/adventure-honeymoon" className="mega-menu-item" onClick={handleNavClick}>Adventure Honeymoon</Link></li>
+                                                            <li><Link to="/packages/view-all-packages" className="mega-menu-item view-all">View All Packages</Link></li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-3 d-none d-lg-block">
                                                     <div className="mega-menu-image">
-                                                        <img src={gallery} alt="Family Destinations" className="img-fluid" />
+                                                        <img src={gallery2} alt="Honeymoon Destinations" className="img-fluid" />
                                                         <div className="image-overlay">
-                                                            <h6>Family Adventures</h6>
-                                                            <p>Memories for a lifetime</p>
+                                                            <h6>Romantic Getaways</h6>
+                                                            <p>Create unforgettable memories</p>
                                                         </div>
                                                     </div>
                                                 </div>
