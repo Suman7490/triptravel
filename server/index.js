@@ -25,6 +25,7 @@ const app = express();
 const allowedOrigins = [
     "http://localhost:3000",
     "https://triptravel-opal.vercel.app",
+    "https://api.makemyatra.com",
     "https://makemyatra.com",
     "https://www.makemyatra.com"
 ];
@@ -42,13 +43,13 @@ app.use(cors({
     credentials: true,
 }));
 // API routes
-app.use('/api/v1/auth', authRoute);
-app.use('/api/v1/tours', tourRoute);
-app.use('/api/v1/users', userRoute);
-app.use('/api/v1/review', reviewRoute);
-app.use('/api/v1/booking', bookingRoute);
-app.use("/api/v1/themes", themeRoutes);
-app.use("/api/v1/filters", filterRoutes);
+app.use('/auth', authRoute);
+app.use('/tours', tourRoute);
+app.use('/users', userRoute);
+app.use('/review', reviewRoute);
+app.use('/booking', bookingRoute);
+app.use("/themes", themeRoutes);
+app.use("/filters", filterRoutes);
 
 app.use((req, res, next) => {
     res.status(404).json({ success: false, message: "Route not found" });
