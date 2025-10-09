@@ -20,9 +20,6 @@ const Tours = () => {
         window.scrollTo(0, 0);
     }, [page, tourCount, tours]);
 
-
-
-
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this tour?");
         if (!confirmDelete) return;
@@ -52,11 +49,8 @@ const Tours = () => {
         }
     };
 
-
-
     return (
         <>
-
             <section className='pt-0'>
                 <Container>
 

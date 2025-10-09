@@ -11,7 +11,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Country, State } from "country-state-city";
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-
 const countries = {
     India: ["Maharashtra", "Delhi", "Karnataka", "Rajasthan", "Kerala", "Jammu & Kashmir"],
     USA: ["California", "Texas", "New York", "Florida", "Washington"],

@@ -63,7 +63,6 @@ const CreateTheme = ({ editingTheme, fetchThemes, clearEditing }) => {
                 className="p-3 border rounded shadow-sm d-flex flex-column flex-lg-row gap-3 align-items-center"
             >
 
-
                 {/* Form Inputs */}
                 <div className="flex-grow-1 d-flex flex-column flex-md-row gap-3 w-100">
                     <div className="mb-3 flex-grow-1">
