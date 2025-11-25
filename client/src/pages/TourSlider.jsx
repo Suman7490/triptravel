@@ -64,6 +64,7 @@ const TourSlider = ({ filters }) => {
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
+        autoplay: true,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
         centerMode: false,
@@ -114,7 +115,7 @@ const TourSlider = ({ filters }) => {
                 <Col lg='12'>
                     <Slider {...settings}>
                         {tours.map((tour) => (
-                            <div key={tour._id} className="tour-item">
+                            <div key={tour._id} className="tour-item  w-100">
                                 <div className="card border-0 shadow-sm h-100">
                                     <div className="card-img-wrapper">
                                         <img

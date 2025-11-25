@@ -46,6 +46,7 @@ const ThemesSlider = () => {
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
+        autoplay: true,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
         responsive: [

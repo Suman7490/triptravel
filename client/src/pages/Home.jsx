@@ -257,32 +257,32 @@ const Home = () => {
                             <div className={`filters-sidebar ${isVisible['featured-tours'] ? 'animate-fade-in-left' : ''}`}>
                                 <div className="filters-card">
                                     <h6 className="filters-title">Filter Tours</h6>
-                                    <TripTypeFilter 
+                                    <TripTypeFilter
                                         key={`tripType-${filterKey}`}
                                         onFilterChange={handleFeaturedFilterChange}
                                         currentValue={tempFilters.tripType}
                                     />
-                                    <TourThemeFilter 
+                                    <TourThemeFilter
                                         key={`theme-${filterKey}`}
                                         onFilterChange={handleFeaturedFilterChange}
                                         currentValue={tempFilters.theme}
                                     />
-                                    <DurationFilter 
+                                    <DurationFilter
                                         key={`duration-${filterKey}`}
                                         onFilterChange={handleFeaturedFilterChange}
                                         currentValue={tempFilters.duration}
                                     />
-                                    <MonthFilter 
+                                    <MonthFilter
                                         key={`month-${filterKey}`}
                                         onFilterChange={handleFeaturedFilterChange}
                                         currentValue={tempFilters.month}
                                     />
-                                    <BudgetFilter 
+                                    <BudgetFilter
                                         key={`budget-${filterKey}`}
                                         onFilterChange={handleFeaturedFilterChange}
                                         currentValue={tempFilters.budget}
                                     />
-                                    <ApplyResetButtons 
+                                    <ApplyResetButtons
                                         onReset={handleResetFilters}
                                         onApply={handleApplyFilters}
                                     />
@@ -306,12 +306,12 @@ const Home = () => {
                             <div className={`experience__content ${isVisible.experience ? 'animate-fade-in-left' : ''}`}>
                                 <h5 className='services__subtitle'>Experience</h5>
                                 <h2 className="experience-title">
-                                    With our all experience <br /> 
+                                    With our all experience <br />
                                     <span className="gradient-text">we will serve you</span>
                                 </h2>
                                 <p className="experience-description">
-                                    With years of expertise in travel planning and a passion for creating unforgettable experiences, 
-                                    we've helped thousands of travelers discover the world's most beautiful destinations. 
+                                    With years of expertise in travel planning and a passion for creating unforgettable experiences,
+                                    we've helped thousands of travelers discover the world's most beautiful destinations.
                                     Our commitment to excellence ensures every journey is extraordinary.
                                 </p>
                             </div>

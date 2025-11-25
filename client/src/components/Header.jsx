@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState, useEffect } from 'react';
 import { Container, Button } from 'reactstrap';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
-import logo from '../assets/images/logo3.png';
+import logo from '../assets/images/logo2.png';
 import gallery from '../assets/images/logo3.png';
 import gallery2 from '../assets/images/gallery-05.jpg';
 import './style/header.css';
@@ -137,6 +137,18 @@ const Header = () => {
                                         }
                                     >
                                         <i className="ri-home-line"></i> Home
+                                    </NavLink>
+                                </li>
+
+                                <li className="nav-item">
+                                    <NavLink
+                                        to="tours"
+                                        onClick={handleNavClick}
+                                        className={({ isActive }) =>
+                                            `nav-link ${isActive ? 'active' : ''}`
+                                        }
+                                    >
+                                        <i className="ri-home-line"></i> Tours
                                     </NavLink>
                                 </li>
 
